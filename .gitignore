@@ -1,0 +1,22 @@
+# Compiled class file
+*.class
+build
+
+# Log file
+*.log
+
+# Gradle
+.gradle
+gradle/wrapper
+
+# Intellij
+.idea
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
