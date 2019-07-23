@@ -6,7 +6,7 @@ import javafx.scene.image.Image
 class Meteor(image: AnimatedImage, x: Double, y: Double) : Actor(image, x, y) {
 
   override fun intersectWithBorder(border: Direction) {
-    world.meteors.remove(this)
+    world.markedDeath.add(this)
   }
 
   companion object {

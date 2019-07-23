@@ -2,6 +2,7 @@ package javaFxGame.gui
 
 import javaFxGame.game.Actor
 import javaFxGame.game.World
+import javaFxGame.game.World.Companion.world
 import javafx.animation.AnimationTimer
 import javafx.application.Application
 import javafx.event.EventHandler
@@ -74,13 +75,11 @@ class WorldView : Application() {
         gc.fillText("Time $t", 36.0, 36.0)
         gc.strokeText("Time $t", 36.0, 36.0)
 
-        World.world.let { world ->
-          world.players.forEach { it.input(keyInput) }
-          world.actors.forEach { actorList ->
-            actorList.forEach { actor ->
-              actor.act(time = 1.0) // The actual acting
-              renderActor(actor, t) // The rendering
-            }
+        world.players.forEach { it.input(keyInput) }
+        world.runActors(time = 1.0)
+        world.actors.forEach { actorList ->
+          actorList.forEach { actor ->
+            renderActor(actor, t)
           }
         }
 

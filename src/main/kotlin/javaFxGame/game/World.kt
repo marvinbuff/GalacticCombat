@@ -10,8 +10,19 @@ class World {
 
   val actors: List<MutableList<Actor>> = listOf(ships, meteors, projectiles)
 
+  val markedDeath: MutableList<Actor> = arrayListOf()
+
   init {
     world = this
+  }
+
+  fun runActors(time: Double) {
+    world.actors.forEach { actorList ->
+      actorList.forEach { actor ->
+        actor.act(time)
+      }
+    }
+    world.removeMarkedDeath()
   }
 
   fun spawnSoloPlayer() {
@@ -28,6 +39,17 @@ class World {
     meteor.rotate(90.0)
     meteor.accelerate(0.2)
     meteors.add(meteor)
+  }
+
+  fun removeMarkedDeath() {
+    markedDeath.forEach { actor ->
+      when (actor) {
+        is PlayerShip -> ships.remove(actor)
+        is Meteor     -> meteors.remove(actor)
+        is Projectile -> projectiles.remove(actor)
+      }
+    }
+    markedDeath.clear()
   }
 
   companion object {
