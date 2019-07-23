@@ -16,7 +16,7 @@ import javafx.scene.text.FontWeight
 import javafx.stage.Stage
 
 class WorldView : Application() {
-  lateinit var scene: Scene
+  private lateinit var scene: Scene
   lateinit var gc: GraphicsContext
   private val keyInput = mutableSetOf<String>()
 
@@ -76,9 +76,11 @@ class WorldView : Application() {
 
         World.world.let { world ->
           world.players.forEach { it.input(keyInput) }
-          world.actors.forEach { actor ->
-            actor.act(time = 1.0)
-            renderActor(actor, t)
+          world.actors.forEach { actorList ->
+            actorList.forEach { actor ->
+              actor.act(time = 1.0) // The actual acting
+              renderActor(actor, t) // The rendering
+            }
           }
         }
 

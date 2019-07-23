@@ -1,19 +1,22 @@
 package javaFxGame.game
 
+import javaFxGame.game.World.Companion.world
 import javafx.scene.image.Image
+import kotlin.math.max
 
 class PlayerShip(image: AnimatedImage, x: Double, y: Double) : Actor(image, x, y), IControllable {
   override val worldOffset: Double = 0.0
+  var shootingCooldown: Double = 0.0
 
   override fun act(time: Double) {
     super.act(time)
-    World.world.actors.forEach { actor ->
-      if (actor != this) {
-        if (this.intersectWith(actor)) {
-          //World.world.actors.remove(this)
-        }
+    world.meteors.forEach { meteor ->
+      if (this.intersectWith(meteor)) {
+        world.ships.remove(this)
       }
     }
+    shootingCooldown -= time
+    shootingCooldown = max(shootingCooldown, 0.0)
   }
 
   override fun executeActions(actions: Set<Action>) {
@@ -25,7 +28,7 @@ class PlayerShip(image: AnimatedImage, x: Double, y: Double) : Actor(image, x, y
         Action.TURN_RIGHT -> rotate(rotationSpeed)
         Action.ACCELERATE -> accelerate(accelerationAmount)
         Action.DECELERATE -> accelerate(-accelerationAmount)
-        Action.SHOOT      -> println("Shoot")
+        Action.SHOOT      -> shoot()
         Action.OTHER      -> Unit
       }
     }
@@ -37,6 +40,15 @@ class PlayerShip(image: AnimatedImage, x: Double, y: Double) : Actor(image, x, y
       Direction.EAST  -> x = 0.0
       Direction.SOUTH -> y = 0.0
       Direction.WEST  -> x = World.WORLD_WIDTH
+    }
+  }
+
+  private fun shoot() {
+    if (shootingCooldown <= 0.0) {
+      val projectile = Projectile.create(x, y, rotation)
+      projectile.accelerate(2.0)
+      world.projectiles.add(projectile)
+      shootingCooldown = 25.0
     }
   }
 

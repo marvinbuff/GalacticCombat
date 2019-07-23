@@ -2,8 +2,13 @@ package javaFxGame.game
 
 class World {
 
-  val actors: MutableList<Actor> = arrayListOf()
+  val ships: MutableList<Actor> = arrayListOf()
+  val meteors: MutableList<Actor> = arrayListOf()
+  val projectiles: MutableList<Actor> = arrayListOf()
+
   val players: MutableList<Player> = arrayListOf()
+
+  val actors: List<MutableList<Actor>> = listOf(ships, meteors, projectiles)
 
   init {
     world = this
@@ -14,7 +19,7 @@ class World {
     ship.rotate(-90.0)
     ship.accelerate(0.1)
     val player = Player(ship, Controls.SOLO_PLAYER)
-    actors.add(ship)
+    ships.add(ship)
     players.add(player)
   }
 
@@ -22,7 +27,7 @@ class World {
     val meteor = Meteor.create(WORLD_WIDTH / 2, 0.0)
     meteor.rotate(90.0)
     meteor.accelerate(0.2)
-    actors.add(meteor)
+    meteors.add(meteor)
   }
 
   companion object {

@@ -9,11 +9,11 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sin
 
-open class Actor(
+abstract class Actor(
     val image: AnimatedImage,
     var x: Double = 0.0,
     var y: Double = 0.0,
-    private var rotation: Double = 0.0,
+    var rotation: Double = 0.0,
     val shape: Shape = Circle(x, y, image.getFrame(0.0).width / 2.0)
 ) {
   private var velocity: Double = 0.0
@@ -30,9 +30,7 @@ open class Actor(
     velocity = min(max(amount + velocity, MIN_VELOCITY), MAX_VELOCITY)
   }
 
-  open fun intersectWithBorder(border: Direction) {
-    World.world.actors.remove(this)
-  }
+  abstract fun intersectWithBorder(border: Direction)
 
   open fun act(time: Double) {
     move(time)
