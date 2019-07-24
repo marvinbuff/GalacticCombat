@@ -2,18 +2,26 @@
 
 This repository contains several Kotlin related projects.
 
-#### Space Wars
+___
+### Space Wars
 
 A small game to learn JavaFX and Kotlin.
 - package: `javaFxGame`
 - Main: `javaFxGame.main`
 
-#### Benchmarking
+___
+### Benchmarking
 
 Small example to try out benchmarking with JMH.
 - Run: `gradlew jmh`
+- Create Report: `gradlew jmhReport`
+- Remove Daemons: `gradlew --stop`
 
-#### Samples
+Resources
+- http://tutorials.jenkov.com/java-performance/jmh.html
+
+___
+### Samples
 
 A collection of very small self-contained code snippets.
 
