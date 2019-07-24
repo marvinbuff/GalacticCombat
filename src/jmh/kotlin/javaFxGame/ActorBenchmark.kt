@@ -61,6 +61,7 @@ open class ActorBenchmark {
     println("Called other")
   }
 
+  @Suppress("UNUSED_PARAMETER")
   private fun markToKill(index: Int): Boolean {
     return Random.nextBoolean()
   }
