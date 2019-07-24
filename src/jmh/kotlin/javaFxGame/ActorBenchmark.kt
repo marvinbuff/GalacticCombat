@@ -1,20 +1,9 @@
 package javaFxGame
 
-import org.openjdk.jmh.annotations.Benchmark
-import org.openjdk.jmh.annotations.BenchmarkMode
-import org.openjdk.jmh.annotations.Level
-import org.openjdk.jmh.annotations.Measurement
-import org.openjdk.jmh.annotations.Mode
-import org.openjdk.jmh.annotations.OutputTimeUnit
-import org.openjdk.jmh.annotations.Scope
-import org.openjdk.jmh.annotations.Setup
-import org.openjdk.jmh.annotations.State
-import org.openjdk.jmh.annotations.Warmup
+import org.openjdk.jmh.annotations.*
 import org.openjdk.jmh.infra.Blackhole
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
-
-private const val ACTORS_SIZE = 10000
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -26,9 +15,12 @@ open class ActorBenchmark {
   open class WorldDummy {
     var actors: MutableList<String> = mutableListOf()
 
+      @Param("100", "1000", "10000", "100000")//Each parameter creates a new result row.
+      var iterations: Int? = null
+
     @Setup(Level.Invocation)
     fun populateActors() {
-      (0..ACTORS_SIZE).map { "Actor $it" }.toCollection(actors)
+        (0..iterations!!).map { "Actor $it" }.toCollection(actors)
     }
   }
 
@@ -43,7 +35,6 @@ open class ActorBenchmark {
     val markedOnes = BooleanArray(state.actors.size, ::markToKill)
     markedOnes.withIndex().reversed().filter { it.value }.forEach { state.actors.removeAt(it.index) }
     bh.consume(state.actors)
-    println("Called benchmark")
   }
 
   /*Step 1: Copy actors
@@ -58,7 +49,6 @@ open class ActorBenchmark {
     }
     state.actors = actorsCopy
     bh.consume(state.actors)
-    println("Called other")
   }
 
   @Suppress("UNUSED_PARAMETER")
