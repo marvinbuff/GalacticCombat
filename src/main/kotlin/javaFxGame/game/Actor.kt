@@ -20,7 +20,17 @@ abstract class Actor(
   open val worldOffset = 10.0
   val rotationDegree: Double
     get() = rotation * (180 / PI)
+  var markedForRemoval = false
+    private set
 
+  /**
+   * Sets [markedForRemoval] to true and returns whether this actually changed the variable from false.
+   */
+  fun markForRemoval(): Boolean {
+    val result = !markedForRemoval
+    markedForRemoval = true
+    return result
+  }
 
   fun rotate(angle: Double) {
     rotation += (angle * PI) / 180
@@ -41,6 +51,8 @@ abstract class Actor(
     shape.centerX = x
     shape.centerY = y
   }
+
+  open fun whenRemoved() {}
 
   internal fun intersectWith(other: Actor): Boolean {
     //alternative: (shape.boundsInParent.intersects(actor.shape.boundsInParent))

@@ -10,8 +10,6 @@ class World {
 
   val actors: List<MutableList<Actor>> = listOf(ships, meteors, projectiles)
 
-  val markedDeath: MutableList<Actor> = arrayListOf()
-
   init {
     world = this
   }
@@ -42,14 +40,16 @@ class World {
   }
 
   fun removeMarkedDeath() {
-    markedDeath.forEach { actor ->
-      when (actor) {
-        is PlayerShip -> ships.remove(actor)
-        is Meteor     -> meteors.remove(actor)
-        is Projectile -> projectiles.remove(actor)
+    println("ActorsBefore: $projectiles")
+    actors.forEach { actorList ->
+      actorList.withIndex().reversed().filter { (_, actor) ->
+        actor.markedForRemoval
+      }.forEach { (index, actor) ->
+        actorList.removeAt(index)
+        actor.whenRemoved()
       }
     }
-    markedDeath.clear()
+    println("ActorsAfter: $projectiles")
   }
 
   companion object {

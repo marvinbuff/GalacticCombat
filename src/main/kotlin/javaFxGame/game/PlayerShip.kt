@@ -12,7 +12,7 @@ class PlayerShip(image: AnimatedImage, x: Double, y: Double) : Actor(image, x, y
     super.act(time)
     world.meteors.forEach { meteor ->
       if (this.intersectWith(meteor)) {
-        world.markedDeath.add(this)
+        markForRemoval()
       }
     }
     shootingCooldown -= time

@@ -1,12 +1,11 @@
 package javaFxGame.game
 
-import javaFxGame.game.World.Companion.world
 import javafx.scene.image.Image
 
 class Meteor(image: AnimatedImage, x: Double, y: Double) : Actor(image, x, y) {
 
   override fun intersectWithBorder(border: Direction) {
-    world.markedDeath.add(this)
+    markForRemoval()
   }
 
   companion object {

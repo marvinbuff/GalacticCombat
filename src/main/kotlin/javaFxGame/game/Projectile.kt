@@ -8,14 +8,15 @@ class Projectile(image: AnimatedImage, x: Double, y: Double, rotation: Double) :
   override fun act(time: Double) {
     super.act(time)
     world.meteors.forEach { meteor ->
-      if (this.intersectWith(meteor)) {
-        world.markedDeath.add(meteor)
+      if (!meteor.markedForRemoval && this.intersectWith(meteor)) {
+        meteor.markForRemoval()
+        this.markForRemoval()
       }
     }
   }
 
   override fun intersectWithBorder(border: Direction) {
-    world.markedDeath.add(this)
+    markForRemoval()
   }
 
 

@@ -23,8 +23,8 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0-RC")
   testImplementation("junit:junit:4.12")
 
-  "jmhImplementation"("org.openjdk.jmh:jmh-core:1.21")
-  "jmhImplementation"("org.openjdk.jmh:jmh-generator-annprocess:1.21")
+//  "jmhImplementation"("org.openjdk.jmh:jmh-core:1.21")
+//  "jmhImplementation"("org.openjdk.jmh:jmh-generator-annprocess:1.21")
 }
 
 jmh {
