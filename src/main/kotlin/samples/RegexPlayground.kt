@@ -5,9 +5,9 @@ fun main() {
   val negativeTests = listOf("23", "a", "hallo", "23,23.23", "222.322", "")
   println("Positive Tests")
   postitiveTests.forEach(::onlyMatchWithMoneyValue)
-  println("Negative Tests")
+  println("\nNegative Tests")
   negativeTests.forEach(::onlyMatchWithMoneyValue)
-  println("Match Currency")
+  println("\nMatch Currency")
   postitiveTests.forEach(::onlyMatchWithCurrency)
 }
 
