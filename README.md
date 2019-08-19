@@ -21,6 +21,11 @@ Resources
 - http://tutorials.jenkov.com/java-performance/jmh.html
 
 ___
+### Json DSL
+
+A Kotlin-DSL for writing Json with a custom example which writes the entity config json.
+
+___
 ### Samples
 
 A collection of very small self-contained code snippets.
