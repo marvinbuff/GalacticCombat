@@ -7,7 +7,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.stringify
 
-@UnstableDefault val configuration = JsonConfiguration(
+@UnstableDefault private val configuration = JsonConfiguration(
   encodeDefaults = true,
   strictMode = true,
   unquoted = false,
