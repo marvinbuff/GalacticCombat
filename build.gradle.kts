@@ -2,7 +2,7 @@ import io.morethan.jmhreport.gradle.task.JmhReportTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin("jvm") version "1.3.41"
+  kotlin("jvm") version "1.3.50"
 
   // For Benchmarking
   id("me.champeau.gradle.jmh") version "0.5.0-rc-1"
@@ -10,8 +10,7 @@ plugins {
   id("io.morethan.jmhreport") version "0.9.0"
 
   // For json serialization
-//  id("kotlin-multiplatform") version "1.3.40"
-  id("kotlinx-serialization") version "1.3.40"
+  id("kotlinx-serialization") version "1.3.50"
 }
 
 
@@ -31,7 +30,6 @@ dependencies {
   testImplementation("junit:junit:4.12")
 
   // For Json Serialization
-//  compileClasspath("org.jetbrains.kotlin:kotlin-serialization:1.3.40")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.11.1")
   compile("org.json:json:20190722")
 

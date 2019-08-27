@@ -54,12 +54,12 @@ private enum class ClusterTemplate(val label: String, val managed: Boolean = tru
   AV("Methacrylates"),
   AW("Acrylic Products"),
   BI("CyPlus Technologies"),
-  J2("Services"),
-  OT("Others"),
-  NOTASSIGNED("Not Assigned", false),
   J0("Nutrition & Care"),
   J1("Resource Efficiency"),
   SM("Performance Matierials"),
+  J2("Services"),
+  OT("Others"),
+  NOTASSIGNED("Not Assigned", false)
   ;
 
   private fun getCluster(segments: Array<SegmentJson>): ClusterJson =
