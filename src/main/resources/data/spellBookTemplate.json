@@ -1,0 +1,20 @@
+{
+  "name": "Spell Book Template",
+  "owner": "Unknown",
+  "spells": [
+    {
+      "name": "Fire Bolt",
+      "school": "Evocation",
+      "level": "0",
+      "description": "A small bolt of fire.",
+      "source": "PHP"
+    },
+    {
+      "name": "Fire Ball",
+      "school": "Evocation",
+      "level": "3",
+      "description": "A big ball of fire.",
+      "source": "PHP"
+    }
+  ]
+}
