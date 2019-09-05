@@ -22,9 +22,7 @@ class WorldView : Application() {
   private val keyInput = mutableSetOf<String>()
 
   override fun init() {
-    val world = World()
-    world.spawnSoloPlayer()
-    world.spawnMeteor()
+    World()
   }
 
   override fun start(stage: Stage) {
@@ -76,6 +74,7 @@ class WorldView : Application() {
         gc.strokeText("Time $t", 36.0, 36.0)
 
         world.players.forEach { it.input(keyInput) }
+        world.computer.forEach { it.run() }
         world.runActors(time = 1.0)
         world.actors.forEach { actorList ->
           actorList.forEach { actor ->

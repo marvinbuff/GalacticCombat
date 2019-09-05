@@ -7,11 +7,16 @@ class World {
   val projectiles: MutableList<Actor> = arrayListOf()
 
   val players: MutableList<Player> = arrayListOf()
+  val computer: MutableList<KI> = arrayListOf()
 
   val actors: List<MutableList<Actor>> = listOf(ships, meteors, projectiles)
 
   init {
     world = this
+
+    spawnSoloPlayer()
+    spawnKI()
+    spawnMeteor()
   }
 
   fun runActors(time: Double) {
@@ -23,7 +28,16 @@ class World {
     world.removeMarkedDeath()
   }
 
-  fun spawnSoloPlayer() {
+  private fun spawnKI() {
+    val ship = PlayerShip.create(WORLD_WIDTH / 2, WORLD_HEIGHT)
+    ship.rotate(-90.0)
+    ship.accelerate(0.2)
+    val ki = KI(ship)
+    ships.add(ship)
+    computer.add(ki)
+  }
+
+  private fun spawnSoloPlayer() {
     val ship = PlayerShip.create(WORLD_WIDTH / 2, WORLD_HEIGHT)
     ship.rotate(-90.0)
     ship.accelerate(0.1)
@@ -32,15 +46,14 @@ class World {
     players.add(player)
   }
 
-  fun spawnMeteor() {
+  private fun spawnMeteor() {
     val meteor = Meteor.create(WORLD_WIDTH / 2, 0.0)
     meteor.rotate(90.0)
     meteor.accelerate(0.2)
     meteors.add(meteor)
   }
 
-  fun removeMarkedDeath() {
-    println("ActorsBefore: $projectiles")
+  private fun removeMarkedDeath() {
     actors.forEach { actorList ->
       actorList.withIndex().reversed().filter { (_, actor) ->
         actor.markedForRemoval
@@ -49,7 +62,6 @@ class World {
         actor.whenRemoved()
       }
     }
-    println("ActorsAfter: $projectiles")
   }
 
   companion object {

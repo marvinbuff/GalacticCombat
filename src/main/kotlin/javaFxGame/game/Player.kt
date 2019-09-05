@@ -1,11 +1,11 @@
 package javaFxGame.game
 
-class Player(private val playerShip: IControllable, private val controls: Controls) {
+class Player(playerShip: IControllable, private val controls: Controls) : IControllable by playerShip {
 
   // score, money, etc.
 
   fun input(input: Collection<String>) {
-    playerShip.keysPressed(input, controls)
+    keysPressed(input, controls)
   }
 
 }
