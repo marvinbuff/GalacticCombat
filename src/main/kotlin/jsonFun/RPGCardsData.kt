@@ -28,3 +28,5 @@ data class SpellCard(
     }
   }
 }
+// count, colour, title, icon, icon_back, contents[strings], tags
+// contents: subtitle, property casting time, property range, property components, rule, text
