@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
+import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -32,6 +33,7 @@ class GalacticCombatApp : GameApplication() {
       .at(150.0, 150.0)
       .viewWithBBox("playership_dd_1.gif")
       .with(CollidableComponent(true))
+//      .with(ProjectileComponent(Point2D(0.0, 1.0),2.0))
       .buildAndAttach()
 
 
@@ -46,20 +48,13 @@ class GalacticCombatApp : GameApplication() {
   override fun initInput() {
     val input = FXGL.getInput()
 
-    input.addAction(object : UserAction("Move Right") {
-      //TODO replace with syntactic sugar
-      override fun onAction() {
-        player.rotateBy(5.0)
-      }
-    }, KeyCode.D)
-
+    input.addAction(KeyCode.D, "Move Right") { player.rotateBy(5.0) }
     input.addAction(KeyCode.A, "Move Left") { player.rotateBy(-5.0) }
 
     input.addAction(KeyCode.W, "Move") {
       val velocity = 5
-      //TODO fix movement
-      player.x += cos(player.rotation) * velocity
-      player.y += sin(player.rotation) * velocity
+      player.x += cos(player.rotation.toRad()) * velocity
+      player.y += sin(player.rotation.toRad()) * velocity
       FXGL.getGameState().increment("pixelsMoved", +velocity)
     }
   }
@@ -80,6 +75,10 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initGameVars(vars: MutableMap<String, Any>) {
     vars["pixelsMoved"] = 0
+    vars["gold"] = 0 //used to buy towers
+    vars["mana"] = 0 //used to cast magic
+    vars["health"] = 10 //game over on 0
+    vars["score"] = 0 //points for your prowess
   }
 
   override fun initPhysics() {
@@ -103,4 +102,6 @@ private fun Input.addAction(code: KeyCode, title: String, action: () -> Unit) {
     override fun onAction() = action()
   }, code)
 }
+
+private fun Double.toRad() = this * PI / 180
 //endregion
