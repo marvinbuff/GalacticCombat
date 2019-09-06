@@ -25,6 +25,7 @@ class GalacticCombatApp : GameApplication() {
     settings.height = 600
     settings.title = "Galactic Combat"
     settings.version = "0.1"
+    settings.isMenuEnabled = true
   }
 
   override fun initGame() {
