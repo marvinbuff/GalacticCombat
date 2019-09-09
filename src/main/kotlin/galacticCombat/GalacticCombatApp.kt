@@ -3,11 +3,17 @@ package galacticCombat
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.dsl.FXGL
+import com.almasb.fxgl.dsl.FXGL.Companion.getAppHeight
+import com.almasb.fxgl.dsl.FXGL.Companion.getAppWidth
+import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
+import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
+import galacticCombat.tower.TowerFactory
+import javafx.geometry.Point2D
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
@@ -15,20 +21,28 @@ import javafx.scene.text.Text
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
+import javafx.geometry.Rectangle2D
+import javafx.scene.input.MouseButton
 
 
 class GalacticCombatApp : GameApplication() {
   private lateinit var player: Entity
+  private val waypoints = arrayListOf<Point2D>()
 
   override fun initSettings(settings: GameSettings) {
     settings.width = 800
     settings.height = 600
     settings.title = "Galactic Combat"
     settings.version = "0.1"
-    settings.isMenuEnabled = true
+    settings.isMenuEnabled = false
+    settings.isIntroEnabled = false
   }
 
   override fun initGame() {
+    getGameWorld().addEntityFactory(TowerFactory())
+
+    waypoints.addAll(arrayListOf(Point2D(50.0, 50.0), Point2D(150.0, 350.0), Point2D(350.0, 350.0)))
+
     player = FXGL.entityBuilder()
       .type(EntityType.SHIP)
       .at(150.0, 150.0)
@@ -58,6 +72,18 @@ class GalacticCombatApp : GameApplication() {
       player.y += sin(player.rotation.toRad()) * velocity
       FXGL.getGameState().increment("pixelsMoved", +velocity)
     }
+
+    input.addAction(object : UserAction("Place Tower") {
+      private val worldBounds = Rectangle2D(0.0, 0.0, getAppWidth().toDouble(), getAppHeight() - 100.0 - 40)
+
+      override fun onActionBegin() {
+        if (worldBounds.contains(input.mousePositionWorld)) {
+          getGameWorld().spawn("Tower",
+            SpawnData(input.mouseXWorld, input.mouseYWorld).put("color", Color.BLACK).put("index", 1)
+          )
+        }
+      }
+    }, MouseButton.PRIMARY)
   }
 
   override fun initUI() {
