@@ -9,13 +9,14 @@ import com.almasb.fxgl.entity.components.CollidableComponent
 import galacticCombat.ENEMY_ID
 import galacticCombat.EntityType
 
+@Suppress("unused")
 class EnemyFactory : EntityFactory {
 
   @Spawns(ENEMY_ID)
   fun spawnEnemy(data: SpawnData): Entity =
     entityBuilder().type(EntityType.SHIP)
       .from(data)
-      .viewWithBBox("meteor.png")
+      .viewWithBBox("enemies/1.1.gif")
       .with(CollidableComponent(true))
       .with(EnemyComponent())
       .build()
