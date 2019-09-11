@@ -38,10 +38,10 @@ class GalacticCombatApp : GameApplication() {
   val waypoints = arrayListOf<Point2D>()
 
   override fun initSettings(settings: GameSettings) {
-    settings.width = 800
-    settings.height = 600
-    settings.title = "Galactic Combat"
-    settings.version = "0.1"
+    settings.width = Config.APP_WIDTH
+    settings.height = Config.APP_HEIGHT
+    settings.title = Config.APP_TITLE
+    settings.version = Config.APP_VERSION
     settings.isMenuEnabled = false
     settings.isIntroEnabled = false
   }
