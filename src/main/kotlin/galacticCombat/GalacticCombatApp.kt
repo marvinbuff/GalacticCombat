@@ -38,12 +38,13 @@ class GalacticCombatApp : GameApplication() {
   val waypoints = arrayListOf<Point2D>()
 
   override fun initSettings(settings: GameSettings) {
-    settings.width = Config.APP_WIDTH
-    settings.height = Config.APP_HEIGHT
-    settings.title = Config.APP_TITLE
-    settings.version = Config.APP_VERSION
+    settings.width = AppConfig.WIDTH
+    settings.height = AppConfig.HEIGHT
+    settings.title = AppConfig.TITLE
+    settings.version = AppConfig.VERSION
     settings.isMenuEnabled = false
     settings.isIntroEnabled = false
+    settings.applicationMode = AppConfig.MODE
   }
 
   override fun initGame() {
@@ -111,6 +112,10 @@ class GalacticCombatApp : GameApplication() {
         }
       }
     }, MouseButton.PRIMARY)
+
+
+    //add cheats here by checking:
+    //getSettings().getApplicationMode() == ApplicationMode.DEVELOPER
   }
 
   override fun initUI() {
@@ -128,6 +133,7 @@ class GalacticCombatApp : GameApplication() {
   }
 
   override fun initGameVars(vars: MutableMap<String, Any>) {
+    //TODO save those strings in an Enum. Careful, some are already in use.
     vars["enemiesToSpawn"] = 4
     vars["gold"] = 0 //used to buy towers
     vars["mana"] = 0 //used to cast magic
@@ -136,8 +142,8 @@ class GalacticCombatApp : GameApplication() {
   }
 
   override fun initPhysics() {
+    //TODO move physic handler to own method
     FXGL.getPhysicsWorld().addCollisionHandler(object : CollisionHandler(EntityType.TOWER, EntityType.SHIP) {
-
       // order of types is the same as passed into the constructor of the CollisionHandler
       override fun onCollisionBegin(tower: Entity?, ship: Entity?) {
         tower!!.removeFromWorld()
