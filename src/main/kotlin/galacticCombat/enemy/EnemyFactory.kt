@@ -1,5 +1,6 @@
 package galacticCombat.enemy
 
+import com.almasb.fxgl.dsl.components.view.HealthBarViewComponent
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
@@ -19,6 +20,7 @@ class EnemyFactory : EntityFactory {
       .from(data)
       .viewWithBBox(AssetsConfig.getEnemy("1.1.gif"))
       .with(CollidableComponent(true))
+      .with(HealthBarViewComponent(0.0, 10.0))
       .with(EnemyComponent())
       .build()
 
