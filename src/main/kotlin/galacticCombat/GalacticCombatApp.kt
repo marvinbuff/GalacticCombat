@@ -51,16 +51,8 @@ class GalacticCombatApp : GameApplication() {
     getGameWorld().addEntityFactory(TowerFactory())
     getGameWorld().addEntityFactory(EnemyFactory())
 
-    waypoints.addAll(arrayListOf(Point2D(50.0, 50.0), Point2D(150.0, 350.0), Point2D(350.0, 350.0)))
-
-    player = FXGL.entityBuilder()
-      .type(EntityType.SHIP)
-      .at(150.0, 150.0)
-      .viewWithBBox("playership_dd_1.gif")
-      .with(CollidableComponent(true))
-//      .with(ProjectileComponent(Point2D(0.0, 1.0),2.0))
-      .buildAndAttach()
-
+    //TODO replace hard-coded level input by file reading
+    waypoints.addAll(arrayListOf(Point2D(50.0, 50.0), Point2D(150.0, 350.0), Point2D(350.0, 350.0), Point2D(130.0, 20.0)))
 
     FXGL.entityBuilder()
       .at(250.0, 150.0)
@@ -80,7 +72,7 @@ class GalacticCombatApp : GameApplication() {
       )
     }
 
-    getGameTimer().runAtIntervalWhile(spawnEnemy, Duration.seconds(4.0), enemiesLeft)
+    getGameTimer().runAtIntervalWhile(spawnEnemy, Duration.seconds(8.0), enemiesLeft)
 
     getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY,
       EventHandler { event ->
@@ -143,7 +135,7 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initPhysics() {
     //TODO move physic handler to own method
-    FXGL.getPhysicsWorld().addCollisionHandler(object : CollisionHandler(EntityType.TOWER, EntityType.SHIP) {
+    FXGL.getPhysicsWorld().addCollisionHandler(object : CollisionHandler(EntityType.TOWER, EntityType.ENEMY) {
       // order of types is the same as passed into the constructor of the CollisionHandler
       override fun onCollisionBegin(tower: Entity?, ship: Entity?) {
         tower!!.removeFromWorld()

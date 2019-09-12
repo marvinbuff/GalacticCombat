@@ -15,3 +15,8 @@ object AppConfig {
 object AchievementConfig {
   const val GOLD_ACHIEVEMNENT_1 = 100
 }
+
+object AssetsConfig {
+  const val ENEMIES = "enemies/"
+  const val TOWERS = "towers/"
+}
