@@ -32,7 +32,6 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-
 class GalacticCombatApp : GameApplication() {
   private lateinit var player: Entity
   val waypoints = arrayListOf<Point2D>()

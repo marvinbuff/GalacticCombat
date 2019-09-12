@@ -3,6 +3,13 @@
 This repository contains several Kotlin related projects.
 
 ___
+### Galactic Combat
+
+A tower defense game using FXGL library.
+- package: `galacticCombat`
+- Main: `galacticCombat.GalacticCombatApp`
+
+___
 ### Space Wars
 
 A small game to learn JavaFX and Kotlin.
