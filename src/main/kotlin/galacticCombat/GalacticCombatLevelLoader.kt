@@ -24,6 +24,7 @@ class GalacticCombatLevelLoader : LevelLoader {
   }
 
   private fun List<String>.readMap(): Map<String, String> {
+    // TODO I would rather just read it in as an json
     val del = ":"
     val map = this.asSequence()
       .filter { it.contains(del) }

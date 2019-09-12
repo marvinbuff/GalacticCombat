@@ -19,4 +19,7 @@ object AchievementConfig {
 object AssetsConfig {
   const val ENEMIES = "enemies/"
   const val TOWERS = "towers/"
+
+  fun getEnemy(file: String): String = "$ENEMIES$file"
+  fun getTower(file: String): String = "$TOWERS$file"
 }
