@@ -41,6 +41,7 @@ class GalacticCombatApp : GameApplication() {
     settings.height = AppConfig.HEIGHT
     settings.title = AppConfig.TITLE
     settings.version = AppConfig.VERSION
+//    settings.appIcon = "icon.png" //TODO enable icon
     settings.isMenuEnabled = false
     settings.isIntroEnabled = false
     settings.applicationMode = AppConfig.MODE
@@ -51,6 +52,8 @@ class GalacticCombatApp : GameApplication() {
     getGameWorld().addEntityFactory(EnemyFactory())
 
     //TODO replace hard-coded level input by file reading
+//    val level = getAssetLoader().loadLevel("experiment.level", GalacticCombatLevelLoader())
+//    getGameWorld().setLevel(level)
     waypoints.addAll(arrayListOf(Point2D(50.0, 50.0), Point2D(150.0, 350.0), Point2D(350.0, 350.0), Point2D(130.0, 20.0)))
 
     FXGL.entityBuilder()
