@@ -14,7 +14,7 @@ class EnemyComponent : Component() {
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
 
   override fun onAdded() {
-    entity.transformComponent.rotationOrigin = Point2D(12.5, 12.5)
+    entity.transformComponent.rotationOrigin = entity.center
 
     wayPoints = (FXGL.getApp() as GalacticCombatApp).waypoints
     nextWayPoint = wayPoints[wayPointIndex]
@@ -23,7 +23,8 @@ class EnemyComponent : Component() {
   }
 
   override fun onUpdate(tpf: Double) {
-    projectile.direction = nextWayPoint.subtract(entity.position)
+    //TODO: this direction should be from center to center
+    projectile.direction = nextWayPoint.subtract(entity.center)
 
     if (isAtNextWaypoint(tpf)) {
       entity.position = nextWayPoint
