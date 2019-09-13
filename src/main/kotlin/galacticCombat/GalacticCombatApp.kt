@@ -56,12 +56,7 @@ class GalacticCombatApp : GameApplication() {
 //    getGameWorld().setLevel(level)
     waypoints.addAll(arrayListOf(Point2D(50.0, 50.0), Point2D(150.0, 350.0), Point2D(350.0, 350.0), Point2D(130.0, 20.0)))
 
-    FXGL.entityBuilder()
-      .at(250.0, 150.0)
-      .type(EntityType.TOWER)
-      .view(Rectangle(20.0, 20.0, Color.BLUE))
-      .with(CollidableComponent(true))
-      .buildAndAttach()
+    showPoints(waypoints)
 
     val enemiesLeft = SimpleBooleanProperty()
     enemiesLeft.bind(getGameState().intProperty("enemiesToSpawn").greaterThan(0))
@@ -151,6 +146,25 @@ fun main(args: Array<String>) {
 }
 
 //region ---------------- Private Helpers ---------------
+
+private fun showPoints(waypoints: List<Point2D>) {
+  operator fun Point2D.component1(): Double = x
+  operator fun Point2D.component2(): Double = y
+  waypoints.forEach { (x, y) ->
+    FXGL.entityBuilder()
+      .at(x, y)
+      .type(EntityType.BARRICADE)
+      .view(Rectangle(20.0, 20.0, Color.BLUE))
+      .with(CollidableComponent(true))
+      .buildAndAttach()
+    FXGL.entityBuilder()
+      .at(x, y)
+      .type(EntityType.BARRICADE)
+      .view(Rectangle(5.0, 5.0, Color.RED))
+      .buildAndAttach()
+  }
+}
+
 private fun Input.addAction(code: KeyCode, title: String, action: () -> Unit) {
   this.addAction(object : UserAction(title) {
     override fun onAction() = action()
