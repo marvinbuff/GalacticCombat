@@ -69,7 +69,7 @@ class GalacticCombatApp : GameApplication() {
       )
     }
 
-    getGameTimer().runAtIntervalWhile(spawnEnemy, Duration.seconds(8.0), enemiesLeft)
+    getGameTimer().runAtIntervalWhile(spawnEnemy, Duration.seconds(1.0), enemiesLeft)
 
     getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY,
       EventHandler { event ->

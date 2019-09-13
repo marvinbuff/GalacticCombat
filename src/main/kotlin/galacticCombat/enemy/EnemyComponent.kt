@@ -14,7 +14,7 @@ class EnemyComponent : Component() {
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
 
   override fun onAdded() {
-    entity.transformComponent.rotationOrigin = entity.center
+    entity.transformComponent.rotationOrigin = entity.boundingBoxComponent.centerLocal
 
     wayPoints = (FXGL.getApp() as GalacticCombatApp).waypoints
     nextWayPoint = wayPoints[wayPointIndex]
@@ -37,7 +37,7 @@ class EnemyComponent : Component() {
     }
   }
 
-  private fun isAtNextWaypoint(tpf: Double) = nextWayPoint.distance(entity.position) < projectile.speed * tpf
+  private fun isAtNextWaypoint(tpf: Double) = nextWayPoint.distance(entity.center) < projectile.speed * tpf
   private fun isLastWaypoint() = wayPoints.size <= wayPointIndex
 
   companion object{
