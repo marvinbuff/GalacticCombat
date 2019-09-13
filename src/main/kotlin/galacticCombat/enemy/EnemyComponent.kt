@@ -14,6 +14,8 @@ class EnemyComponent : Component() {
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
 
   override fun onAdded() {
+    entity.transformComponent.rotationOrigin = Point2D(12.5, 12.5)
+
     wayPoints = (FXGL.getApp() as GalacticCombatApp).waypoints
     nextWayPoint = wayPoints[wayPointIndex]
     projectile = ProjectileComponent(Point2D(0.0, 0.0), BASE_SPEED)

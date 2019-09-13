@@ -65,7 +65,7 @@ class GalacticCombatApp : GameApplication() {
       getGameState().increment("enemiesToSpawn", -1)
       getGameWorld().spawn(
         ENEMY_ID,
-        SpawnData(waypoints.first().x, waypoints.first().y).put("color", Color.BLUE).put("index", 1)
+        SpawnData(waypoints.first().x - 12.5, waypoints.first().y - 12.5).put("color", Color.BLUE).put("index", 1)
       )
     }
 
