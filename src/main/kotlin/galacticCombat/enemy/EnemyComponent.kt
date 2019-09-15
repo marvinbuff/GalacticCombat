@@ -24,7 +24,7 @@ class EnemyComponent : Component() {
 
   override fun onUpdate(tpf: Double) {
     //TODO: this direction should be from center to center
-    projectile.direction = nextWayPoint.subtract(entity.center)
+    projectile.direction = nextWayPoint.subtract(entity.position)
 
     if (isAtNextWaypoint(tpf)) {
       entity.position = nextWayPoint
@@ -37,7 +37,7 @@ class EnemyComponent : Component() {
     }
   }
 
-  private fun isAtNextWaypoint(tpf: Double) = nextWayPoint.distance(entity.center) < projectile.speed * tpf
+  private fun isAtNextWaypoint(tpf: Double) = nextWayPoint.distance(entity.position) < projectile.speed * tpf
   private fun isLastWaypoint() = wayPoints.size <= wayPointIndex
 
   companion object{

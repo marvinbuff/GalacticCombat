@@ -15,7 +15,7 @@ class TowerComponent : Component() {
   private var reloadingTime: Double = 0.0
 
   override fun onAdded() {
-    entity.transformComponent.rotationOrigin = Point2D(12.5, 12.5)
+    entity.transformComponent.rotationOrigin = Point2D(AssetsConfig.getRotationOrigin(), AssetsConfig.getRotationOrigin())
 
     projectile = ProjectileComponent(Point2D(0.0, 0.0), 0.1) //TODO replace by unmovable Component
     entity.addComponent(projectile)

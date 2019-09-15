@@ -18,7 +18,7 @@ class TowerFactory : EntityFactory {
   fun spawnTower(data: SpawnData): Entity =
     entityBuilder().type(EntityType.TOWER)
       .from(data)
-      .view("${AssetsConfig.ENEMIES}1.1.gif")//TODO revert to AssetsConfig.getTower("3.3.gif")
+      .view(AssetsConfig.getTower("3.3.gif"))//TODO revert to AssetsConfig.getTower("3.3.gif")
       .with(TowerComponent())
       .build()
 }

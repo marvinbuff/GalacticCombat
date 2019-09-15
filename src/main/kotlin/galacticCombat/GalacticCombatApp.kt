@@ -123,7 +123,7 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initGameVars(vars: MutableMap<String, Any>) {
     //TODO save those strings in an Enum. Careful, some are already in use.
-    vars["enemiesToSpawn"] = 4
+    vars["enemiesToSpawn"] = 1
     vars["gold"] = 0 //used to buy towers
     vars["mana"] = 0 //used to cast magic
     vars["health"] = 10 //game over on 0
