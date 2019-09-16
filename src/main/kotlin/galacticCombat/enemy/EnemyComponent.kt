@@ -5,6 +5,7 @@ import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.entity.component.Component
 import galacticCombat.GalacticCombatApp
 import galacticCombat.event.EnemyReachedGoalEvent
+import galacticCombat.toPoint
 import javafx.geometry.Point2D
 
 class EnemyComponent : Component() {
@@ -14,7 +15,7 @@ class EnemyComponent : Component() {
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
 
   override fun onAdded() {
-    entity.transformComponent.rotationOrigin = entity.boundingBoxComponent.centerLocal
+    entity.transformComponent.rotationOrigin = center
 
     wayPoints = (FXGL.getApp() as GalacticCombatApp).waypoints
     nextWayPoint = wayPoints[wayPointIndex]
@@ -40,6 +41,7 @@ class EnemyComponent : Component() {
   private fun isLastWaypoint() = wayPoints.size <= wayPointIndex
 
   companion object{
-    const val BASE_SPEED = 60 * 2.0
+    const val BASE_SPEED = 10 * 2.0
+    val center = (25/2.0).toPoint()
   }
 }

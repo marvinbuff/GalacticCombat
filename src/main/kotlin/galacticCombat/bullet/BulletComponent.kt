@@ -3,32 +3,34 @@ package galacticCombat.bullet
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.component.Component
+import galacticCombat.enemy.EnemyComponent
+import galacticCombat.toPoint
 import javafx.geometry.Point2D
 
-class BulletComponent : Component() {
-  private lateinit var target: Entity
+class BulletComponent(private val target: Entity) : Component() {
   private lateinit var projectile: ProjectileComponent
 
+
   override fun onAdded() {
-    entity.transformComponent.rotationOrigin = entity.center
+    entity.transformComponent.rotationOrigin = center
 
     projectile = ProjectileComponent(Point2D(0.0, 0.0), BASE_SPEED)
     entity.addComponent(projectile)
   }
 
   override fun onUpdate(tpf: Double) {
-    projectile.direction = target.position.subtract(entity.position)
+    val adjustedTargetPosition = target.position.add(EnemyComponent.center.subtract(center))
+    val vectorToTarget = adjustedTargetPosition.subtract(entity.position)
+    projectile.direction = vectorToTarget
 
-    if (hitsTarget(tpf)) {
+    if (vectorToTarget.magnitude() < projectile.speed * tpf) {
       //TODO: deal damage
       entity.removeFromWorld()
     }
   }
 
-  // TODO already hit when in proximity
-  private fun hitsTarget(tpf: Double) = target.position.distance(entity.position) < projectile.speed * tpf
-
   companion object {
-    const val BASE_SPEED = 60 * 4.0
+    const val BASE_SPEED = 80 * 2.0
+    val center = (50/2.0).toPoint()
   }
 }
