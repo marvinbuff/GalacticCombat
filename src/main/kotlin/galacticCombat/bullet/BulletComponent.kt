@@ -17,7 +17,6 @@ class BulletComponent : Component() {
   }
 
   override fun onUpdate(tpf: Double) {
-    //TODO: this direction should be from center to center
     projectile.direction = target.position.subtract(entity.position)
 
     if (hitsTarget(tpf)) {

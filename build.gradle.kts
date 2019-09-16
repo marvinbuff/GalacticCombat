@@ -23,6 +23,11 @@ plugins {
 version = "SNAPSHOT"
 group = "labs"
 
+application {
+  mainClassName = "galacticCombat.GalacticCombatAppKt"
+}
+
+
 repositories {
   mavenCentral()
   jcenter()

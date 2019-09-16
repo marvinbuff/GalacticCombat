@@ -40,7 +40,7 @@ class TowerComponent : Component() {
       .at(entity.position)
       .view("${AssetsConfig.ENEMIES}1.1.gif")
       .with(BulletComponent())
-      .build()
+      .buildAndAttach()
   }
 
   companion object {

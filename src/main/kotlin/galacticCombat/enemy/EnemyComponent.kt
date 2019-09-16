@@ -23,7 +23,6 @@ class EnemyComponent : Component() {
   }
 
   override fun onUpdate(tpf: Double) {
-    //TODO: this direction should be from center to center
     projectile.direction = nextWayPoint.subtract(entity.position)
 
     if (isAtNextWaypoint(tpf)) {
