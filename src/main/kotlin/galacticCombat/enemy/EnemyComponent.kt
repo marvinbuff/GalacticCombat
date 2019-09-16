@@ -8,7 +8,9 @@ import galacticCombat.event.EnemyReachedGoalEvent
 import galacticCombat.toPoint
 import javafx.geometry.Point2D
 
-class EnemyComponent : Component() {
+class EnemyComponent(
+  private var health: Double = 100.0
+) : Component() {
   private lateinit var wayPoints: List<Point2D>
   private lateinit var nextWayPoint: Point2D
   private lateinit var projectile: ProjectileComponent
@@ -34,6 +36,13 @@ class EnemyComponent : Component() {
       } else {
         nextWayPoint = wayPoints[wayPointIndex]
       }
+    }
+  }
+
+  fun inflictDamage(damage: Double){
+    health -= damage
+    if (health <= 0){
+      entity.removeFromWorld()
     }
   }
 

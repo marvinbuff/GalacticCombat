@@ -7,7 +7,10 @@ import galacticCombat.enemy.EnemyComponent
 import galacticCombat.toPoint
 import javafx.geometry.Point2D
 
-class BulletComponent(private val target: Entity) : Component() {
+class BulletComponent(
+  private val target: Entity,
+  private val damage: Double = 10.0
+) : Component() {
   private lateinit var projectile: ProjectileComponent
 
 
@@ -24,7 +27,9 @@ class BulletComponent(private val target: Entity) : Component() {
     projectile.direction = vectorToTarget
 
     if (vectorToTarget.magnitude() < projectile.speed * tpf) {
-      //TODO: deal damage
+      if (target.isActive) {
+        target.getComponent(EnemyComponent::class.java).inflictDamage(damage)
+      }
       entity.removeFromWorld()
     }
   }
