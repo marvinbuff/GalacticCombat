@@ -1,5 +1,6 @@
 package galacticCombat.enemy
 
+import com.almasb.fxgl.dsl.components.view.HealthBarViewComponent
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
@@ -9,18 +10,25 @@ import com.almasb.fxgl.entity.components.CollidableComponent
 import galacticCombat.AssetsConfig
 import galacticCombat.ENEMY_ID
 import galacticCombat.EntityType
+import galacticCombat.bullet.HealthComponent
 
 @Suppress("unused")
 class EnemyFactory : EntityFactory {
 
+
   @Spawns(ENEMY_ID)
-  fun spawnEnemy(data: SpawnData): Entity =
-    entityBuilder().type(EntityType.ENEMY)
+  fun spawnEnemy(data: SpawnData): Entity {
+    val invader = EnemyComponent()
+    val healthBar = HealthComponent(invader)
+
+    return entityBuilder().type(EntityType.ENEMY)
       .from(data)
       .viewWithBBox(AssetsConfig.getEnemy("1.1.gif"))
       .with(CollidableComponent(true))
-//      .with(HealthBarViewComponent(0.0, 10.0))
-      .with(EnemyComponent())
+      .with(invader)
+      .with(healthBar)
       .build()
+  }
+
 
 }
