@@ -108,26 +108,33 @@ class GalacticCombatApp : GameApplication() {
   }
 
   override fun initUI() {
-    val texture = FXGL.texture("meteor.png")
-    texture.translateX = 50.0
-    texture.translateY = 150.0
-    texture.disableProperty()
-    FXGL.getGameScene().addUINode(texture)
+//    val texture = FXGL.texture("meteor.png")
+//    texture.translateX = 50.0
+//    texture.translateY = 150.0
+//    texture.disableProperty()
+//    FXGL.getGameScene().addUINode(texture)
 
-    val textPixels = Text()
-    textPixels.translateX = 50.0
-    textPixels.translateY = 100.0
-    textPixels.textProperty().bind(getGameState().intProperty("enemiesToSpawn").asString())
-    FXGL.getGameScene().addUINode(textPixels) // add to the scene graph
+    val toSpawnLabel = Text()
+    toSpawnLabel.translateX = 50.0
+    toSpawnLabel.translateY = 100.0
+    toSpawnLabel.textProperty().bind(getGameState().intProperty("enemiesToSpawn").asString())
+    FXGL.getGameScene().addUINode(toSpawnLabel) // add to the scene graph
+
+    val activeEnemiesLabel = Text()
+    activeEnemiesLabel.translateX = 150.0
+    activeEnemiesLabel.translateY = 100.0
+    activeEnemiesLabel.textProperty().bind(getGameState().intProperty("aliveEnemies").asString())
+    FXGL.getGameScene().addUINode(activeEnemiesLabel) // add to the scene graph
   }
 
   override fun initGameVars(vars: MutableMap<String, Any>) {
     //TODO save those strings in an Enum. Careful, some are already in use.
-    vars["enemiesToSpawn"] = 1
+    vars["enemiesToSpawn"] = 2
     vars["gold"] = 0 //used to buy towers
     vars["mana"] = 0 //used to cast magic
     vars["health"] = 10 //game over on 0
     vars["score"] = 0 //points for your prowess
+    vars["aliveEnemies"] = 0 //enemies running about
   }
 
   override fun initPhysics() {

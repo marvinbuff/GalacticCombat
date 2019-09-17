@@ -2,6 +2,7 @@ package galacticCombat.enemy
 
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.components.ProjectileComponent
+import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.entity.component.Component
 import galacticCombat.GalacticCombatApp
 import galacticCombat.event.EnemyReachedGoalEvent
@@ -23,6 +24,8 @@ class EnemyComponent(
     nextWayPoint = wayPoints[wayPointIndex]
     projectile = ProjectileComponent(Point2D(0.0, 0.0), BASE_SPEED)
     entity.addComponent(projectile)
+
+    getGameState().increment("aliveEnemies", +1)
   }
 
   override fun onUpdate(tpf: Double) {
@@ -37,6 +40,10 @@ class EnemyComponent(
         nextWayPoint = wayPoints[wayPointIndex]
       }
     }
+  }
+
+  override fun onRemoved() {
+    getGameState().increment("aliveEnemies", -1)
   }
 
   fun inflictDamage(damage: Double){
