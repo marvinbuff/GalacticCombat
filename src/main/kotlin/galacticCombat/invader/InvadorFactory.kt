@@ -19,7 +19,7 @@ class InvadorFactory : EntityFactory {
     val invader = InvaderComponent()
     val healthBar = HealthComponent(invader)
 
-    return entityBuilder().type(EntityType.ENEMY)
+    return entityBuilder().type(EntityType.INVADER)
       .from(data)
       .viewWithBBox(AssetsConfig.getEnemy("1.1.gif"))
       .with(CollidableComponent(true))

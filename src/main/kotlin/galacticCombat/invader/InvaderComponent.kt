@@ -16,6 +16,7 @@ class InvaderComponent(
 ) : Component() {
   private lateinit var wayPoints: List<Point2D>
   private lateinit var nextWayPoint: Point2D
+  private lateinit var lastWayPoint: Point2D
   private lateinit var projectile: ProjectileComponent
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
   var health: SimpleDoubleProperty = SimpleDoubleProperty(maxHealth)
@@ -25,6 +26,7 @@ class InvaderComponent(
 
     wayPoints = (FXGL.getApp() as GalacticCombatApp).waypoints
     nextWayPoint = wayPoints[wayPointIndex]
+    lastWayPoint = wayPoints[wayPointIndex - 1]
     projectile = ProjectileComponent(Point2D(0.0, 0.0), BASE_SPEED)
     entity.addComponent(projectile)
 
@@ -40,6 +42,7 @@ class InvaderComponent(
       if (isLastWaypoint()) {
         FXGL.getEventBus().fireEvent(EnemyReachedGoalEvent(entity))
       } else {
+        lastWayPoint = nextWayPoint
         nextWayPoint = wayPoints[wayPointIndex]
       }
     }
@@ -54,6 +57,12 @@ class InvaderComponent(
     if (health.doubleValue() <= 0.0){
       entity.removeFromWorld()
     }
+  }
+
+  fun getProgress(): Double {
+    val progress = (wayPointIndex - 1) * 10000.0 //each wayPoint is closer than 10'000 pixel to each other
+    val distanceFromOld = lastWayPoint.distance(entity.position)
+    return progress + distanceFromOld
   }
 
   private fun isAtNextWaypoint(tpf: Double) = nextWayPoint.distance(entity.position) < projectile.speed * tpf

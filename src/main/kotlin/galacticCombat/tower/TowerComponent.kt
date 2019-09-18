@@ -8,6 +8,7 @@ import com.almasb.fxgl.entity.component.Component
 import galacticCombat.AssetsConfig
 import galacticCombat.EntityType
 import galacticCombat.bullet.BulletComponent
+import galacticCombat.invader.InvaderComponent
 import galacticCombat.toPoint
 import javafx.geometry.Point2D
 import javafx.scene.transform.Rotate
@@ -24,11 +25,14 @@ class TowerComponent : Component() {
   }
 
   override fun onUpdate(tpf: Double) {
-    val closestEnemy = getGameWorld().getEntitiesByType(EntityType.ENEMY).maxBy { other -> entity.position.distance(other.position) }
-    closestEnemy?.let {
+    val closestInvader = getGameWorld()
+      .getEntitiesByType(EntityType.INVADER)
+      .filter { other -> entity.position.distance(other.position) < RANGE }
+      .maxBy { it.getComponent(InvaderComponent::class.java).getProgress() }
+    closestInvader?.let {
       projectile.direction = Rotate.rotate(-45.0, 0.0, 0.0).transform(it.position.subtract(entity.position))
       if (reloadingTime <= 0.0) {
-        shoot(closestEnemy)
+        shoot(closestInvader)
         reloadingTime = SHOOT_CD
       } else {
         reloadingTime -= tpf
@@ -47,6 +51,7 @@ class TowerComponent : Component() {
 
   companion object {
     const val SHOOT_CD = 2.0
+    const val RANGE = 400
     val center = (38/2.0).toPoint()
   }
 }

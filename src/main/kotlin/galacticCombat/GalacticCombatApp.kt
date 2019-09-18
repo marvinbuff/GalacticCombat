@@ -135,7 +135,7 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initPhysics() {
     //TODO move physic handler to own method
-    FXGL.getPhysicsWorld().addCollisionHandler(object : CollisionHandler(EntityType.TOWER, EntityType.ENEMY) {
+    FXGL.getPhysicsWorld().addCollisionHandler(object : CollisionHandler(EntityType.TOWER, EntityType.INVADER) {
       // order of types is the same as passed into the constructor of the CollisionHandler
       override fun onCollisionBegin(tower: Entity?, ship: Entity?) {
         tower!!.removeFromWorld()
