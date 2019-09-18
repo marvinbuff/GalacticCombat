@@ -45,12 +45,13 @@ class TowerComponent : Component() {
     entityBuilder().type(EntityType.PROJECTILE)
       .at(entity.position.add(center.subtract(BulletComponent.center)))
       .view(AssetsConfig.get("beeper.png"))
+      .scale(0.5,0.5)
       .with(BulletComponent(target))
       .buildAndAttach()
   }
 
   companion object {
-    const val SHOOT_CD = 2.0
+    const val SHOOT_CD = 1.0
     const val RANGE = 400
     val center = (38/2.0).toPoint()
   }

@@ -9,7 +9,7 @@ import javafx.geometry.Point2D
 
 class BulletComponent(
   private val target: Entity,
-  private val damage: Double = 10.0
+  private val damage: Double = 5.0
 ) : Component() {
   private lateinit var projectile: ProjectileComponent
 
@@ -35,7 +35,7 @@ class BulletComponent(
   }
 
   companion object {
-    const val BASE_SPEED = 80 * 2.0
-    val center = (50/2.0).toPoint()
+    const val BASE_SPEED = 400.0
+    val center = (50/2.0/2.0).toPoint()
   }
 }
