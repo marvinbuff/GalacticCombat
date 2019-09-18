@@ -7,11 +7,7 @@ import com.almasb.fxgl.entity.component.Component
 import galacticCombat.GalacticCombatApp
 import galacticCombat.event.EnemyReachedGoalEvent
 import galacticCombat.toPoint
-import javafx.beans.Observable
-import javafx.beans.property.BooleanProperty
-import javafx.beans.property.DoubleProperty
 import javafx.beans.property.SimpleDoubleProperty
-import javafx.beans.property.SimpleIntegerProperty
 import javafx.geometry.Point2D
 
 class EnemyComponent(
@@ -63,7 +59,7 @@ class EnemyComponent(
   private fun isLastWaypoint() = wayPoints.size <= wayPointIndex
 
   companion object{
-    const val BASE_SPEED = 10 * 2.0
+    const val BASE_SPEED = 30 * 2.0
     val center = (25/2.0).toPoint()
   }
 }

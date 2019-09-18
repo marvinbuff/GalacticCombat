@@ -1,6 +1,5 @@
 package galacticCombat.enemy
 
-import com.almasb.fxgl.dsl.components.view.HealthBarViewComponent
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
@@ -10,7 +9,6 @@ import com.almasb.fxgl.entity.components.CollidableComponent
 import galacticCombat.AssetsConfig
 import galacticCombat.ENEMY_ID
 import galacticCombat.EntityType
-import galacticCombat.bullet.HealthComponent
 
 @Suppress("unused")
 class EnemyFactory : EntityFactory {
