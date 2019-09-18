@@ -7,15 +7,21 @@ import com.almasb.fxgl.entity.component.Component
 import galacticCombat.GalacticCombatApp
 import galacticCombat.event.EnemyReachedGoalEvent
 import galacticCombat.toPoint
+import javafx.beans.Observable
+import javafx.beans.property.BooleanProperty
+import javafx.beans.property.DoubleProperty
+import javafx.beans.property.SimpleDoubleProperty
+import javafx.beans.property.SimpleIntegerProperty
 import javafx.geometry.Point2D
 
 class EnemyComponent(
-  private var health: Double = 100.0
+  val maxHealth: Double = 100.0
 ) : Component() {
   private lateinit var wayPoints: List<Point2D>
   private lateinit var nextWayPoint: Point2D
   private lateinit var projectile: ProjectileComponent
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
+  var health: SimpleDoubleProperty = SimpleDoubleProperty(maxHealth)
 
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
@@ -47,8 +53,8 @@ class EnemyComponent(
   }
 
   fun inflictDamage(damage: Double){
-    health -= damage
-    if (health <= 0){
+    health.value -= damage
+    if (health.doubleValue() <= 0.0){
       entity.removeFromWorld()
     }
   }
