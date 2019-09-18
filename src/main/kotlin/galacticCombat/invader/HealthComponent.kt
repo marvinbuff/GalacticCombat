@@ -1,11 +1,11 @@
-package galacticCombat.enemy
+package galacticCombat.invader
 
 import com.almasb.fxgl.dsl.components.view.ChildViewComponent
 import com.almasb.fxgl.ui.Position
 import com.almasb.fxgl.ui.ProgressBar
 import javafx.scene.paint.Color
 
-class HealthComponent(invaderComponent: EnemyComponent) : ChildViewComponent(-5.0, -15.0, false) {
+class HealthComponent(invaderComponent: InvaderComponent) : ChildViewComponent(-5.0, -15.0, false) {
 
   private val hpBar = ProgressBar()
 

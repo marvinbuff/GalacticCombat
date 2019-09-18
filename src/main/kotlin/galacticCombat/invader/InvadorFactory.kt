@@ -1,4 +1,4 @@
-package galacticCombat.enemy
+package galacticCombat.invader
 
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.entity.Entity
@@ -11,12 +11,12 @@ import galacticCombat.ENEMY_ID
 import galacticCombat.EntityType
 
 @Suppress("unused")
-class EnemyFactory : EntityFactory {
+class InvadorFactory : EntityFactory {
 
 
   @Spawns(ENEMY_ID)
   fun spawnEnemy(data: SpawnData): Entity {
-    val invader = EnemyComponent()
+    val invader = InvaderComponent()
     val healthBar = HealthComponent(invader)
 
     return entityBuilder().type(EntityType.ENEMY)

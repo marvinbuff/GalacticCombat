@@ -3,7 +3,7 @@ package galacticCombat.bullet
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.component.Component
-import galacticCombat.enemy.EnemyComponent
+import galacticCombat.invader.InvaderComponent
 import galacticCombat.toPoint
 import javafx.geometry.Point2D
 
@@ -22,13 +22,13 @@ class BulletComponent(
   }
 
   override fun onUpdate(tpf: Double) {
-    val adjustedTargetPosition = target.position.add(EnemyComponent.center.subtract(center))
+    val adjustedTargetPosition = target.position.add(InvaderComponent.center.subtract(center))
     val vectorToTarget = adjustedTargetPosition.subtract(entity.position)
     projectile.direction = vectorToTarget
 
     if (vectorToTarget.magnitude() < projectile.speed * tpf) {
       if (target.isActive) {
-        target.getComponent(EnemyComponent::class.java).inflictDamage(damage)
+        target.getComponent(InvaderComponent::class.java).inflictDamage(damage)
       }
       entity.removeFromWorld()
     }

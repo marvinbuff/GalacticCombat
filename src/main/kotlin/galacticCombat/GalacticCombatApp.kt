@@ -15,8 +15,8 @@ import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
-import galacticCombat.enemy.EnemyFactory
 import galacticCombat.event.EnemyReachedGoalEvent
+import galacticCombat.invader.InvadorFactory
 import galacticCombat.tower.TowerFactory
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.event.EventHandler
@@ -49,7 +49,7 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initGame() {
     getGameWorld().addEntityFactory(TowerFactory())
-    getGameWorld().addEntityFactory(EnemyFactory())
+    getGameWorld().addEntityFactory(InvadorFactory())
 
     //TODO replace hard-coded level input by file reading
 //    val level = getAssetLoader().loadLevel("experiment.level", GalacticCombatLevelLoader())
@@ -59,17 +59,17 @@ class GalacticCombatApp : GameApplication() {
     showPoints(waypoints)
 
     val enemiesLeft = SimpleBooleanProperty()
-    enemiesLeft.bind(getGameState().intProperty("enemiesToSpawn").greaterThan(0))
+    enemiesLeft.bind(getGameState().intProperty(GameVars.ENEMIES_TO_SPAWN.id).greaterThan(0))
 
-    val spawnEnemy = Runnable {
-      getGameState().increment("enemiesToSpawn", -1)
+    val spawnInvader = Runnable {
+      getGameState().increment(GameVars.ENEMIES_TO_SPAWN.id, -1)
       getGameWorld().spawn(
         ENEMY_ID,
         SpawnData(waypoints.first().x - 12.5, waypoints.first().y - 12.5).put("color", Color.BLUE).put("index", 1)
       )
     }
 
-    getGameTimer().runAtIntervalWhile(spawnEnemy, Duration.seconds(2.0), enemiesLeft)
+    getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
 
     getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY,
       EventHandler { event ->
@@ -117,24 +117,20 @@ class GalacticCombatApp : GameApplication() {
     val toSpawnLabel = Text()
     toSpawnLabel.translateX = 50.0
     toSpawnLabel.translateY = 100.0
-    toSpawnLabel.textProperty().bind(getGameState().intProperty("enemiesToSpawn").asString())
+    toSpawnLabel.textProperty().bind(getGameState().intProperty(GameVars.ENEMIES_TO_SPAWN.id).asString())
     FXGL.getGameScene().addUINode(toSpawnLabel) // add to the scene graph
 
     val activeEnemiesLabel = Text()
     activeEnemiesLabel.translateX = 150.0
     activeEnemiesLabel.translateY = 100.0
-    activeEnemiesLabel.textProperty().bind(getGameState().intProperty("aliveEnemies").asString())
+    activeEnemiesLabel.textProperty().bind(getGameState().intProperty(GameVars.ALIVE_ENEMIES.id).asString())
     FXGL.getGameScene().addUINode(activeEnemiesLabel) // add to the scene graph
   }
 
   override fun initGameVars(vars: MutableMap<String, Any>) {
-    //TODO save those strings in an Enum. Careful, some are already in use.
-    vars["enemiesToSpawn"] = 2
-    vars["gold"] = 0 //used to buy towers
-    vars["mana"] = 0 //used to cast magic
-    vars["health"] = 10 //game over on 0
-    vars["score"] = 0 //points for your prowess
-    vars["aliveEnemies"] = 0 //enemies running about
+    GameVars.values().forEach { gameVar ->
+      vars[gameVar.id] = gameVar.initial
+    }
   }
 
   override fun initPhysics() {

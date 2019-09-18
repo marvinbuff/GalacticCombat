@@ -1,16 +1,17 @@
-package galacticCombat.enemy
+package galacticCombat.invader
 
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.entity.component.Component
 import galacticCombat.GalacticCombatApp
+import galacticCombat.GameVars
 import galacticCombat.event.EnemyReachedGoalEvent
 import galacticCombat.toPoint
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.geometry.Point2D
 
-class EnemyComponent(
+class InvaderComponent(
   val maxHealth: Double = 100.0
 ) : Component() {
   private lateinit var wayPoints: List<Point2D>
@@ -27,7 +28,7 @@ class EnemyComponent(
     projectile = ProjectileComponent(Point2D(0.0, 0.0), BASE_SPEED)
     entity.addComponent(projectile)
 
-    getGameState().increment("aliveEnemies", +1)
+    getGameState().increment(GameVars.ALIVE_ENEMIES.id, +1)
   }
 
   override fun onUpdate(tpf: Double) {
@@ -45,7 +46,7 @@ class EnemyComponent(
   }
 
   override fun onRemoved() {
-    getGameState().increment("aliveEnemies", -1)
+    getGameState().increment(GameVars.ALIVE_ENEMIES.id, -1)
   }
 
   fun inflictDamage(damage: Double){
