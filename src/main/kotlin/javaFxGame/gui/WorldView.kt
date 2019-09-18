@@ -3,6 +3,7 @@ package javaFxGame.gui
 import javaFxGame.game.Actor
 import javaFxGame.game.World
 import javaFxGame.game.World.Companion.world
+import javaFxGame.game.pysics.getDirectionVectorFromAngle
 import javafx.animation.AnimationTimer
 import javafx.application.Application
 import javafx.event.EventHandler
@@ -86,12 +87,21 @@ class WorldView : Application() {
     }.start()
   }
 
-  fun renderActor(actor: Actor, time: Double) {
+  private fun renderActor(actor: Actor, time: Double) {
     val image = actor.image.getFrame(time)
     gc.save()
     gc.translate(actor.x, actor.y)
+    gc.renderDebug(actor, time)
     gc.rotate(actor.rotationDegree)
     gc.drawImage(image, -(image.width / 2), -(image.height / 2))
+
     gc.restore()
+  }
+
+  private fun GraphicsContext.renderDebug(actor: Actor, time: Double) {
+    val dir = getDirectionVectorFromAngle(actor.rotation)
+    this.strokeLine(0.0, 0.0, dir.first * 30.0, dir.second * 30.0)
+
+
   }
 }

@@ -4,22 +4,34 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
   kotlin("jvm") version "1.3.50"
 
-  // For Benchmarking
+  // Benchmarking
   id("me.champeau.gradle.jmh") version "0.5.0-rc-1"
   id("com.github.ben-manes.versions") version "0.21.0"
   id("io.morethan.jmhreport") version "0.9.0"
 
-  // For json serialization
+  // json serialization
   id("kotlinx-serialization") version "1.3.50"
+
+  // FXGL
+  id("application")
+
+  // Java FX
+  id("org.openjfx.javafxplugin") version "0.0.8"
 }
 
 
 version = "SNAPSHOT"
 group = "labs"
 
+application {
+  mainClassName = "galacticCombat.GalacticCombatAppKt"
+}
+
+
 repositories {
   mavenCentral()
   jcenter()
+  maven("https://nexus.gluonhq.com/nexus/content/repositories/releases")
 }
 
 dependencies {
@@ -33,8 +45,18 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.11.1")
   compile("org.json:json:20190722")
 
+  // FXGL
+  compile("com.github.almasb:fxgl:11.4")
+
+
+  // JMH?
 //  "jmhImplementation"("org.openjdk.jmh:jmh-core:1.21")
 //  "jmhImplementation"("org.openjdk.jmh:jmh-generator-annprocess:1.21")
+}
+
+javafx {
+  version = "12.0.2"
+  modules = mutableListOf("javafx.controls")
 }
 
 jmh {
