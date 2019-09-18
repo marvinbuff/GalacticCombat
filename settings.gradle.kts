@@ -1,4 +1,4 @@
-rootProject.name = "KotlinPlayground"
+rootProject.name = "Galactic Combat"
 
 pluginManagement {
   resolutionStrategy {
