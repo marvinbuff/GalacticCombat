@@ -15,6 +15,7 @@ import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
+import galacticCombat.bullet.BulletFactory
 import galacticCombat.event.EnemyReachedGoalEvent
 import galacticCombat.invader.InvadorFactory
 import galacticCombat.tower.TowerFactory
@@ -50,6 +51,7 @@ class GalacticCombatApp : GameApplication() {
   override fun initGame() {
     getGameWorld().addEntityFactory(TowerFactory())
     getGameWorld().addEntityFactory(InvadorFactory())
+    getGameWorld().addEntityFactory(BulletFactory())
 
     //TODO replace hard-coded level input by file reading
 //    val level = getAssetLoader().loadLevel("experiment.level", GalacticCombatLevelLoader())

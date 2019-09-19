@@ -21,9 +21,10 @@ class BulletFactory : EntityFactory {
   fun spawnBullet(data: SpawnData): Entity {
     return entityBuilder().type(EntityType.BULLET)
       .view(AssetsConfig.get("beeper.png"))
+      .from(data)
       .scale(0.5, 0.5)
       .with(BulletComponent(data.get("target") as Entity))
-      .buildAndAttach()
+      .build()
   }
 
 
