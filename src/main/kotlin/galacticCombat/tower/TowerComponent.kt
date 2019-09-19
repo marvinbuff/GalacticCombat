@@ -1,11 +1,11 @@
 package galacticCombat.tower
 
 import com.almasb.fxgl.dsl.components.ProjectileComponent
-import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
+import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.component.Component
-import galacticCombat.AssetsConfig
+import galacticCombat.BULLET_ID
 import galacticCombat.EntityType
 import galacticCombat.bullet.BulletComponent
 import galacticCombat.invader.InvaderComponent
@@ -42,12 +42,11 @@ class TowerComponent : Component() {
   }
 
   private fun shoot(target: Entity) {
-    entityBuilder().type(EntityType.BULLET)
-      .at(entity.position.add(center.subtract(BulletComponent.center)))
-      .view(AssetsConfig.get("beeper.png"))
-      .scale(0.5,0.5)
-      .with(BulletComponent(target))
-      .buildAndAttach()
+    getGameWorld().spawn(
+      BULLET_ID,
+      SpawnData(entity.position.add(center.subtract(BulletComponent.center)))
+        .put("target", target)
+    )
   }
 
   companion object {
