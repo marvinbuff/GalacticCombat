@@ -1,0 +1,194 @@
+= Galactic Combat Notes
+Marvin Buff <marvin.buff@optravis.com>
+v1.0, 2019-DAY-MONTH
+:toc:
+:sectnums:
+:icons: font
+:imagesdir: ./folderName
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Game Development
+
+=== Roadmap
+
+To-Do::
+- Design how the tower cost and exp will work.
+- Design how the mana system should work at the beginning.
+
+Next Features::
+- Button to buy tower
+- Nicer UI: shop part, nice display for money and health
+- Background Image
+- Painted Path
+
+Milestone 0.2::
+Having a playable level prototype.
+- Shop to buy towers
+- At least one tower
+- Waves of enemies
+- Boss enemy
+
+Milestone 1.0::
+The game as it exists in Greenfoot.
+- Stat ui activated on click of entity
+- Invaders can be focused, Towers can be set to ignore focus
+- Player Profiles
+- Achievements
+- Rework Mana
+- Menu
+- Physical Cover
+
+Milestone 2.0::
+- Level Editor
+- Future Ideas
+- Build and Release System
+
+== Game Design
+
+=== Tower
+
+A tower can be bought in the shop with gold, placed onto the field, and will then shoot incoming invaders.
+
+==== Details
+
+|===
+| Tower          | Range  | Frequency | Turret Speed | Bullet
+| Cannon Tower   | Normal | Normal    | Normal       | Normal
+| Spore Launcher | Normal | Normal    | High         | Applies Dot
+| Tactical Tower | Large  | Slow      | Slow         | High dmg and pen
+| Cryonic Tower  | Normal | High      | Normal       | Slows enemy
+| Storm Conjurer | Short  |
+|===
+
+Properties::
+- View
+- Price
+- Range
+- Frequency
+- Turret Speed
+- Targeting Strategy (Foremost, High Health, Effect Not Yet Applied)
+
+=== Bullet
+
+Bullets consist of the following parts:
+
+- View
+- Speed
+- Target
+- On-hit lambda
+
+=== Invader
+
+A list of all planned and implemented invaders with their stats.
+
+|===
+| Invader | Health Points | Armour | Speed | Speciality
+| Armoured | 100 HP | 8 AC | Slow | -
+| Balanced | 100 HP | 2 AC | Normal | -
+| Overclocked | 80 HP | 0 AC | Fast | -
+|===
+
+|===
+| Generals | Health Points | Armour | Speed | Speciality
+| Red Square | 1000 HP | 4 AC | Slow | -
+| The Bastion | 1000 HP| 30 AC | Very Slow | Stops to regenerate
+
+|===
+
+==== Details
+
+Levels::
+Each invader has comes in variations for Level 1 - 3. A level up increases the health, armour, and special effects of an invader.
+(+50?, +2?)
+
+Properties::
+- Health
+- Armour
+- Speed
+- Type (defines traits)
+- Level (defines scaling)
+
+Traits::
+- Healing - aoe range, amount, self-flag
+- Regenerating - amount, delay
+- Dashing - speed boost, cooldown, duration
+- Shielded - amount, regeneration amount, regeneration delay (prevents effects, ignores armour and penetration, regenerates)
+- Covered - physical shield
+- Disrupting - aoe range
+- Spawning - child, frequency
+
+=== Game Variables
+
+The game holds various variables which are either kept between waves, levels, or instances.
+
+Level Variables::
+- Health
+- Gold
+- Wave Index
+- Wave Timer
+- Level Score
+
+=== Level
+
+TODO::
+- what is the information sufficient to describe a level (background, path, spawner, enabled towers, start money, etc.)
+- list of levels
+
+=== Miscellaneous
+
+==== Way Points
+
+TODO (different routes?)
+
+==== Armour
+
+To add more depth to the interaction between towers and invaders, we introduce Armour.
+
+Armour:: Invaders have armour which reduce the damage of each incoming bullet.
+Having `x` armour lowers incoming damage by `x` for each bullet.
+Armour Penetration:: Towers can shoot bullets which penetrate the invaders armour, effectively ignoring it.
+Having `x` penetration and hitting an invader with `y` armour, will do damage as if the invader only had `y-x` armour.
+
+== Future Ideas
+
+Some notes and ideas I had to improve GC in the future.
+
+=== Mobile Defenses
+
+A cool idea would be to have mobile "Towers".
+They would function the same in regards to effects, range and other interaction with invaders.
+However they would look like spaceships and could be commanded to move somewhere by the player.
+They would then circle around the position and shoot everything in range.
+Until the players commands them to move somewhere else.
+
+Pro::
+- More interaction with the player than regular towers.
+- Very easy to implement.
+Can use the base tower and just enable some moving patter and interaction with the player.
+
+Con::
+- Might add a lot of clutter, with ships overlapping towers, invaders, etc.
+- Requires new assets.
+(Although might use Space Wars ones.)
+- Mobility is not that important in late game, neutralizing the improvement.
+
+=== Random Levels
+
+An interesting option would be to have levels which are not fully determined.
+For example, we define that there are three waves until the general appears, but the exact composition of the waves is randomly determined.
+This would make it harder to find one easy way to beat a level as you have to prepare for multiple events.
+
+Pro::
+- Could be a very interesting alternative to the scripted levels
+- Might be used as an addition.
+For example, it could be interesting to have single waves which are random.
+
+Con::
+- Difficult to include in a level file.
+- Inconsistent level difficulty could lessen the pride gained from beating a level.
