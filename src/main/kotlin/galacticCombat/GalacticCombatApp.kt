@@ -64,7 +64,7 @@ class GalacticCombatApp : GameApplication() {
     val spawnInvader = Runnable {
       getGameState().increment(GameVars.ENEMIES_TO_SPAWN.id, -1)
       getGameWorld().spawn(
-        ENEMY_ID,
+        INVADER_ID,
         SpawnData(waypoints.first().x - 12.5, waypoints.first().y - 12.5).put("color", Color.BLUE).put("index", 1)
       )
     }

@@ -20,7 +20,7 @@ class TowerComponent : Component() {
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
 
-    projectile = ProjectileComponent(Point2D(0.0, 0.0), 0.1) //TODO replace by unmovable Component
+    projectile = ProjectileComponent(Point2D(0.0, 0.0), 0.1)
     entity.addComponent(projectile)
   }
 
@@ -42,7 +42,7 @@ class TowerComponent : Component() {
   }
 
   private fun shoot(target: Entity) {
-    entityBuilder().type(EntityType.PROJECTILE)
+    entityBuilder().type(EntityType.BULLET)
       .at(entity.position.add(center.subtract(BulletComponent.center)))
       .view(AssetsConfig.get("beeper.png"))
       .scale(0.5,0.5)
