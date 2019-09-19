@@ -2,13 +2,10 @@ package galacticCombat
 
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.FXGL
+import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.dsl.FXGL.Companion.getAppHeight
 import com.almasb.fxgl.dsl.FXGL.Companion.getAppWidth
-import com.almasb.fxgl.dsl.getEventBus
-import com.almasb.fxgl.dsl.getGameState
-import com.almasb.fxgl.dsl.getGameTimer
-import com.almasb.fxgl.dsl.getGameWorld
+import com.almasb.fxgl.dsl.FXGL.Companion.getDevPane
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.components.CollidableComponent
@@ -19,12 +16,14 @@ import galacticCombat.bullet.BulletFactory
 import galacticCombat.event.EnemyReachedGoalEvent
 import galacticCombat.invader.InvadorFactory
 import galacticCombat.tower.TowerFactory
+import galacticCombat.ui.TopBar
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.event.EventHandler
 import javafx.geometry.Point2D
 import javafx.geometry.Rectangle2D
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
+import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
@@ -43,7 +42,7 @@ class GalacticCombatApp : GameApplication() {
     settings.title = AppConfig.TITLE
     settings.version = AppConfig.VERSION
 //    settings.appIcon = "icon.png" //TODO enable icon
-    settings.isMenuEnabled = false
+    settings.isMenuEnabled = true
     settings.isIntroEnabled = false
     settings.applicationMode = AppConfig.MODE
   }
@@ -73,7 +72,7 @@ class GalacticCombatApp : GameApplication() {
 
     getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
 
-    getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY,
+    FXGL.getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY,
       EventHandler { event ->
         event.enemy.removeFromWorld()
       })
@@ -110,11 +109,9 @@ class GalacticCombatApp : GameApplication() {
   }
 
   override fun initUI() {
-//    val texture = FXGL.texture("meteor.png")
-//    texture.translateX = 50.0
-//    texture.translateY = 150.0
-//    texture.disableProperty()
-//    FXGL.getGameScene().addUINode(texture)
+    // initialize upper stats
+    val topBar = TopBar(getGameScene())
+    topBar.open()
 
     val toSpawnLabel = Text()
     toSpawnLabel.translateX = 50.0

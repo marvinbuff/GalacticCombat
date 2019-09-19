@@ -29,6 +29,12 @@ enum class GameVars(val initial: Int) {
   ;
 
   val id: String = name
+
+  companion object{
+    fun getVarsInTopBar(): List<GameVars>{
+      return listOf(GOLD, HEALTH, SCORE, ENEMIES_TO_SPAWN, ALIVE_ENEMIES)
+    }
+  }
 }
 
 object AssetsConfig {
