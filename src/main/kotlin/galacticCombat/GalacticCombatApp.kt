@@ -6,7 +6,6 @@ import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.FXGL.Companion.getAppHeight
 import com.almasb.fxgl.dsl.FXGL.Companion.getAppWidth
 import com.almasb.fxgl.dsl.getGameScene
-import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
@@ -15,6 +14,7 @@ import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
+import com.almasb.fxgl.saving.DataFile
 import galacticCombat.bullet.BulletFactory
 import galacticCombat.event.EnemyReachedGoalEvent
 import galacticCombat.invader.InvadorFactory
@@ -29,9 +29,12 @@ import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
 import javafx.util.Duration
+import java.io.Serializable
 import kotlin.collections.set
-import kotlin.math.PI
 
+fun main(args: Array<String>) {
+  GameApplication.launch(GalacticCombatApp::class.java, args)
+}
 
 class GalacticCombatApp : GameApplication() {
   val waypoints = arrayListOf<Point2D>()
@@ -60,10 +63,10 @@ class GalacticCombatApp : GameApplication() {
     showPoints(waypoints)
 
     val enemiesLeft = SimpleBooleanProperty()
-    enemiesLeft.bind(getGameState().intProperty(GameVars.ENEMIES_TO_SPAWN.id).greaterThan(0))
+    enemiesLeft.bind(FXGL.getGameState().intProperty(GameVars.ENEMIES_TO_SPAWN.id).greaterThan(0))
 
     val spawnInvader = Runnable {
-      getGameState().increment(GameVars.ENEMIES_TO_SPAWN.id, -1)
+      FXGL.getGameState().increment(GameVars.ENEMIES_TO_SPAWN.id, -1)
       getGameWorld().spawn(
         INVADER_ID,
         SpawnData(waypoints.first().x - 12.5, waypoints.first().y - 12.5).put("color", Color.BLUE).put("index", 1)
@@ -129,11 +132,24 @@ class GalacticCombatApp : GameApplication() {
       }
     })
   }
+
+  override fun saveState(): DataFile {
+    val data = FXGL.getGameState().getInt(GameVars.ENEMIES_TO_SPAWN.id)
+    println("Saved $data")
+    return DataFile(SaveData(data))
+  }
+
+  override fun loadState(dataFile: DataFile?) {
+    if (dataFile == null) return
+    val data = dataFile.data as SaveData
+    println("Loaded ${data.scores}")
+    FXGL.getGameState().increment(GameVars.ENEMIES_TO_SPAWN.id, data.scores)
+  }
+
 }
 
-fun main(args: Array<String>) {
-  GameApplication.launch(GalacticCombatApp::class.java, args)
-}
+data class SaveData(val scores: Int) : Serializable
+
 
 //region ---------------- Private Helpers ---------------
 
@@ -161,5 +177,4 @@ private fun Input.addAction(code: KeyCode, title: String, action: () -> Unit) {
   }, code)
 }
 
-private fun Double.toRad() = this * PI / 180
 //endregion
