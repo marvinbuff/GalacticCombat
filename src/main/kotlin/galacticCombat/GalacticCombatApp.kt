@@ -2,10 +2,13 @@ package galacticCombat
 
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.*
+import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.FXGL.Companion.getAppHeight
 import com.almasb.fxgl.dsl.FXGL.Companion.getAppWidth
-import com.almasb.fxgl.dsl.FXGL.Companion.getDevPane
+import com.almasb.fxgl.dsl.getGameScene
+import com.almasb.fxgl.dsl.getGameState
+import com.almasb.fxgl.dsl.getGameTimer
+import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.components.CollidableComponent
@@ -23,17 +26,19 @@ import javafx.geometry.Point2D
 import javafx.geometry.Rectangle2D
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
-import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
 import javafx.scene.text.Text
 import javafx.util.Duration
+import kotlin.collections.List
+import kotlin.collections.MutableMap
+import kotlin.collections.arrayListOf
+import kotlin.collections.first
+import kotlin.collections.forEach
+import kotlin.collections.set
 import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
 
 class GalacticCombatApp : GameApplication() {
-  private lateinit var player: Entity
   val waypoints = arrayListOf<Point2D>()
 
   override fun initSettings(settings: GameSettings) {
@@ -80,15 +85,6 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initInput() {
     val input = FXGL.getInput()
-
-    input.addAction(KeyCode.D, "Move Right") { player.rotateBy(5.0) }
-    input.addAction(KeyCode.A, "Move Left") { player.rotateBy(-5.0) }
-
-    input.addAction(KeyCode.W, "Move") {
-      val velocity = 5
-      player.x += cos(player.rotation.toRad()) * velocity
-      player.y += sin(player.rotation.toRad()) * velocity
-    }
 
     input.addAction(object : UserAction("Place Tower") {
       private val worldBounds = Rectangle2D(0.0, 0.0, getAppWidth().toDouble(), getAppHeight() - 100.0 - 40)
