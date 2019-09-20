@@ -28,15 +28,10 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
-import javafx.scene.text.Text
 import javafx.util.Duration
-import kotlin.collections.List
-import kotlin.collections.MutableMap
-import kotlin.collections.arrayListOf
-import kotlin.collections.first
-import kotlin.collections.forEach
 import kotlin.collections.set
 import kotlin.math.PI
+
 
 class GalacticCombatApp : GameApplication() {
   val waypoints = arrayListOf<Point2D>()
@@ -47,7 +42,7 @@ class GalacticCombatApp : GameApplication() {
     settings.title = AppConfig.TITLE
     settings.version = AppConfig.VERSION
 //    settings.appIcon = "icon.png" //TODO enable icon
-    settings.isMenuEnabled = true
+    settings.isMenuEnabled = false
     settings.isIntroEnabled = false
     settings.applicationMode = AppConfig.MODE
   }
@@ -60,7 +55,7 @@ class GalacticCombatApp : GameApplication() {
     //TODO replace hard-coded level input by file reading
 //    val level = getAssetLoader().loadLevel("experiment.level", GalacticCombatLevelLoader())
 //    getGameWorld().setLevel(level)
-    waypoints.addAll(arrayListOf(Point2D(50.0, 50.0), Point2D(150.0, 350.0), Point2D(350.0, 350.0), Point2D(130.0, 20.0)))
+    waypoints.addAll(arrayListOf(Point2D(50.0, 150.0), Point2D(150.0, 350.0), Point2D(550.0, 350.0), Point2D(130.0, 120.0)))
 
     showPoints(waypoints)
 
@@ -105,21 +100,18 @@ class GalacticCombatApp : GameApplication() {
   }
 
   override fun initUI() {
+    // Background
+    getGameScene().setBackgroundColor(Color.LIGHTGRAY)
+
     // initialize upper stats
     val topBar = TopBar(getGameScene())
     topBar.open()
 
-    val toSpawnLabel = Text()
-    toSpawnLabel.translateX = 50.0
-    toSpawnLabel.translateY = 100.0
-    toSpawnLabel.textProperty().bind(getGameState().intProperty(GameVars.ENEMIES_TO_SPAWN.id).asString())
-    FXGL.getGameScene().addUINode(toSpawnLabel) // add to the scene graph
-
-    val activeEnemiesLabel = Text()
-    activeEnemiesLabel.translateX = 150.0
-    activeEnemiesLabel.translateY = 100.0
-    activeEnemiesLabel.textProperty().bind(getGameState().intProperty(GameVars.ALIVE_ENEMIES.id).asString())
-    FXGL.getGameScene().addUINode(activeEnemiesLabel) // add to the scene graph
+//    val activeEnemiesLabel = Text()
+//    activeEnemiesLabel.translateX = 150.0
+//    activeEnemiesLabel.translateY = 100.0
+//    activeEnemiesLabel.textProperty().bind(getGameState().intProperty(GameVars.ALIVE_ENEMIES.id).asString())
+//    FXGL.getGameScene().addUINode(activeEnemiesLabel) // add to the scene graph
   }
 
   override fun initGameVars(vars: MutableMap<String, Any>) {
