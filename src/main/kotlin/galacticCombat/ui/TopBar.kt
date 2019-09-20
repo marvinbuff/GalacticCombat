@@ -7,9 +7,9 @@ import com.almasb.sslogger.Logger
 import galacticCombat.GameVars
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.geometry.Insets
-import javafx.geometry.Pos
-import javafx.scene.control.TitledPane
-import javafx.scene.layout.*
+import javafx.scene.layout.GridPane
+import javafx.scene.layout.HBox
+import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 
 class TopBar(private val scene: GameScene) {
@@ -24,12 +24,12 @@ class TopBar(private val scene: GameScene) {
     init {
         panel.styleClass.add("dev-pane")
 
-        val pane = TitledPane("xx", createGameVarsPane())
+      val pane = Pane(createGameVarsPane())
         pane.prefWidth = scene.width
         pane.prefHeight = 100.0
 
         pane.isMouseTransparent = true
-        pane.background = Background(BackgroundFill(Color.color(0.7, 0.6, 0.7, 0.6), null, null))
+//        pane.background = Background(BackgroundFill(Color.color(0.7, 0.6, 0.7, 0.6), null, null))
 
         panel.children += pane
         scene.addUINodes(panel)
@@ -44,23 +44,24 @@ class TopBar(private val scene: GameScene) {
     }
 
     private fun createGameVarsPane(): Pane {
-        val vbox = VBox()
+      val vbox = HBox()
         vbox.padding = Insets(15.0)
-        vbox.alignment = Pos.TOP_CENTER
 
         val pane = GridPane()
         pane.hgap = 25.0
         pane.vgap = 10.0
 
         GameVars.getVarsInTopBar().forEachIndexed { index, key ->
-            val textKey = FXGL.getUIFactory().newText(key.id, Color.BLUE, 18.0)
+          val color = Color.BLUE
+          val fontSize = 12.0
+          val textKey = FXGL.getUIFactory().newText(key.id, color, fontSize)
 
             val value = FXGL.getGameState().properties.getValueObservable(key.id)
-            val textValue = FXGL.getUIFactory().newText("", Color.WHITE, 18.0)
+          val textValue = FXGL.getUIFactory().newText("", color, fontSize)
 
             textValue.textProperty().bind((value as SimpleIntegerProperty).asString())
 
-            pane.addRow(index, textKey, textValue)
+          pane.addColumn(index, textKey, textValue)
         }
 
         vbox.children += pane
