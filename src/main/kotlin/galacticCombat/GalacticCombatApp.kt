@@ -38,6 +38,7 @@ fun main(args: Array<String>) {
 
 class GalacticCombatApp : GameApplication() {
   val waypoints = arrayListOf<Point2D>()
+  val enemiesLeft = SimpleBooleanProperty()
 
   override fun initSettings(settings: GameSettings) {
     settings.width = AppConfig.WIDTH
@@ -49,6 +50,7 @@ class GalacticCombatApp : GameApplication() {
     settings.isIntroEnabled = false
     settings.applicationMode = AppConfig.MODE
   }
+
 
   override fun initGame() {
     getGameWorld().addEntityFactory(TowerFactory())
@@ -62,7 +64,6 @@ class GalacticCombatApp : GameApplication() {
 
     showPoints(waypoints)
 
-    val enemiesLeft = SimpleBooleanProperty()
     enemiesLeft.bind(FXGL.getGameState().intProperty(GameVars.ENEMIES_TO_SPAWN.id).greaterThan(0))
 
     val spawnInvader = Runnable {

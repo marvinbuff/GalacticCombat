@@ -15,10 +15,23 @@ class TowerFactory : EntityFactory {
   // TODO add read in from kv file to build TowerDataComponent
   @Suppress("unused")
   @Spawns(TOWER_ID)
-  fun spawnTower(data: SpawnData): Entity =
-    entityBuilder().type(EntityType.TOWER)
-      .from(data)
-      .view(AssetsConfig.getTower("3.3.gif"))
-      .with(TowerComponent())
-      .build()
+  fun spawnTower(data: SpawnData): Entity {
+    val towerData = parseTowerData(data)
+
+    return entityBuilder().type(EntityType.TOWER)
+        .from(data)
+        .view(towerData.texture)
+        .with(TowerComponent(towerData))
+        .build()
+  }
+
+
+  private fun parseTowerData(data: SpawnData): TowerData {
+    //TODO implement parsing
+    return TowerData(
+        10.0,
+        1.0,
+        300.0,
+        AssetsConfig.getTower("3.3.gif"))
+  }
 }

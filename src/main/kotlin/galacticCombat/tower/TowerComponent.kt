@@ -13,7 +13,7 @@ import galacticCombat.toPoint
 import javafx.geometry.Point2D
 import javafx.scene.transform.Rotate
 
-class TowerComponent : Component() {
+open class TowerComponent(val towerData: TowerData) : Component(){
   private lateinit var projectile: ProjectileComponent
   private var reloadingTime: Double = 0.0
 
@@ -27,13 +27,13 @@ class TowerComponent : Component() {
   override fun onUpdate(tpf: Double) {
     val closestInvader = getGameWorld()
       .getEntitiesByType(EntityType.INVADER)
-      .filter { other -> entity.position.distance(other.position) < RANGE }
+      .filter { other -> entity.position.distance(other.position) < towerData.range }
       .maxBy { it.getComponent(InvaderComponent::class.java).getProgress() }
     closestInvader?.let {
       projectile.direction = Rotate.rotate(-45.0, 0.0, 0.0).transform(it.position.subtract(entity.position))
       if (reloadingTime <= 0.0) {
         shoot(closestInvader)
-        reloadingTime = SHOOT_CD
+        reloadingTime = towerData.attackDelay
       } else {
         reloadingTime -= tpf
       }
@@ -50,8 +50,6 @@ class TowerComponent : Component() {
   }
 
   companion object {
-    const val SHOOT_CD = 1.0
-    const val RANGE = 400
     val center = (38/2.0).toPoint()
   }
 }

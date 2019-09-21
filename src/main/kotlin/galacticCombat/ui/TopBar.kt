@@ -2,11 +2,19 @@ package galacticCombat.ui
 
 import com.almasb.fxgl.app.GameScene
 import com.almasb.fxgl.dsl.FXGL
+import com.almasb.fxgl.dsl.getGameScene
+import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.ui.InGamePanel
 import com.almasb.sslogger.Logger
+import galacticCombat.AssetsConfig
 import galacticCombat.GameVars
+import galacticCombat.ui.elements.IconButton
+import galacticCombat.ui.elements.TowerButton
 import javafx.beans.property.SimpleIntegerProperty
+import javafx.event.ActionEvent
+import javafx.event.EventHandler
 import javafx.geometry.Insets
+import javafx.scene.control.Button
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Pane
@@ -28,7 +36,7 @@ class TopBar(private val scene: GameScene) {
         pane.prefWidth = scene.width
         pane.prefHeight = 100.0
 
-        pane.isMouseTransparent = true
+        pane.isMouseTransparent = false
 //        pane.background = Background(BackgroundFill(Color.color(0.7, 0.6, 0.7, 0.6), null, null))
 
         panel.children += pane
@@ -63,6 +71,10 @@ class TopBar(private val scene: GameScene) {
 
           pane.addColumn(index, textKey, textValue)
         }
+
+        //button
+        val button = TowerButton()
+        pane.addColumn(pane.columnCount, button)
 
         vbox.children += pane
 
