@@ -18,6 +18,10 @@ endif::[]
 === Roadmap
 
 To-Do::
+- Let enemy give gold and/or exp
+- Add the other tower buttons
+- Move buttons away from topbar
+- Add losing screen
 - Design how the tower cost and exp will work.
 - Design how the mana system should work at the beginning.
 

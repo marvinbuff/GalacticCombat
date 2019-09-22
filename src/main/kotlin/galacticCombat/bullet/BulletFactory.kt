@@ -25,10 +25,10 @@ class BulletFactory : EntityFactory {
 
     return entityBuilder().type(EntityType.BULLET)
         .view(bulletData.texture)
-      .from(data)
-      .scale(0.5, 0.5)
+        .from(data)
+        .scale(0.5, 0.5)
         .with(BulletComponent(target, bulletData))
-      .build()
+        .build()
   }
 
 
