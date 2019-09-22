@@ -5,9 +5,6 @@ import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.ui.InGamePanel
 import com.almasb.sslogger.Logger
 import galacticCombat.GameVars
-import galacticCombat.tower.TowerFactory
-import galacticCombat.tower.TowerType
-import galacticCombat.ui.elements.TowerButton
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.geometry.Insets
 import javafx.scene.layout.GridPane
@@ -20,9 +17,6 @@ class TopBar(private val scene: GameScene) {
   private val log = Logger.get(javaClass)
 
   private val panel = InGamePanel(350.0, scene.height)
-
-  val isOpen: Boolean
-    get() = panel.isOpen
 
   init {
     panel.styleClass.add("dev-pane")
@@ -42,13 +36,9 @@ class TopBar(private val scene: GameScene) {
     panel.open()
   }
 
-  fun close() {
-    panel.close()
-  }
-
   private fun createGameVarsPane(): Pane {
-    val vbox = HBox()
-    vbox.padding = Insets(15.0)
+    val hbox = HBox()
+    hbox.padding = Insets(15.0)
 
     val pane = GridPane()
     pane.hgap = 25.0
@@ -67,13 +57,8 @@ class TopBar(private val scene: GameScene) {
       pane.addColumn(index, textKey, textValue)
     }
 
-    //button
-    //TODO go over all towers and create buttons for them
-    val button = TowerButton(TowerFactory.getTowerData(TowerType.CANNON))
-    pane.addColumn(pane.columnCount, button)
+    hbox.children += pane
 
-    vbox.children += pane
-
-    return vbox
+    return hbox
   }
 }
