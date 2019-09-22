@@ -3,6 +3,6 @@ package galacticCombat.tower
 import galacticCombat.bullet.BulletData
 
 data class TowerData(
-    val bullet: BulletData,
+    val bulletData: BulletData,
     val texture: String
 )

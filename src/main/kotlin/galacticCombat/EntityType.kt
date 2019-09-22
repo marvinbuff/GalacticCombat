@@ -1,9 +1,9 @@
 package galacticCombat
 
 // we need to have const val for the compiler to use it in the annotations
-const val TOWER_ID = "Tower"
+const val TOWER_SPAWN_ID = "Tower"
 const val INVADER_ID = "Invader"
-const val BULLET_ID = "Bullet"
+const val BULLET_SPAWN_ID = "Bullet"
 
 enum class EntityType {
   TOWER, //searches for SHIP; launches PROJECTILES

@@ -5,18 +5,19 @@ import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.component.Component
-import galacticCombat.BULLET_ID
+import galacticCombat.BULLET_SPAWN_ID
 import galacticCombat.EntityType
 import galacticCombat.bullet.BulletComponent
+import galacticCombat.bullet.BulletData
 import galacticCombat.invader.InvaderComponent
 import galacticCombat.toPoint
 import javafx.geometry.Point2D
 import javafx.scene.transform.Rotate
 
-open class TowerComponent(val towerData: TowerData) : Component(){
+open class TowerComponent(towerData: TowerData) : Component() {
   private lateinit var projectile: ProjectileComponent
   private var reloadingTime: Double = 0.0
-  private val bullet = towerData.bullet
+  private val bullet = towerData.bulletData
 
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
@@ -44,9 +45,9 @@ open class TowerComponent(val towerData: TowerData) : Component(){
 
   private fun shoot(target: Entity) {
     getGameWorld().spawn(
-      BULLET_ID,
+        BULLET_SPAWN_ID,
       SpawnData(entity.position.add(center.subtract(BulletComponent.center)))
-        .put("target", target)
+          .put("target", target).put(BulletData.id, bullet)
     )
   }
 
