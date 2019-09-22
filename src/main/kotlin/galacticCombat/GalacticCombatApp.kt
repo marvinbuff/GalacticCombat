@@ -3,8 +3,6 @@ package galacticCombat
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.dsl.FXGL
-import com.almasb.fxgl.dsl.FXGL.Companion.getAppHeight
-import com.almasb.fxgl.dsl.FXGL.Companion.getAppWidth
 import com.almasb.fxgl.dsl.getGameScene
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.dsl.getGameWorld
@@ -18,15 +16,13 @@ import com.almasb.fxgl.saving.DataFile
 import galacticCombat.bullet.BulletFactory
 import galacticCombat.event.EnemyReachedGoalEvent
 import galacticCombat.invader.InvadorFactory
+import galacticCombat.tower.PlaceholderFactory
 import galacticCombat.tower.TowerFactory
-import galacticCombat.tower.TowerType
 import galacticCombat.ui.TopBar
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.event.EventHandler
 import javafx.geometry.Point2D
-import javafx.geometry.Rectangle2D
 import javafx.scene.input.KeyCode
-import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
 import javafx.util.Duration
@@ -54,9 +50,9 @@ class GalacticCombatApp : GameApplication() {
 
 
   override fun initGame() {
-    getGameWorld().addEntityFactory(TowerFactory())
-    getGameWorld().addEntityFactory(InvadorFactory())
-    getGameWorld().addEntityFactory(BulletFactory())
+    val factories =
+        listOf(TowerFactory(), InvadorFactory(), BulletFactory(), PlaceholderFactory())
+    factories.forEach(getGameWorld()::addEntityFactory)
 
     //TODO replace hard-coded level input by file reading
 //    val level = getAssetLoader().loadLevel("experiment.level", GalacticCombatLevelLoader())
@@ -86,18 +82,28 @@ class GalacticCombatApp : GameApplication() {
   override fun initInput() {
     val input = FXGL.getInput()
 
-    input.addAction(object : UserAction("Place Tower") {
-      private val worldBounds = Rectangle2D(0.0, 0.0, getAppWidth().toDouble(), getAppHeight() - 100.0 - 40)
+//    input.addAction(object : UserAction("Tower") {
+//      override fun onAction() {
+//        getGameWorld().spawn(
+//            PLACEHOLDER_SPAWN_ID,
+//            SpawnData(input.mousePositionWorld).put(TowerData.id, TowerFactory.getTowerData(TowerType.CANNON))
+//        )
+//      }
+//    }, KeyCode.K)
 
-      override fun onActionBegin() {
-        if (worldBounds.contains(input.mousePositionWorld)) {
-          getGameWorld().spawn(
-              TOWER_SPAWN_ID,
-            SpawnData(input.mouseXWorld, input.mouseYWorld).put(TowerType.id, TowerType.CANNON)
-          )
-        }
-      }
-    }, MouseButton.PRIMARY)
+
+//    input.addAction(object : UserAction("Place Tower") {
+//      private val worldBounds = Rectangle2D(0.0, 0.0, getAppWidth().toDouble(), getAppHeight() - 100.0 - 40)
+//
+//      override fun onActionBegin() {
+//        if (worldBounds.contains(input.mousePositionWorld)) {
+//          getGameWorld().spawn(
+//              TOWER_SPAWN_ID,
+//            SpawnData(input.mouseXWorld, input.mouseYWorld).put(TowerType.id, TowerType.CANNON)
+//          )
+//        }
+//      }
+//    }, MouseButton.PRIMARY)
 
 
     //add cheats here by checking:

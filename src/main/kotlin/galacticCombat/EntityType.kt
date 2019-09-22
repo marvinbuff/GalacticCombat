@@ -4,11 +4,12 @@ package galacticCombat
 const val TOWER_SPAWN_ID = "Tower"
 const val INVADER_ID = "Invader"
 const val BULLET_SPAWN_ID = "Bullet"
+const val PLACEHOLDER_SPAWN_ID = "Placeholder"
 
 enum class EntityType {
-  TOWER, //searches for SHIP; launches PROJECTILES
-  INVADER, //gets hit by PROJECTILE; Seeks WAYPOINT
-  BULLET, //seeks SHIP; hits SHIP; hits BARRICADE
+  TOWER,
+  INVADER,
+  BULLET,
   BARRICADE,
   WAYPOINT
   ;
