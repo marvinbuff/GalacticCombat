@@ -16,6 +16,7 @@ import javafx.scene.transform.Rotate
 open class TowerComponent(val towerData: TowerData) : Component(){
   private lateinit var projectile: ProjectileComponent
   private var reloadingTime: Double = 0.0
+  private val bullet = towerData.bullet
 
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
@@ -27,13 +28,13 @@ open class TowerComponent(val towerData: TowerData) : Component(){
   override fun onUpdate(tpf: Double) {
     val closestInvader = getGameWorld()
       .getEntitiesByType(EntityType.INVADER)
-      .filter { other -> entity.position.distance(other.position) < towerData.range }
+      .filter { other -> entity.position.distance(other.position) < bullet.range }
       .maxBy { it.getComponent(InvaderComponent::class.java).getProgress() }
     closestInvader?.let {
       projectile.direction = Rotate.rotate(-45.0, 0.0, 0.0).transform(it.position.subtract(entity.position))
       if (reloadingTime <= 0.0) {
         shoot(closestInvader)
-        reloadingTime = towerData.attackDelay
+        reloadingTime = bullet.attackDelay
       } else {
         reloadingTime -= tpf
       }

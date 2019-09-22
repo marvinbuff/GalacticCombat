@@ -60,10 +60,10 @@ A tower can be bought in the shop with gold, placed onto the field, and will the
 |===
 | Tower          | Range  | Frequency | Turret Speed | Bullet
 | Cannon Tower   | Normal | Normal    | Normal       | Normal
-| Spore Launcher | Normal | Normal    | High         | Applies Dot
+| Spore Launcher | Normal | Normal    | Fast         | Applies Dot
 | Tactical Tower | Large  | Slow      | Slow         | High dmg and pen
 | Cryonic Tower  | Normal | High      | Normal       | Slows enemy
-| Storm Conjurer | Short  |
+| Storm Conjurer | Short  | Normal    | Fast         | Chain
 |===
 
 Properties::
