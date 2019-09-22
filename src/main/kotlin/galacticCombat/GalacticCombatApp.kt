@@ -19,6 +19,7 @@ import galacticCombat.bullet.BulletFactory
 import galacticCombat.event.EnemyReachedGoalEvent
 import galacticCombat.invader.InvadorFactory
 import galacticCombat.tower.TowerFactory
+import galacticCombat.tower.TowerType
 import galacticCombat.ui.TopBar
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.event.EventHandler
@@ -92,7 +93,7 @@ class GalacticCombatApp : GameApplication() {
         if (worldBounds.contains(input.mousePositionWorld)) {
           getGameWorld().spawn(
             TOWER_ID,
-            SpawnData(input.mouseXWorld, input.mouseYWorld).put("color", Color.BLACK).put("index", 1)
+            SpawnData(input.mouseXWorld, input.mouseYWorld).put(TowerType.id, TowerType.CANNON)
           )
         }
       }

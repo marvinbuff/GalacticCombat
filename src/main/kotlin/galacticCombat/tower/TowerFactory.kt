@@ -8,11 +8,17 @@ import com.almasb.fxgl.entity.Spawns
 import galacticCombat.AssetsConfig
 import galacticCombat.EntityType
 import galacticCombat.TOWER_ID
+import galacticCombat.bullet.BulletData
+import galacticCombat.bullet.BulletEffect
 
 
 class TowerFactory : EntityFactory {
 
-  // TODO add read in from kv file to build TowerDataComponent
+  /**
+   * Spawns a tower.
+   * SpawnData [data] must contain the following entries:
+   *  - [TowerType.id]
+   */
   @Suppress("unused")
   @Spawns(TOWER_ID)
   fun spawnTower(data: SpawnData): Entity {
@@ -27,11 +33,32 @@ class TowerFactory : EntityFactory {
 
 
   private fun parseTowerData(data: SpawnData): TowerData {
-    //TODO implement parsing
+    val type: TowerType = data.get(TowerType.id)
+
+    val bulletData = BulletData.create(type, 1)
+
+    val asset = when(type){
+      TowerType.CANNON -> AssetsConfig.getTower("1.3.gif")
+      TowerType.SPORE  -> AssetsConfig.getTower("3.3.gif")
+      TowerType.TACTICAL -> AssetsConfig.getTower("4.3.gif")
+      TowerType.CRYONIC -> AssetsConfig.getTower("2.3.gif")
+      TowerType.STORM -> AssetsConfig.getTower("6.3.gif")
+    }
+
     return TowerData(
-        10.0,
-        1.0,
-        300.0,
-        AssetsConfig.getTower("3.3.gif"))
+        bulletData,
+        asset)
+  }
+}
+
+enum class TowerType(val title: String){
+  CANNON("Cannon Tower"),
+  SPORE("Spore Launcher"),
+  TACTICAL("Tactical Tower"),
+  CRYONIC("Cryonic Tower"),
+  STORM("Storm Conjurer");
+
+  companion object{
+    const val id = "TowerType"
   }
 }

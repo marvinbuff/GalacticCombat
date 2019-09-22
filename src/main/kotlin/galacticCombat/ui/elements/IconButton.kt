@@ -20,5 +20,5 @@ open class IconButton(icon: Texture, handler: EventHandler<ActionEvent>) : Butto
 }
 
 // TODO eventually move to css file
-private val STYLE_NORMAL = "-fx-padding: 2, 2, 2, 2;"
-private val STYLE_PRESSED = "-fx-padding: 3 1 1 3;"
+private const val STYLE_NORMAL = "-fx-padding: 2, 2, 2, 2;"
+private const val STYLE_PRESSED = "-fx-padding: 3 1 1 3;"

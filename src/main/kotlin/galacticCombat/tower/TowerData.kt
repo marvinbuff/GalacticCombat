@@ -1,10 +1,8 @@
 package galacticCombat.tower
 
-import com.almasb.fxgl.texture.Texture
+import galacticCombat.bullet.BulletData
 
 data class TowerData(
-    val damage: Double,
-    val attackDelay: Double,
-    val range: Double,
+    val bullet: BulletData,
     val texture: String
 )
