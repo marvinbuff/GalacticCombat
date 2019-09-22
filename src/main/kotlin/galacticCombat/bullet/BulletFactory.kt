@@ -5,8 +5,7 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
-import galacticCombat.AssetsConfig
-import galacticCombat.BULLET_ID
+import galacticCombat.BULLET_SPAWN_ID
 import galacticCombat.EntityType
 
 @Suppress("unused")
@@ -15,15 +14,20 @@ class BulletFactory : EntityFactory {
 
   /**
    * Spawns a Bullet.
-   * SpawnData [data] must have a set "target".
+   * SpawnData [data] must contain the following entries:
+   * - [BulletData.id]
+   * - "target"
    */
-  @Spawns(BULLET_ID)
+  @Spawns(BULLET_SPAWN_ID)
   fun spawnBullet(data: SpawnData): Entity {
+    val bulletData: BulletData = data.get(BulletData.id)
+    val target: Entity = data.get("target")
+
     return entityBuilder().type(EntityType.BULLET)
-      .view(AssetsConfig.get("beeper.png"))
+        .view(bulletData.texture)
       .from(data)
       .scale(0.5, 0.5)
-      .with(BulletComponent(data.get("target") as Entity))
+        .with(BulletComponent(target, bulletData))
       .build()
   }
 

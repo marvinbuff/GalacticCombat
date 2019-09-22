@@ -7,9 +7,8 @@ import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import galacticCombat.AssetsConfig
 import galacticCombat.EntityType
-import galacticCombat.TOWER_ID
+import galacticCombat.TOWER_SPAWN_ID
 import galacticCombat.bullet.BulletData
-import galacticCombat.bullet.BulletEffect
 
 
 class TowerFactory : EntityFactory {
@@ -20,9 +19,11 @@ class TowerFactory : EntityFactory {
    *  - [TowerType.id]
    */
   @Suppress("unused")
-  @Spawns(TOWER_ID)
+  @Spawns(TOWER_SPAWN_ID)
   fun spawnTower(data: SpawnData): Entity {
-    val towerData = parseTowerData(data)
+    val type: TowerType = data.get(TowerType.id)
+
+    val towerData = parseTowerData(type)
 
     return entityBuilder().type(EntityType.TOWER)
         .from(data)
@@ -32,9 +33,7 @@ class TowerFactory : EntityFactory {
   }
 
 
-  private fun parseTowerData(data: SpawnData): TowerData {
-    val type: TowerType = data.get(TowerType.id)
-
+  private fun parseTowerData(type: TowerType): TowerData {
     val bulletData = BulletData.create(type, 1)
 
     val asset = when(type){

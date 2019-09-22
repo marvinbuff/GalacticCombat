@@ -9,7 +9,7 @@ import javafx.geometry.Point2D
 
 class BulletComponent(
   private val target: Entity,
-  private val damage: Double = 5.0
+    private val data: BulletData
 ) : Component() {
   private lateinit var projectile: ProjectileComponent
 
@@ -17,7 +17,7 @@ class BulletComponent(
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
 
-    projectile = ProjectileComponent(Point2D(0.0, 0.0), BASE_SPEED)
+    projectile = ProjectileComponent(Point2D(0.0, 0.0), data.bulletSpeed)
     entity.addComponent(projectile)
   }
 
@@ -28,14 +28,13 @@ class BulletComponent(
 
     if (vectorToTarget.magnitude() < projectile.speed * tpf) {
       if (target.isActive) {
-        target.getComponent(InvaderComponent::class.java).inflictDamage(damage)
+        target.getComponent(InvaderComponent::class.java).inflictDamage(data.damage)
       }
       entity.removeFromWorld()
     }
   }
 
   companion object {
-    const val BASE_SPEED = 400.0
     val center = (50/2.0/2.0).toPoint()
   }
 }

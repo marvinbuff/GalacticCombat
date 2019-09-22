@@ -1,16 +1,25 @@
 package galacticCombat.bullet
 
+import galacticCombat.AssetsConfig
 import galacticCombat.tower.TowerType
-import galacticCombat.tower.TowerType.*
+import galacticCombat.tower.TowerType.CANNON
+import galacticCombat.tower.TowerType.CRYONIC
+import galacticCombat.tower.TowerType.SPORE
+import galacticCombat.tower.TowerType.STORM
+import galacticCombat.tower.TowerType.TACTICAL
 
-class BulletData private constructor(
+open class BulletData private constructor(
     val damage: Double,
-    val penetration: Double,
+    val penetration: Double, //TODO implement penetration and armour
     val attackDelay: Double = 2.0,
     val range: Double = 300.0,
-    val effect: BulletEffect = BulletEffect(BulletEffectType.NONE, 0.0, 0.0)
+    val bulletSpeed: Double = 300.0,
+    val effect: BulletEffect = BulletEffect(BulletEffectType.NONE, 0.0, 0.0), //TODO implement effects
+    val texture: String = AssetsConfig.get("beeper.png")
 ){
   companion object{
+    const val id = "BulletData"
+
     fun create(towerType: TowerType, level: Int): BulletData =
       when(towerType){
         CANNON -> createCannon(level)

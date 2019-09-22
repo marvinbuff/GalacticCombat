@@ -92,7 +92,7 @@ class GalacticCombatApp : GameApplication() {
       override fun onActionBegin() {
         if (worldBounds.contains(input.mousePositionWorld)) {
           getGameWorld().spawn(
-            TOWER_ID,
+              TOWER_SPAWN_ID,
             SpawnData(input.mouseXWorld, input.mouseYWorld).put(TowerType.id, TowerType.CANNON)
           )
         }
