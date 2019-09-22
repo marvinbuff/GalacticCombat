@@ -18,6 +18,7 @@ import galacticCombat.event.EnemyReachedGoalEvent
 import galacticCombat.invader.InvadorFactory
 import galacticCombat.tower.PlaceholderFactory
 import galacticCombat.tower.TowerFactory
+import galacticCombat.ui.SideBar
 import galacticCombat.ui.TopBar
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.event.EventHandler
@@ -112,11 +113,14 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initUI() {
     // Background
-    getGameScene().setBackgroundColor(Color.LIGHTGRAY)
+    val scene = getGameScene()
+    scene.setBackgroundColor(Color.LIGHTGRAY)
 
     // initialize upper stats
-    val topBar = TopBar(getGameScene())
+    val topBar = TopBar(scene)
     topBar.open()
+    val sideBar = SideBar(scene)
+    sideBar.open()
 
 //    val activeEnemiesLabel = Text()
 //    activeEnemiesLabel.translateX = 150.0

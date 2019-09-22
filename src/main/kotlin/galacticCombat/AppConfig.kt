@@ -23,7 +23,7 @@ enum class GameVars(val initial: Int) {
   ALIVE_ENEMIES(0),
 
   // Shown to the Player
-  GOLD(200),
+  GOLD(600),
   HEALTH(10),
   SCORE(0)
   ;

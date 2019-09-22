@@ -8,8 +8,6 @@ import com.almasb.fxgl.entity.SpawnData
 import galacticCombat.GameVars
 import galacticCombat.PLACEHOLDER_SPAWN_ID
 import galacticCombat.tower.TowerData
-import galacticCombat.tower.TowerFactory
-import galacticCombat.tower.TowerType
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
 
@@ -26,7 +24,8 @@ private fun getHandler(data: TowerData) = EventHandler<ActionEvent> { event ->
     getGameState().increment(goldId, -data.price)
     getGameWorld().spawn(
         PLACEHOLDER_SPAWN_ID,
-        SpawnData(getInput().mousePositionWorld).put(TowerData.id, TowerFactory.getTowerData(TowerType.CANNON))
+        SpawnData(getInput().mousePositionWorld).put(TowerData.id, data)
     )
+
   }
 }
