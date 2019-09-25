@@ -8,7 +8,7 @@ import galacticCombat.toPoint
 import javafx.geometry.Point2D
 
 class BulletComponent(
-  private val target: Entity,
+    private val target: Entity,
     private val data: BulletData
 ) : Component() {
   private lateinit var projectile: ProjectileComponent
@@ -28,13 +28,13 @@ class BulletComponent(
 
     if (vectorToTarget.magnitude() < projectile.speed * tpf) {
       if (target.isActive) {
-        target.getComponent(InvaderComponent::class.java).inflictDamage(data.damage)
+        target.getComponent(InvaderComponent::class.java).inflictDamage(data)
       }
       entity.removeFromWorld()
     }
   }
 
   companion object {
-    val center = (50/2.0/2.0).toPoint()
+    val center = (50 / 2.0 / 2.0).toPoint()
   }
 }

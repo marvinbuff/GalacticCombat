@@ -43,7 +43,7 @@ open class BulletData private constructor(
   }
 }
 
-data class BulletEffect(val type: BulletEffectType, val amount: Double, val duration: Double)
+data class BulletEffect(val type: BulletEffectType, val amount: Double, var duration: Double)
 
 enum class BulletEffectType{
   NONE,
