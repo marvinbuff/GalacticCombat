@@ -11,7 +11,7 @@ class HealthComponent(invaderComponent: InvaderComponent) : ChildViewComponent(-
 
   init {
     hpBar.setMinValue(0.0)
-    hpBar.setMaxValue(invaderComponent.maxHealth)
+    hpBar.setMaxValue(invaderComponent.data.maxHealth)
     hpBar.setWidth(35.0)
     hpBar.setHeight(8.0)
     hpBar.setLabelPosition(Position.TOP)
@@ -20,7 +20,7 @@ class HealthComponent(invaderComponent: InvaderComponent) : ChildViewComponent(-
     hpBar.setFill(Color.GREEN)
 
     hpBar.currentValueProperty().bind(
-      invaderComponent.health.divide(invaderComponent.maxHealth * 1.0).multiply(100)
+        invaderComponent.health.divide(invaderComponent.data.maxHealth * 1.0).multiply(100)
     )
 
     viewRoot.children.addAll(hpBar)

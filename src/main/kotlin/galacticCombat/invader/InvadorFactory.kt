@@ -16,7 +16,7 @@ class InvadorFactory : EntityFactory {
 
   @Spawns(INVADER_ID)
   fun spawnEnemy(data: SpawnData): Entity {
-    val invader = InvaderComponent()
+    val invader = InvaderComponent(getInvaderData(InvaderType.COMMON))
     val healthBar = HealthComponent(invader)
 
     return entityBuilder().type(EntityType.INVADER)
@@ -28,5 +28,20 @@ class InvadorFactory : EntityFactory {
       .build()
   }
 
+  private fun getInvaderData(type: InvaderType): InvaderData {
+    //TODO make dynamic
+    return when (type) {
+      InvaderType.COMMON -> InvaderData(100.0, 60.0, 20.0)
+    }
+  }
 
+
+}
+
+enum class InvaderType(val title: String) {
+  COMMON("Cannon Tower");
+
+  companion object {
+    const val id = "InvaderType"
+  }
 }
