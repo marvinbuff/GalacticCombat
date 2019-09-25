@@ -14,7 +14,7 @@ import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.fxgl.saving.DataFile
 import galacticCombat.bullet.BulletFactory
-import galacticCombat.event.EnemyReachedGoalEvent
+import galacticCombat.event.InvaderEvents
 import galacticCombat.invader.InvadorFactory
 import galacticCombat.tower.PlaceholderFactory
 import galacticCombat.tower.TowerFactory
@@ -65,7 +65,7 @@ class GalacticCombatApp : GameApplication() {
     enemiesLeft.bind(FXGL.getGameState().intProperty(GameVars.ENEMIES_TO_SPAWN.id).greaterThan(0))
 
     val spawnInvader = Runnable {
-      FXGL.getGameState().increment(GameVars.ENEMIES_TO_SPAWN.id, -1)
+      GameVars.ENEMIES_TO_SPAWN.increment(-1)
       getGameWorld().spawn(
         INVADER_ID,
         SpawnData(waypoints.first().x - 12.5, waypoints.first().y - 12.5).put("color", Color.BLUE).put("index", 1)
@@ -74,9 +74,11 @@ class GalacticCombatApp : GameApplication() {
 
     getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
 
-    FXGL.getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY,
+    FXGL.getEventBus().addEventHandler(
+        InvaderEvents.ANY,
       EventHandler { event ->
-        event.enemy.removeFromWorld()
+        GameVars.HEALTH.increment(-event.damage)
+        event.invader.removeFromWorld()
       })
   }
 

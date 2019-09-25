@@ -2,7 +2,6 @@ package galacticCombat.invader
 
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.components.ProjectileComponent
-import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.entity.component.Component
 import galacticCombat.GalacticCombatApp
@@ -10,21 +9,18 @@ import galacticCombat.GameVars
 import galacticCombat.bullet.BulletData
 import galacticCombat.bullet.BulletEffect
 import galacticCombat.bullet.BulletEffectType
-import galacticCombat.event.EnemyReachedGoalEvent
+import galacticCombat.event.InvaderEvents
 import galacticCombat.toPoint
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.geometry.Point2D
 
-class InvaderComponent(
-  val maxHealth: Double = 100.0,
-  private val baseSpeed: Double = 60.0 //move this into a new InvaderData.kt file
-) : Component() {
+class InvaderComponent(val data: InvaderData) : Component() {
   private lateinit var wayPoints: List<Point2D>
   private lateinit var nextWayPoint: Point2D
   private lateinit var lastWayPoint: Point2D
   private lateinit var projectile: ProjectileComponent
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
-  var health: SimpleDoubleProperty = SimpleDoubleProperty(maxHealth)
+  var health: SimpleDoubleProperty = SimpleDoubleProperty(data.maxHealth)
 
   private val poisonEffects: ArrayList<Pair<Double, BulletEffect>> = arrayListOf()
   private val slowEffects: ArrayList<Pair<Double, BulletEffect>> = arrayListOf()
@@ -35,26 +31,25 @@ class InvaderComponent(
     wayPoints = (FXGL.getApp() as GalacticCombatApp).waypoints
     nextWayPoint = wayPoints[wayPointIndex]
     lastWayPoint = wayPoints[wayPointIndex - 1]
-    projectile = ProjectileComponent(Point2D(0.0, 0.0), baseSpeed)
+    projectile = ProjectileComponent(Point2D(0.0, 0.0), data.baseSpeed)
     entity.addComponent(projectile)
 
-    getGameState().increment(GameVars.ALIVE_ENEMIES.id, +1)
+    GameVars.ALIVE_ENEMIES.increment(+1)
   }
 
   override fun onUpdate(tpf: Double) {
     checkHealth()
 
-    println("Slow: $slowEffects")
-
     followPath(tpf)
 
     // Effects
+    timeoutEffects()
     sufferPoison(tpf)
-    sufferSlow(tpf)
+    sufferSlow()
   }
 
   override fun onRemoved() {
-    getGameState().increment(GameVars.ALIVE_ENEMIES.id, -1)
+    GameVars.ALIVE_ENEMIES.increment(-1)
   }
 
   fun inflictDamage(bullet: BulletData) {
@@ -82,7 +77,7 @@ class InvaderComponent(
       entity.position = nextWayPoint
       wayPointIndex++
       if (isLastWaypoint()) {
-        FXGL.getEventBus().fireEvent(EnemyReachedGoalEvent(entity))
+        FXGL.getEventBus().fireEvent(InvaderEvents(entity, data.damage))
       } else {
         lastWayPoint = nextWayPoint
         nextWayPoint = wayPoints[wayPointIndex]
@@ -93,19 +88,22 @@ class InvaderComponent(
   private fun isAtNextWaypoint(tpf: Double) = nextWayPoint.distance(entity.position) < projectile.speed * tpf
   private fun isLastWaypoint() = wayPoints.size <= wayPointIndex
 
-  private fun sufferPoison(tpf: Double) {
+  private fun timeoutEffects() {
     val now = getGameTimer().now
-    poisonEffects.removeIf { now > it.first + it.second.duration }
+    listOf(poisonEffects, slowEffects).forEach { effectList ->
+      effectList.removeIf { now > it.first + it.second.duration }
+    }
+  }
+
+  private fun sufferPoison(tpf: Double) {
     poisonEffects.forEach {
       health.value -= it.second.amount * tpf
     }
   }
 
-  private fun sufferSlow(tpf: Double) {
-    val now = getGameTimer().now
-    slowEffects.removeIf { now > it.first + it.second.duration } // TODO duplicate code, move the logic out
-    if (slowEffects.isEmpty()) projectile.speed = baseSpeed
-    else projectile.speed = (slowEffects.map { it.second }.minBy { it.amount }?.amount ?: 1.0) * baseSpeed
+  private fun sufferSlow() {
+    if (slowEffects.isEmpty()) projectile.speed = data.baseSpeed
+    else projectile.speed = (slowEffects.map { it.second }.minBy { it.amount }?.amount ?: 1.0) * data.baseSpeed
   }
 
   private fun checkHealth() {

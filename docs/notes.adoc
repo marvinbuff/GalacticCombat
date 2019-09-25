@@ -23,7 +23,6 @@ But improve it with a fade out and maybe accumulation.
 
 To-Do::
 - Let enemy give gold and/or exp
-- Create a InvaderData.kt file
 - Add losing screen
 - Design how the tower cost and exp will work.
 - Design how the mana system should work at the beginning.

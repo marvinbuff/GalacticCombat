@@ -1,6 +1,7 @@
 package galacticCombat
 
 import com.almasb.fxgl.app.ApplicationMode
+import com.almasb.fxgl.dsl.getGameState
 
 //TODO maybe use a config folder with each object in a file.
 
@@ -14,7 +15,7 @@ object AppConfig {
 }
 
 object AchievementConfig {
-  const val GOLD_ACHIEVEMNENT_1 = 100
+  const val GOLD_ACHIEVEMENT_1 = 100
 }
 
 enum class GameVars(val initial: Int) {
@@ -29,6 +30,10 @@ enum class GameVars(val initial: Int) {
   ;
 
   val id: String = name
+
+  fun increment(increment: Int) {
+    getGameState().increment(name, increment)
+  }
 
   companion object{
     fun getVarsInTopBar(): List<GameVars>{
