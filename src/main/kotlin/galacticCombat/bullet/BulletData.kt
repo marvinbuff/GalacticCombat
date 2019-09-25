@@ -36,8 +36,8 @@ open class BulletData private constructor(
 
     private fun createSpore(level: Int): BulletData {
       //TODO implement scaling with level and specialization
-      val bulletEffect = BulletEffect(BulletEffectType.POISON, 10.0, 6.0)
-      return BulletData(5.0, 0.0, effect = bulletEffect)
+      val bulletEffect = BulletEffect(BulletEffectType.POISON, 1.5, 6.0)
+      return BulletData(4.0, 0.0, effect = bulletEffect)
     }
 
   }
@@ -47,6 +47,6 @@ data class BulletEffect(val type: BulletEffectType, val amount: Double, var dura
 
 enum class BulletEffectType{
   NONE,
-  POISON,
+  POISON, //amount: dps
   SLOW
 }

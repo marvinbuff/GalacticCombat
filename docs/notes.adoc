@@ -17,16 +17,18 @@ endif::[]
 
 === Roadmap
 
+Issue List::
+- Re-enable the label showing damage numbers.
+But improve it with a fade out and maybe accumulation.
+
 To-Do::
 - Let enemy give gold and/or exp
-- Add the other tower buttons
-- Move buttons away from topbar
+- Create a InvaderData.kt file
 - Add losing screen
 - Design how the tower cost and exp will work.
 - Design how the mana system should work at the beginning.
 
 Next Features::
-- Button to buy tower
 - Nicer UI: shop part, nice display for money and health
 - Background Image
 - Painted Path
