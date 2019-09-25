@@ -44,6 +44,8 @@ class InvaderComponent(
   override fun onUpdate(tpf: Double) {
     checkHealth()
 
+    println("Slow: $slowEffects")
+
     followPath(tpf)
 
     // Effects
@@ -103,7 +105,7 @@ class InvaderComponent(
     val now = getGameTimer().now
     slowEffects.removeIf { now > it.first + it.second.duration } // TODO duplicate code, move the logic out
     if (slowEffects.isEmpty()) projectile.speed = baseSpeed
-    else projectile.speed = slowEffects.map { it.second }.minBy { it.amount }?.amount ?: baseSpeed
+    else projectile.speed = (slowEffects.map { it.second }.minBy { it.amount }?.amount ?: 1.0) * baseSpeed
   }
 
   private fun checkHealth() {

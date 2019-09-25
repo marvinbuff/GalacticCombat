@@ -22,11 +22,11 @@ open class BulletData private constructor(
 
     fun create(towerType: TowerType, level: Int): BulletData =
       when(towerType){
-        CANNON -> createCannon(level)
-        SPORE  -> createSpore(level)
-        TACTICAL -> createCannon(level)
-        CRYONIC -> createCannon(level)
-        STORM -> createCannon(level)
+        CANNON   -> createCannon(level)
+        SPORE    -> createSpore(level)
+        TACTICAL -> createTactical(level)
+        CRYONIC  -> createCryonic(level)
+        STORM    -> createCannon(level)
       }
 
     private fun createCannon(level: Int): BulletData {
@@ -38,6 +38,17 @@ open class BulletData private constructor(
       //TODO implement scaling with level and specialization
       val bulletEffect = BulletEffect(BulletEffectType.POISON, 1.5, 6.0)
       return BulletData(4.0, 0.0, effect = bulletEffect)
+    }
+
+    private fun createCryonic(level: Int): BulletData {
+      //TODO implement scaling with level and specialization
+      val bulletEffect = BulletEffect(BulletEffectType.SLOW, 0.5, 6.0)
+      return BulletData(4.0, 0.0, effect = bulletEffect)
+    }
+
+    private fun createTactical(level: Int): BulletData {
+      //TODO implement scaling with level and specialization
+      return BulletData(15.0, 8.0, 4.0)
     }
 
   }
