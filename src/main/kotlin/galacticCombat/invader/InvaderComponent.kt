@@ -6,6 +6,9 @@ import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.entity.component.Component
 import galacticCombat.GalacticCombatApp
 import galacticCombat.GameVars
+import galacticCombat.bullet.BulletData
+import galacticCombat.bullet.BulletEffect
+import galacticCombat.bullet.BulletEffectType
 import galacticCombat.event.EnemyReachedGoalEvent
 import galacticCombat.toPoint
 import javafx.beans.property.SimpleDoubleProperty
@@ -20,6 +23,8 @@ class InvaderComponent(
   private lateinit var projectile: ProjectileComponent
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
   var health: SimpleDoubleProperty = SimpleDoubleProperty(maxHealth)
+
+  val poisonEffects: ArrayList<BulletEffect> = arrayListOf()
 
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
@@ -46,17 +51,27 @@ class InvaderComponent(
         nextWayPoint = wayPoints[wayPointIndex]
       }
     }
+
+    // Go through effects
+    poisonEffects.removeIf { it.duration <= 0 }
+    poisonEffects.forEach {
+      val time = (tpf / 100)
+      health.value -= it.amount * time
+      it.duration -= time
+    }
   }
 
   override fun onRemoved() {
     getGameState().increment(GameVars.ALIVE_ENEMIES.id, -1)
   }
 
-  fun inflictDamage(damage: Double){
-    health.value -= damage
+  fun inflictDamage(bullet: BulletData) {
+    health.value -= bullet.damage
     if (health.doubleValue() <= 0.0){
       entity.removeFromWorld()
     }
+    val effect = bullet.effect
+    if (effect.type == BulletEffectType.POISON) poisonEffects += effect
   }
 
   fun getProgress(): Double {
