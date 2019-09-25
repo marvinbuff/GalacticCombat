@@ -7,7 +7,7 @@ import javafx.scene.paint.Color
 
 class HealthComponent(invaderComponent: InvaderComponent) : ChildViewComponent(-5.0, -15.0, false) {
 
-  private val hpBar = ProgressBar()
+  private val hpBar = ProgressBar(false)
 
   init {
     hpBar.setMinValue(0.0)
@@ -16,6 +16,7 @@ class HealthComponent(invaderComponent: InvaderComponent) : ChildViewComponent(-
     hpBar.setHeight(8.0)
     hpBar.setLabelPosition(Position.TOP)
     hpBar.isLabelVisible = false
+    hpBar.setLabelFill(Color.RED)
     hpBar.setFill(Color.GREEN)
 
     hpBar.currentValueProperty().bind(
