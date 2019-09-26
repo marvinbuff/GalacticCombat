@@ -8,23 +8,24 @@ import com.almasb.fxgl.entity.Spawns
 import galacticCombat.AssetsConfig
 import galacticCombat.EntityType
 import galacticCombat.INVADER_ID
+import javafx.geometry.Point2D
 
 @Suppress("unused")
 class InvadorFactory : EntityFactory {
 
-
   @Spawns(INVADER_ID)
   fun spawnEnemy(data: SpawnData): Entity {
+    val position = Point2D(data.x, data.y).subtract(InvaderComponent.center)
     val invaderData = parseInvaderData(data)
     val invader = InvaderComponent(invaderData)
     val healthBar = HealthComponent(invader)
 
     return entityBuilder().type(EntityType.INVADER)
-      .from(data)
+        .at(position)
         .viewWithBBox(invaderData.texture)
-      .with(invader)
-      .with(healthBar)
-      .build()
+        .with(invader)
+        .with(healthBar)
+        .build()
   }
 
   private fun parseInvaderData(data: SpawnData): InvaderData =
