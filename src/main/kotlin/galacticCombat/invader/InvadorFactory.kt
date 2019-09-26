@@ -21,7 +21,7 @@ class InvadorFactory : EntityFactory {
 
     return entityBuilder().type(EntityType.INVADER)
       .from(data)
-      .viewWithBBox(AssetsConfig.getEnemy("1.1.gif"))
+      .viewWithBBox(AssetsConfig.getInvader("1.1.gif"))
       .with(CollidableComponent(true))
       .with(invader)
       .with(healthBar)
@@ -30,6 +30,10 @@ class InvadorFactory : EntityFactory {
 
   private fun getInvaderData(type: InvaderType): InvaderData {
     //TODO make dynamic
+    val asset = when (type) {
+      InvaderType.COMMON -> AssetsConfig.getInvader("1.3.gif")
+    }
+
     return when (type) {
       InvaderType.COMMON -> InvaderData(100.0, 60.0, 20)
     }
