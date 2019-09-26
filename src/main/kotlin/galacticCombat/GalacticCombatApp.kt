@@ -15,6 +15,7 @@ import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.fxgl.saving.DataFile
 import galacticCombat.bullet.BulletFactory
 import galacticCombat.event.InvaderEvents
+import galacticCombat.invader.InvaderType
 import galacticCombat.invader.InvadorFactory
 import galacticCombat.tower.PlaceholderFactory
 import galacticCombat.tower.TowerFactory
@@ -66,16 +67,20 @@ class GalacticCombatApp : GameApplication() {
 
     val spawnInvader = Runnable {
       GameVars.ENEMIES_TO_SPAWN.increment(-1)
+      val index = GameVars.ENEMIES_TO_SPAWN.get()
       getGameWorld().spawn(
         INVADER_ID,
-        SpawnData(waypoints.first().x - 12.5, waypoints.first().y - 12.5).put("color", Color.BLUE).put("index", 1)
+          SpawnData(waypoints.first()).put(InvaderType.id, InvaderType.values()[index])
       )
     }
 
-    val goldTrickle = Runnable { GameVars.GOLD.increment(5) }
+    val trickle = Runnable {
+      GameVars.GOLD.increment(5)
+      GameVars.SCORE.increment(5)
+    }
 
     getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
-    getGameTimer().runAtInterval(goldTrickle, Duration.seconds(1.0))
+    getGameTimer().runAtInterval(trickle, Duration.seconds(1.0))
 
     // Invader Events
     FXGL.getEventBus().apply {
@@ -90,6 +95,7 @@ class GalacticCombatApp : GameApplication() {
         InvaderEvents.INVADER_KILLED,
         EventHandler { event ->
           GameVars.EXPERIENCE.increment(event.invader.data.xp)
+          GameVars.SCORE.increment(event.invader.data.bounty)
           event.invader.entity.removeFromWorld()
         })
     }
