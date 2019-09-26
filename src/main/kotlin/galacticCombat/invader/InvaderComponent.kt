@@ -31,7 +31,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
     wayPoints = (FXGL.getApp() as GalacticCombatApp).waypoints
     nextWayPoint = wayPoints[wayPointIndex]
     lastWayPoint = wayPoints[wayPointIndex - 1]
-    projectile = ProjectileComponent(Point2D(0.0, 0.0), data.baseSpeed)
+    projectile = ProjectileComponent(Point2D(0.0, 0.0), data.baseSpeed.speed)
     entity.addComponent(projectile)
 
     GameVars.ALIVE_ENEMIES.increment(+1)
@@ -102,8 +102,8 @@ class InvaderComponent(val data: InvaderData) : Component() {
   }
 
   private fun sufferSlow() {
-    if (slowEffects.isEmpty()) projectile.speed = data.baseSpeed
-    else projectile.speed = (slowEffects.map { it.second }.minBy { it.amount }?.amount ?: 1.0) * data.baseSpeed
+    if (slowEffects.isEmpty()) projectile.speed = data.baseSpeed.speed
+    else projectile.speed = (slowEffects.map { it.second }.minBy { it.amount }?.amount ?: 1.0) * data.baseSpeed.speed
   }
 
   private fun checkHealth() {

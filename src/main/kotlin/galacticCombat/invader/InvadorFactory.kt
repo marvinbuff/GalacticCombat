@@ -5,7 +5,6 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
-import com.almasb.fxgl.entity.components.CollidableComponent
 import galacticCombat.AssetsConfig
 import galacticCombat.EntityType
 import galacticCombat.INVADER_ID
@@ -16,26 +15,38 @@ class InvadorFactory : EntityFactory {
 
   @Spawns(INVADER_ID)
   fun spawnEnemy(data: SpawnData): Entity {
-    val invader = InvaderComponent(getInvaderData(InvaderType.COMMON))
+    val invaderData = parseInvaderData(data)
+    val invader = InvaderComponent(invaderData)
     val healthBar = HealthComponent(invader)
 
     return entityBuilder().type(EntityType.INVADER)
       .from(data)
-      .viewWithBBox(AssetsConfig.getInvader("1.1.gif"))
-      .with(CollidableComponent(true))
+        .viewWithBBox(invaderData.texture)
       .with(invader)
       .with(healthBar)
       .build()
   }
 
+  private fun parseInvaderData(data: SpawnData): InvaderData =
+      if (data.hasKey(InvaderType.id)) {
+        getInvaderData(data.get(InvaderType.id))
+      } else {
+        data.get(InvaderData.id)
+      }
+
   private fun getInvaderData(type: InvaderType): InvaderData {
-    //TODO make dynamic
-    val asset = when (type) {
-      InvaderType.COMMON -> AssetsConfig.getInvader("1.3.gif")
-    }
+    val asset = AssetsConfig.getInvader(
+        when (type) {
+          InvaderType.COMMON      -> "1.2.gif"
+          InvaderType.REINFORCED  -> "2.21.gif"
+          InvaderType.ACCELERATED -> "3.21.gif"
+        }
+    )
 
     return when (type) {
-      InvaderType.COMMON -> InvaderData(100.0, 60.0, 20)
+      InvaderType.COMMON      -> InvaderData(asset, 100.0, Speed.NORMAL, 2.0, 10)
+      InvaderType.REINFORCED  -> InvaderData(asset, 100.0, Speed.SLOW, 8.0, 10)
+      InvaderType.ACCELERATED -> InvaderData(asset, 80.0, Speed.FAST, 0.0, 10)
     }
   }
 
@@ -43,7 +54,10 @@ class InvadorFactory : EntityFactory {
 }
 
 enum class InvaderType(val title: String) {
-  COMMON("Cannon Tower");
+  COMMON("Common Invader"),
+  REINFORCED("Common Invader"),
+  ACCELERATED("Common Invader")
+  ;
 
   companion object {
     const val id = "InvaderType"
