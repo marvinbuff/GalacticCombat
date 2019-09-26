@@ -3,7 +3,6 @@ package galacticCombat.ui
 import com.almasb.fxgl.app.GameScene
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.ui.InGamePanel
-import com.almasb.sslogger.Logger
 import galacticCombat.GameVars
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.geometry.Insets
@@ -13,8 +12,6 @@ import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 
 class TopBar(private val scene: GameScene) {
-
-  private val log = Logger.get(javaClass)
 
   private val panel = InGamePanel(350.0, scene.height)
 
