@@ -31,7 +31,7 @@ class InvadorFactory : EntityFactory {
   private fun getInvaderData(type: InvaderType): InvaderData {
     //TODO make dynamic
     return when (type) {
-      InvaderType.COMMON -> InvaderData(100.0, 60.0, 20.0)
+      InvaderType.COMMON -> InvaderData(100.0, 60.0, 20)
     }
   }
 

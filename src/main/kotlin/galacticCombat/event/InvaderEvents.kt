@@ -1,12 +1,13 @@
 package galacticCombat.event
 
-import com.almasb.fxgl.entity.Entity
+import galacticCombat.invader.InvaderComponent
 import javafx.event.Event
 import javafx.event.EventType
 
-class InvaderEvents(val invader: Entity, val damage: Int) : Event(ANY) {
+class InvaderEvents(eventType: EventType<InvaderEvents>, val invader: InvaderComponent) : Event(eventType) {
 
   companion object {
-    val ANY: EventType<InvaderEvents> = EventType(Event.ANY, "EnemyReachedGoalEvent")
+    val INVADER_REACHED_GOAL: EventType<InvaderEvents> = EventType(ANY, "InvaderReachedGoalEvent")
+    val INVADER_KILLED: EventType<InvaderEvents> = EventType(ANY, "InvaderKilled")
   }
 }

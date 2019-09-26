@@ -25,6 +25,7 @@ enum class GameVars(val initial: Int) {
 
   // Shown to the Player
   GOLD(600),
+  EXPERIENCE(100),
   HEALTH(10),
   SCORE(0)
   ;
@@ -37,7 +38,7 @@ enum class GameVars(val initial: Int) {
 
   companion object{
     fun getVarsInTopBar(): List<GameVars>{
-      return listOf(GOLD, HEALTH, SCORE, ENEMIES_TO_SPAWN, ALIVE_ENEMIES)
+      return listOf(GOLD, EXPERIENCE, HEALTH, SCORE, ENEMIES_TO_SPAWN, ALIVE_ENEMIES)
     }
   }
 }

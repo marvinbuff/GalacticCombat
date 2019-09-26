@@ -72,14 +72,28 @@ class GalacticCombatApp : GameApplication() {
       )
     }
 
-    getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
+    val goldTrickle = Runnable { GameVars.GOLD.increment(5) }
 
-    FXGL.getEventBus().addEventHandler(
-        InvaderEvents.ANY,
-      EventHandler { event ->
-        GameVars.HEALTH.increment(-event.damage)
-        event.invader.removeFromWorld()
-      })
+    getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
+    getGameTimer().runAtInterval(goldTrickle, Duration.seconds(1.0))
+
+    // Invader Events
+    FXGL.getEventBus().apply {
+      addEventHandler(
+        InvaderEvents.INVADER_REACHED_GOAL,
+        EventHandler { event ->
+          GameVars.HEALTH.increment(-event.invader.data.damage)
+          event.invader.entity.removeFromWorld()
+        })
+
+      addEventHandler(
+        InvaderEvents.INVADER_KILLED,
+        EventHandler { event ->
+          GameVars.EXPERIENCE.increment(event.invader.data.xp)
+          event.invader.entity.removeFromWorld()
+        })
+    }
+
   }
 
   override fun initInput() {

@@ -77,7 +77,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
       entity.position = nextWayPoint
       wayPointIndex++
       if (isLastWaypoint()) {
-        FXGL.getEventBus().fireEvent(InvaderEvents(entity, data.damage))
+        FXGL.getEventBus().fireEvent(InvaderEvents(InvaderEvents.INVADER_REACHED_GOAL, this))
       } else {
         lastWayPoint = nextWayPoint
         nextWayPoint = wayPoints[wayPointIndex]
@@ -108,7 +108,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
 
   private fun checkHealth() {
     if (health.doubleValue() <= 0.0) {
-      entity.removeFromWorld()
+      FXGL.getEventBus().fireEvent(InvaderEvents(InvaderEvents.INVADER_KILLED, this))
     }
   }
 
