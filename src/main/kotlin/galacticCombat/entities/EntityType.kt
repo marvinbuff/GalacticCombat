@@ -1,4 +1,4 @@
-package galacticCombat
+package galacticCombat.entities
 
 // we need to have const val for the compiler to use it in the annotations
 const val TOWER_SPAWN_ID = "Tower"

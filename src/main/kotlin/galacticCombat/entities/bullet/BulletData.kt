@@ -1,12 +1,12 @@
-package galacticCombat.bullet
+package galacticCombat.entities.bullet
 
-import galacticCombat.AssetsConfig
-import galacticCombat.tower.TowerType
-import galacticCombat.tower.TowerType.CANNON
-import galacticCombat.tower.TowerType.CRYONIC
-import galacticCombat.tower.TowerType.SPORE
-import galacticCombat.tower.TowerType.STORM
-import galacticCombat.tower.TowerType.TACTICAL
+import galacticCombat.configs.AssetConfig
+import galacticCombat.entities.tower.TowerType
+import galacticCombat.entities.tower.TowerType.CANNON
+import galacticCombat.entities.tower.TowerType.CRYONIC
+import galacticCombat.entities.tower.TowerType.SPORE
+import galacticCombat.entities.tower.TowerType.STORM
+import galacticCombat.entities.tower.TowerType.TACTICAL
 
 open class BulletData private constructor(
     val damage: Double,
@@ -15,7 +15,7 @@ open class BulletData private constructor(
     val range: Double = 300.0,
     val bulletSpeed: Double = 300.0,
     val effect: BulletEffect = BulletEffect(BulletEffectType.NONE, 0.0, 0.0), //TODO implement effects
-    val texture: String = AssetsConfig.get("beeper.png")
+  val texture: String = AssetConfig.get("beeper.png")
 ){
   companion object{
     const val id = "BulletData"
@@ -30,8 +30,8 @@ open class BulletData private constructor(
       }
 
     private fun createCannon(level: Int): BulletData {
-      //TODO implement scaling with level and specialization
-      return BulletData(10.0, 2.0)
+      val damage = 10.0 + (level - 1) * 3
+      return BulletData(damage, 2.0)
     }
 
     private fun createSpore(level: Int): BulletData {
@@ -52,12 +52,4 @@ open class BulletData private constructor(
     }
 
   }
-}
-
-data class BulletEffect(val type: BulletEffectType, val amount: Double, var duration: Double)
-
-enum class BulletEffectType{
-  NONE,
-  POISON, //amount: dps
-  SLOW
 }

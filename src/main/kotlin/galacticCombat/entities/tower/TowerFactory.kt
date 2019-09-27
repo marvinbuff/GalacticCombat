@@ -1,4 +1,4 @@
-package galacticCombat.tower
+package galacticCombat.entities.tower
 
 import com.almasb.fxgl.dsl.FXGL.Companion.getGameWorld
 import com.almasb.fxgl.dsl.entityBuilder
@@ -6,10 +6,10 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
-import galacticCombat.AssetsConfig
-import galacticCombat.EntityType
-import galacticCombat.TOWER_SPAWN_ID
-import galacticCombat.bullet.BulletData
+import galacticCombat.configs.AssetConfig
+import galacticCombat.entities.EntityType
+import galacticCombat.entities.TOWER_SPAWN_ID
+import galacticCombat.entities.bullet.BulletData
 import javafx.geometry.Point2D
 
 
@@ -44,7 +44,7 @@ class TowerFactory : EntityFactory {
   companion object {
     fun spawnFromTowerData(data: TowerData, position: Point2D) {
       getGameWorld().spawn(
-          TOWER_SPAWN_ID,
+        TOWER_SPAWN_ID,
           SpawnData(position).put(TowerData.id, data)
       )
 
@@ -54,11 +54,11 @@ class TowerFactory : EntityFactory {
       val bulletData = BulletData.create(type, 1)
 
       val asset = when (type) {
-        TowerType.CANNON   -> AssetsConfig.getTower("1.3.gif")
-        TowerType.SPORE    -> AssetsConfig.getTower("3.3.gif")
-        TowerType.TACTICAL -> AssetsConfig.getTower("4.3.gif")
-        TowerType.CRYONIC  -> AssetsConfig.getTower("2.3.gif")
-        TowerType.STORM    -> AssetsConfig.getTower("6.3.gif")
+        TowerType.CANNON   -> AssetConfig.getTower("1.3.gif")
+        TowerType.SPORE    -> AssetConfig.getTower("3.3.gif")
+        TowerType.TACTICAL -> AssetConfig.getTower("4.3.gif")
+        TowerType.CRYONIC  -> AssetConfig.getTower("2.3.gif")
+        TowerType.STORM    -> AssetConfig.getTower("6.3.gif")
       }
 
       return TowerData(
@@ -67,17 +67,5 @@ class TowerFactory : EntityFactory {
           asset
       )
     }
-  }
-}
-
-enum class TowerType(val title: String) {
-  CANNON("Cannon Tower"),
-  SPORE("Spore Launcher"),
-  TACTICAL("Tactical Tower"),
-  CRYONIC("Cryonic Tower"),
-  STORM("Storm Conjurer");
-
-  companion object {
-    const val id = "TowerType"
   }
 }

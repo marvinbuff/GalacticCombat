@@ -3,7 +3,7 @@ package galacticCombat.ui
 import com.almasb.fxgl.app.GameScene
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.ui.InGamePanel
-import galacticCombat.GameVars
+import galacticCombat.configs.GameVars
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.geometry.Insets
 import javafx.scene.layout.GridPane

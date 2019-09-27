@@ -4,6 +4,7 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.GameWorld
 import com.almasb.fxgl.entity.level.Level
 import com.almasb.fxgl.entity.level.LevelLoader
+import galacticCombat.configs.AppConfig
 import java.net.URL
 
 class GalacticCombatLevelLoader : LevelLoader {

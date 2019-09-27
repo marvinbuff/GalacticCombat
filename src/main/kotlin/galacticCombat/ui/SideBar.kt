@@ -2,8 +2,8 @@ package galacticCombat.ui
 
 import com.almasb.fxgl.app.GameScene
 import com.almasb.fxgl.ui.InGamePanel
-import galacticCombat.tower.TowerFactory
-import galacticCombat.tower.TowerType
+import galacticCombat.entities.tower.TowerFactory
+import galacticCombat.entities.tower.TowerType
 import galacticCombat.ui.elements.TowerButton
 import javafx.geometry.HorizontalDirection
 import javafx.geometry.Insets

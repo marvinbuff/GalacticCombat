@@ -1,4 +1,4 @@
-package galacticCombat.tower
+package galacticCombat.entities.tower
 
 import com.almasb.fxgl.dsl.getInput
 import com.almasb.fxgl.entity.component.Component

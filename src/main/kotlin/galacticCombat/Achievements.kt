@@ -1,6 +1,7 @@
 package galacticCombat
 
 import com.almasb.fxgl.achievement.Achievement
+import galacticCombat.configs.AchievementConfig
 
 
 val achievements = listOf(

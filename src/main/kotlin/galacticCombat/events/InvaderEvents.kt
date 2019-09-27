@@ -1,6 +1,6 @@
-package galacticCombat.event
+package galacticCombat.events
 
-import galacticCombat.invader.InvaderComponent
+import galacticCombat.entities.invader.InvaderComponent
 import javafx.event.Event
 import javafx.event.EventType
 

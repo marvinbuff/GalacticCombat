@@ -1,15 +1,15 @@
-package galacticCombat.invader
+package galacticCombat.entities.invader
 
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.entity.component.Component
-import galacticCombat.GameVars
-import galacticCombat.bullet.BulletData
-import galacticCombat.bullet.BulletEffect
-import galacticCombat.bullet.BulletEffectType
-import galacticCombat.event.InvaderEvents
-import galacticCombat.toPoint
+import galacticCombat.configs.GameVars
+import galacticCombat.entities.bullet.BulletData
+import galacticCombat.entities.bullet.BulletEffect
+import galacticCombat.entities.bullet.BulletEffectType
+import galacticCombat.events.InvaderEvents
+import galacticCombat.utils.toPoint
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.geometry.Point2D
 import kotlin.math.max

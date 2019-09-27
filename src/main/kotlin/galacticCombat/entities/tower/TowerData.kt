@@ -1,6 +1,6 @@
-package galacticCombat.tower
+package galacticCombat.entities.tower
 
-import galacticCombat.bullet.BulletData
+import galacticCombat.entities.bullet.BulletData
 
 data class TowerData(
     val towerType: TowerType,

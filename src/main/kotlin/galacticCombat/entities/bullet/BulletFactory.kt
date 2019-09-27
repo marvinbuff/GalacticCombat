@@ -1,20 +1,19 @@
-package galacticCombat.bullet
+package galacticCombat.entities.bullet
 
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
-import galacticCombat.BULLET_SPAWN_ID
-import galacticCombat.EntityType
+import galacticCombat.entities.BULLET_SPAWN_ID
+import galacticCombat.entities.EntityType
 
 @Suppress("unused")
 class BulletFactory : EntityFactory {
 
-
   /**
    * Spawns a Bullet.
-   * SpawnData [data] must contain the following entries:
+   * @param data Needs to contain the following entries:
    * - [BulletData.id]
    * - "target"
    */
@@ -30,6 +29,4 @@ class BulletFactory : EntityFactory {
         .with(BulletComponent(target, bulletData))
         .build()
   }
-
-
 }
