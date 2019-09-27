@@ -86,7 +86,6 @@ Bullets consist of the following parts:
 - View
 - Speed
 - Target
-- On-hit lambda
 
 === Invader
 
@@ -132,18 +131,34 @@ Traits::
 
 The game holds various variables which are either kept between waves, levels, or instances.
 
-Level Variables::
-- Health
-- Gold
-- Wave Index
-- Wave Timer
-- Level Score
+Health:: Health is reduced by invaders reaching the goal and on zero health, the game is over.
+Gold:: Gold is earned passively and allows the player to buy towers.
+Experience:: Destroying an invader grants experience, which can be used to level up towers.
+Score:: The score is a metric to measure how efficiently a player has beaten a level.
+You gain points over time, by destroying invaders, and from any unspent resource at the end of a level.
 
 === Level
 
 TODO::
-- what is the information sufficient to describe a level (background, path, spawner, enabled towers, start money, etc.)
-- list of levels
+* what is the information sufficient to describe a level (background, path, spawner, enabled towers, start money, etc.)
+* list of levels
+
+==== Details
+
+Each level includes the following data:
+
+* Title
+* Description
+* Difficulty Rating
+* A set of Way Points
+* A set of Waves, each wave having
+** as set of mappings from time to Invader
+
+Future Ides:
+
+* (The trickle gold depends on the level)
+* (Environment objects, which are just entities marked by a time.)
+* (Randomness)
 
 === Miscellaneous
 
