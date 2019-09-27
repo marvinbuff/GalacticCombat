@@ -79,6 +79,37 @@ Properties::
 - Turret Speed
 - Targeting Strategy (Foremost, High Health, Effect Not Yet Applied)
 
+Scaling::
+- Level 1-3 give around 10% of extra damage per level, with an extra 5% of utility.
+- Level 4 allows to take a specialization, with 15% utility increase.
+- Level 5 is the final upgrade.
+It costs more and gives a massive stat boost.
+- Overview: 100% + 15% + 15% + 15% + 15% + 40%
+
+Upgrade Ideas::
+* General
+** AOE Variant
+** Quicker Reload
+** Faster Turret Speed
+** More Range
+* Cannon Tower (more damage/penetration)
+**  ?
+* Spore Launcher (higher dot)
+** Poison Cloud (static cloud applying dots once per entity for x seconds)
+** Lethal Poison (Less ticks, same damage)
+* Tactical Tower (more damage/penetration)
+** Penetrates Obstacles
+** Armour Shred
+** High Caliber (more range, more delay, more damage, more penetration)
+//|=== //todo, decide on what upgrades to use
+//| Tower          | Level 1-3 | Variant I | Variant II | Variant III | Comment
+//| Cannon Tower   | Normal |  | | |
+//| Spore Launcher | Applies Dot | | Poison Spreads | Less Ticks |
+//| Tactical Tower | High dmg and pen | Shred Armour | | |
+//| Cryonic Tower  | Slows enemy | AOE Slow | | |
+//| Storm Conjurer | Chain | | | |
+//|===
+
 === Bullet
 
 Bullets consist of the following parts:
@@ -109,7 +140,9 @@ A list of all planned and implemented invaders with their stats.
 
 Levels::
 Each invader has comes in variations for Level 1 - 3. A level up increases the health, armour, and special effects of an invader.
-(+50?, +2?)
+
+Scaling::
+* Level 1-3: 41.2% improvement per level -> 100 to 141 to 200
 
 Properties::
 - Health

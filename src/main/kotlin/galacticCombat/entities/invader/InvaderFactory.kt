@@ -9,6 +9,7 @@ import galacticCombat.configs.AssetConfig
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.INVADER_ID
 import javafx.geometry.Point2D
+import kotlin.math.pow
 
 @Suppress("unused")
 class InvaderFactory : EntityFactory {
@@ -30,12 +31,12 @@ class InvaderFactory : EntityFactory {
 
   private fun parseInvaderData(data: SpawnData): InvaderData =
       if (data.hasKey(InvaderType.id)) {
-        getInvaderData(data.get(InvaderType.id))
+        getInvaderData(data.get(InvaderType.id), 1)
       } else {
         data.get(InvaderData.id)
       }
 
-  private fun getInvaderData(type: InvaderType): InvaderData {
+  private fun getInvaderData(type: InvaderType, level: Int): InvaderData {
     val asset = AssetConfig.getInvader(
         when (type) {
           InvaderType.COMMON      -> "1.2.gif"
@@ -45,10 +46,19 @@ class InvaderFactory : EntityFactory {
     )
 
     return when (type) {
-      InvaderType.COMMON      -> InvaderData(asset, 100.0, Speed.NORMAL, 2.0, 10)
-      InvaderType.REINFORCED  -> InvaderData(asset, 100.0, Speed.SLOW, 8.0, 10)
-      InvaderType.ACCELERATED -> InvaderData(asset, 80.0, Speed.FAST, 0.0, 10)
+      InvaderType.COMMON      -> getInvaderDataFromDynamic(level, asset, Speed.NORMAL, 100.0, 2.0)
+      InvaderType.REINFORCED  -> getInvaderDataFromDynamic(level, asset, Speed.SLOW, 100.0, 8.0)
+      InvaderType.ACCELERATED -> getInvaderDataFromDynamic(level, asset, Speed.FAST, 80.0, 0.0)
     }
+  }
+
+  private fun getInvaderDataFromDynamic(level: Int, asset: String, speed: Speed, health: Double, armour: Double): InvaderData {
+    return InvaderData(asset, scale(health, level), speed, scale(armour, level), 10)
+  }
+
+  private fun scale(value: Double, level: Int): Double {
+    val scaling = 1.412
+    return value * scaling.pow(level)
   }
 
 
