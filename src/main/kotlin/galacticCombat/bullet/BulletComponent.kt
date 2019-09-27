@@ -28,7 +28,7 @@ class BulletComponent(
 
     if (vectorToTarget.magnitude() < projectile.speed * tpf) {
       if (target.isActive) {
-        target.getComponent(InvaderComponent::class.java).inflictDamage(data)
+        target.getComponent(InvaderComponent::class.java).hitWithBullet(data)
       }
       entity.removeFromWorld()
     }

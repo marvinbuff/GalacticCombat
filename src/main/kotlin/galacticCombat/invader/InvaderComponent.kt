@@ -4,7 +4,6 @@ import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.entity.component.Component
-import galacticCombat.GalacticCombatApp
 import galacticCombat.GameVars
 import galacticCombat.bullet.BulletData
 import galacticCombat.bullet.BulletEffect
@@ -13,24 +12,25 @@ import galacticCombat.event.InvaderEvents
 import galacticCombat.toPoint
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.geometry.Point2D
+import kotlin.math.max
 
 class InvaderComponent(val data: InvaderData) : Component() {
-  private lateinit var wayPoints: List<Point2D>
   private lateinit var nextWayPoint: Point2D
   private lateinit var lastWayPoint: Point2D
-  private lateinit var projectile: ProjectileComponent
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
+  private lateinit var projectile: ProjectileComponent
   var health: SimpleDoubleProperty = SimpleDoubleProperty(data.maxHealth)
 
   private val poisonEffects: ArrayList<Pair<Double, BulletEffect>> = arrayListOf()
   private val slowEffects: ArrayList<Pair<Double, BulletEffect>> = arrayListOf()
 
+  //region -------------------- Inherited Members ------------------------
+
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
 
-    wayPoints = (FXGL.getApp() as GalacticCombatApp).waypoints
-    nextWayPoint = wayPoints[wayPointIndex]
-    lastWayPoint = wayPoints[wayPointIndex - 1]
+    nextWayPoint = data.wayPoints[wayPointIndex]
+    lastWayPoint = data.wayPoints[wayPointIndex - 1]
     projectile = ProjectileComponent(Point2D(0.0, 0.0), data.baseSpeed.speed)
     entity.addComponent(projectile)
 
@@ -52,8 +52,17 @@ class InvaderComponent(val data: InvaderData) : Component() {
     GameVars.ALIVE_ENEMIES.increment(-1)
   }
 
-  fun inflictDamage(bullet: BulletData) {
-    health.value -= bullet.damage
+  //endregion
+  //region -------------------- Public Members ------------------------
+
+  /**
+   *  A bullet hitting an invader registers here to apply its damage and effect.
+   */
+  fun hitWithBullet(bullet: BulletData) {
+    val effectiveArmour = max((data.armour - bullet.penetration), 0.0)
+    val effectiveDmg = max((bullet.damage - effectiveArmour), 0.0)
+    if (effectiveDmg == 0.0) return // Effects are not applied if no damage is done
+    health.value -= effectiveDmg
     val effect = bullet.effect
     val effectWithTime = getGameTimer().now to effect
     when (effect.type) {
@@ -64,11 +73,17 @@ class InvaderComponent(val data: InvaderData) : Component() {
     }
   }
 
+  /**
+   * Returns an estimation of how much progression the invader has towards its goal.
+   */
   fun getProgress(): Double {
     val progress = (wayPointIndex - 1) * 10000.0 //each wayPoint is closer than 10'000 pixel to each other
     val distanceFromOld = lastWayPoint.distance(entity.position)
     return progress + distanceFromOld
   }
+
+  //endregion
+  //region -------------------- Private Members ------------------------
 
   private fun followPath(tpf: Double) {
     projectile.direction = nextWayPoint.subtract(entity.position)
@@ -80,13 +95,13 @@ class InvaderComponent(val data: InvaderData) : Component() {
         FXGL.getEventBus().fireEvent(InvaderEvents(InvaderEvents.INVADER_REACHED_GOAL, this))
       } else {
         lastWayPoint = nextWayPoint
-        nextWayPoint = wayPoints[wayPointIndex]
+        nextWayPoint = data.wayPoints[wayPointIndex]
       }
     }
   }
 
   private fun isAtNextWaypoint(tpf: Double) = nextWayPoint.distance(entity.position) < projectile.speed * tpf
-  private fun isLastWaypoint() = wayPoints.size <= wayPointIndex
+  private fun isLastWaypoint() = data.wayPoints.size <= wayPointIndex
 
   private fun timeoutEffects() {
     val now = getGameTimer().now
@@ -111,6 +126,8 @@ class InvaderComponent(val data: InvaderData) : Component() {
       FXGL.getEventBus().fireEvent(InvaderEvents(InvaderEvents.INVADER_KILLED, this))
     }
   }
+
+  //endregion
 
   companion object {
     val center = (25 / 2.0).toPoint()
