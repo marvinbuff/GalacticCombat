@@ -11,7 +11,7 @@ class HealthComponent(invaderComponent: InvaderComponent) : ChildViewComponent(-
 
   init {
     hpBar.setMinValue(0.0)
-    hpBar.setMaxValue(invaderComponent.data.maxHealth)
+    hpBar.setMaxValue(100.0)
     hpBar.setWidth(35.0)
     hpBar.setHeight(8.0)
     hpBar.setLabelPosition(Position.TOP)
