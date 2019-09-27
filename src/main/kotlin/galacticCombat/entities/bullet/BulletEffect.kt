@@ -11,5 +11,6 @@ data class BulletEffect(val type: BulletEffectType, val amount: Double, var dura
 enum class BulletEffectType {
   NONE,
   POISON,
-  SLOW
+  SLOW,
+  CHAIN
 }
