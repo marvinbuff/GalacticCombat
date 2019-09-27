@@ -1,4 +1,4 @@
-package galacticCombat.invader
+package galacticCombat.entities.invader
 
 import com.almasb.fxgl.dsl.components.view.ChildViewComponent
 import com.almasb.fxgl.ui.Position

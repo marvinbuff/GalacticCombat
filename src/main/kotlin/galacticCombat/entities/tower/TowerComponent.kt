@@ -1,16 +1,16 @@
-package galacticCombat.tower
+package galacticCombat.entities.tower
 
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.component.Component
-import galacticCombat.BULLET_SPAWN_ID
-import galacticCombat.EntityType
-import galacticCombat.bullet.BulletComponent
-import galacticCombat.bullet.BulletData
-import galacticCombat.invader.InvaderComponent
-import galacticCombat.toPoint
+import galacticCombat.entities.BULLET_SPAWN_ID
+import galacticCombat.entities.EntityType
+import galacticCombat.entities.bullet.BulletComponent
+import galacticCombat.entities.bullet.BulletData
+import galacticCombat.entities.invader.InvaderComponent
+import galacticCombat.utils.toPoint
 import javafx.geometry.Point2D
 import javafx.scene.transform.Rotate
 
@@ -45,7 +45,7 @@ open class TowerComponent(towerData: TowerData) : Component() {
 
   private fun shoot(target: Entity) {
     getGameWorld().spawn(
-        BULLET_SPAWN_ID,
+      BULLET_SPAWN_ID,
       SpawnData(entity.position.add(center.subtract(BulletComponent.center)))
           .put("target", target).put(BulletData.id, bullet)
     )

@@ -1,10 +1,10 @@
-package galacticCombat.bullet
+package galacticCombat.entities.bullet
 
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.component.Component
-import galacticCombat.invader.InvaderComponent
-import galacticCombat.toPoint
+import galacticCombat.entities.invader.InvaderComponent
+import galacticCombat.utils.toPoint
 import javafx.geometry.Point2D
 
 class BulletComponent(

@@ -13,12 +13,16 @@ import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.fxgl.saving.DataFile
-import galacticCombat.bullet.BulletFactory
-import galacticCombat.event.InvaderEvents
-import galacticCombat.invader.InvaderType
-import galacticCombat.invader.InvadorFactory
-import galacticCombat.tower.PlaceholderFactory
-import galacticCombat.tower.TowerFactory
+import galacticCombat.configs.AppConfig
+import galacticCombat.configs.GameVars
+import galacticCombat.entities.EntityType
+import galacticCombat.entities.INVADER_ID
+import galacticCombat.entities.bullet.BulletFactory
+import galacticCombat.entities.invader.InvaderFactory
+import galacticCombat.entities.invader.InvaderType
+import galacticCombat.entities.tower.PlaceholderFactory
+import galacticCombat.entities.tower.TowerFactory
+import galacticCombat.events.InvaderEvents
 import galacticCombat.ui.SideBar
 import galacticCombat.ui.TopBar
 import javafx.beans.property.SimpleBooleanProperty
@@ -53,7 +57,7 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initGame() {
     val factories =
-        listOf(TowerFactory(), InvadorFactory(), BulletFactory(), PlaceholderFactory())
+      listOf(TowerFactory(), InvaderFactory(), BulletFactory(), PlaceholderFactory())
     factories.forEach(getGameWorld()::addEntityFactory)
 
     //TODO replace hard-coded level input by file reading

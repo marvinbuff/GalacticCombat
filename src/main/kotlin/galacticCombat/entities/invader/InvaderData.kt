@@ -1,4 +1,4 @@
-package galacticCombat.invader
+package galacticCombat.entities.invader
 
 import com.almasb.fxgl.dsl.FXGL
 import galacticCombat.GalacticCombatApp

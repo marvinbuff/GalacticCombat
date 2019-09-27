@@ -1,17 +1,17 @@
-package galacticCombat.invader
+package galacticCombat.entities.invader
 
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
-import galacticCombat.AssetsConfig
-import galacticCombat.EntityType
-import galacticCombat.INVADER_ID
+import galacticCombat.configs.AssetConfig
+import galacticCombat.entities.EntityType
+import galacticCombat.entities.INVADER_ID
 import javafx.geometry.Point2D
 
 @Suppress("unused")
-class InvadorFactory : EntityFactory {
+class InvaderFactory : EntityFactory {
 
   @Spawns(INVADER_ID)
   fun spawnEnemy(data: SpawnData): Entity {
@@ -36,7 +36,7 @@ class InvadorFactory : EntityFactory {
       }
 
   private fun getInvaderData(type: InvaderType): InvaderData {
-    val asset = AssetsConfig.getInvader(
+    val asset = AssetConfig.getInvader(
         when (type) {
           InvaderType.COMMON      -> "1.2.gif"
           InvaderType.REINFORCED  -> "2.21.gif"
@@ -52,15 +52,4 @@ class InvadorFactory : EntityFactory {
   }
 
 
-}
-
-enum class InvaderType(val title: String) {
-  COMMON("Common Invader"),
-  REINFORCED("Common Invader"),
-  ACCELERATED("Common Invader")
-  ;
-
-  companion object {
-    const val id = "InvaderType"
-  }
 }

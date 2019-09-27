@@ -1,4 +1,4 @@
-package galacticCombat
+package galacticCombat.utils
 
 import javafx.geometry.Point2D
 
