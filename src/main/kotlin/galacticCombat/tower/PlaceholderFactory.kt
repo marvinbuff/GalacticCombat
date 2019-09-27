@@ -13,7 +13,7 @@ import javafx.geometry.Point2D
 class PlaceholderFactory : EntityFactory {
 
   @Spawns(PLACEHOLDER_SPAWN_ID)
-  fun spawnBullet(data: SpawnData): Entity {
+  fun spawnPlaceholder(data: SpawnData): Entity {
     val position = Point2D(data.x, data.y).subtract(TowerComponent.center)
     val towerData: TowerData = data.get(TowerData.id)
 
