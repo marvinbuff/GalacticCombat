@@ -1,6 +1,7 @@
 package galacticCombat.configs
 
 import com.almasb.fxgl.dsl.getGameState
+import galacticCombat.level.LevelData
 
 interface GameVar<T : Any> {
   val id: String
@@ -24,6 +25,15 @@ interface IntGameVar : GameVar<Int> {
       return listOf(LevelGameVars.GOLD, LevelGameVars.EXPERIENCE, LevelGameVars.HEALTH, GameVars.SCORE, GameVars.ENEMIES_TO_SPAWN, GameVars.ALIVE_ENEMIES)
     }
   }
+}
+
+enum class AnyGameVars : GameVar<Any> {
+  LEVEL_DATA { //Todo maybe just use global object instead?
+    override fun get(): LevelData = getGameState().getObject(id)
+  };
+
+  override val id: String = name
+
 }
 
 /**

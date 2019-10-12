@@ -1,6 +1,7 @@
 {
   "title": "My Experimental Level",
   "initialGold": 600,
+  "trickleScore": 30,
   "initialHealth": 3,
   "initialExperience": 300,
   "timePerWave": 60.0
