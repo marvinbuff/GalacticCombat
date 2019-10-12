@@ -4,6 +4,7 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.GameWorld
 import com.almasb.fxgl.entity.level.Level
 import com.almasb.fxgl.entity.level.LevelLoader
+import galacticCombat.configs.AnyGameVars
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.utils.loadJson
@@ -16,6 +17,7 @@ class GalacticCombatLevelLoader : LevelLoader {
   override fun load(url: URL, world: GameWorld): Level {
     val data = loadJson<LevelData>(url)
     data.setGameVars()
+    AnyGameVars.LEVEL_DATA.set(data)
 
     val entities = listOf<Entity>()
     // Create Timer
@@ -30,6 +32,8 @@ class GalacticCombatLevelLoader : LevelLoader {
 data class LevelData(
     val title: String,
     val initialGold: Int = 100,
+    val trickleGold: Int = 5,
+    val trickleScore: Int = 5,
     val initialHealth: Int = 10,
     val initialExperience: Int = 0,
     val timePerWave: Double = 60.0

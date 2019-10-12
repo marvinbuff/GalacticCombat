@@ -14,6 +14,7 @@ import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.fxgl.saving.DataFile
+import galacticCombat.configs.AnyGameVars
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.GameVars
 import galacticCombat.configs.LevelGameVars
@@ -26,6 +27,7 @@ import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.events.InvaderEvents
 import galacticCombat.level.GalacticCombatLevelLoader
+import galacticCombat.level.LevelData
 import galacticCombat.ui.SideBar
 import galacticCombat.ui.TopBar
 import javafx.beans.property.SimpleBooleanProperty
@@ -80,12 +82,13 @@ class GalacticCombatApp : GameApplication() {
     }
 
     val trickle = Runnable {
-      LevelGameVars.GOLD.increment(5)
-      GameVars.SCORE.increment(5)
+      val levelData = AnyGameVars.LEVEL_DATA.get() as LevelData
+      LevelGameVars.GOLD.increment(levelData.trickleGold)
+      GameVars.SCORE.increment(levelData.trickleScore)
     }
 
     getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
-    getGameTimer().runAtInterval(trickle, Duration.seconds(1.0))
+    getGameTimer().runAtInterval(trickle, Duration.seconds(AppConfig.TRICKLE_RATE))
 
     // Invader Events
     FXGL.getEventBus().apply {

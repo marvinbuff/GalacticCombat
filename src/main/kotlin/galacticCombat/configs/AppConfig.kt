@@ -9,6 +9,7 @@ object AppConfig {
   const val WIDTH = 800
   const val HEIGHT = 600
   const val TITLE = "Galactic Combat"
+  const val TRICKLE_RATE = 1.0
 }
 
 //TODO Refactor the achievements and put into own file
