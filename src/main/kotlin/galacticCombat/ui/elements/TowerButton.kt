@@ -5,7 +5,7 @@ import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.dsl.getInput
 import com.almasb.fxgl.entity.SpawnData
-import galacticCombat.configs.GameVars
+import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.PLACEHOLDER_SPAWN_ID
 import galacticCombat.entities.tower.TowerData
 import javafx.event.ActionEvent
@@ -17,7 +17,7 @@ class TowerButton(data: TowerData) : IconButton(getIcon(data), getHandler(data))
 private fun getIcon(data: TowerData) = FXGL.texture(data.texture)
 
 private fun getHandler(data: TowerData) = EventHandler<ActionEvent> { event ->
-  val goldId = GameVars.GOLD.id
+  val goldId = LevelGameVars.GOLD.id
 
   val gold = getGameState().getInt(goldId)
   if (gold >= data.price) {
