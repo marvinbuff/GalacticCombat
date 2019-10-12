@@ -2,7 +2,11 @@ package galacticCombat
 
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.*
+import com.almasb.fxgl.dsl.FXGL
+import com.almasb.fxgl.dsl.getAssetLoader
+import com.almasb.fxgl.dsl.getGameScene
+import com.almasb.fxgl.dsl.getGameTimer
+import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.components.CollidableComponent
@@ -12,6 +16,7 @@ import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.fxgl.saving.DataFile
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.GameVars
+import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.INVADER_ID
 import galacticCombat.entities.bullet.BulletFactory
@@ -38,8 +43,8 @@ fun main(args: Array<String>) {
 }
 
 class GalacticCombatApp : GameApplication() {
+  private val enemiesLeft = SimpleBooleanProperty()
   val waypoints = arrayListOf<Point2D>()
-  val enemiesLeft = SimpleBooleanProperty()
 
   override fun initSettings(settings: GameSettings) {
     settings.width = AppConfig.WIDTH
@@ -75,7 +80,7 @@ class GalacticCombatApp : GameApplication() {
     }
 
     val trickle = Runnable {
-      GameVars.GOLD.increment(5)
+      LevelGameVars.GOLD.increment(5)
       GameVars.SCORE.increment(5)
     }
 
@@ -87,14 +92,14 @@ class GalacticCombatApp : GameApplication() {
       addEventHandler(
         InvaderEvents.INVADER_REACHED_GOAL,
         EventHandler { event ->
-          GameVars.HEALTH.increment(-event.invader.data.damage)
+          LevelGameVars.HEALTH.increment(-event.invader.data.damage)
           event.invader.entity.removeFromWorld()
         })
 
       addEventHandler(
         InvaderEvents.INVADER_KILLED,
         EventHandler { event ->
-          GameVars.EXPERIENCE.increment(event.invader.data.xp)
+          LevelGameVars.EXPERIENCE.increment(event.invader.data.xp)
           GameVars.SCORE.increment(event.invader.data.bounty)
           event.invader.entity.removeFromWorld()
         })

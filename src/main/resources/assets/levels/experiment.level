@@ -1,6 +1,7 @@
 {
-  "title": "My Title",
-  "initialGold": 100,
-  "initialHP": 10,
+  "title": "My Experimental Level",
+  "initialGold": 600,
+  "initialHealth": 3,
+  "initialExperience": 300,
   "timePerWave": 60.0
 }

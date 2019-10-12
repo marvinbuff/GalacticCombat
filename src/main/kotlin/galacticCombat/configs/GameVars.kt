@@ -2,29 +2,50 @@ package galacticCombat.configs
 
 import com.almasb.fxgl.dsl.getGameState
 
-enum class GameVars(val initial: Int) {
-  // Background
-  ENEMIES_TO_SPAWN(3),
-  ALIVE_ENEMIES(0),
+interface GameVar<T : Any> {
+  val id: String
 
-  // Shown to the Player
-  GOLD(600),
-  EXPERIENCE(100),
-  HEALTH(3),
+  fun set(value: T) {
+    getGameState().setValue(id, value)
+  }
+
+  fun get(): T
+}
+
+interface IntGameVar : GameVar<Int> {
+  fun increment(increment: Int) {
+    getGameState().increment(id, increment)
+  }
+
+  override fun get(): Int = getGameState().getInt(id)
+
+  companion object {
+    fun getVarsInTopBar(): List<IntGameVar> { //TODO not nice to have this list in super class
+      return listOf(LevelGameVars.GOLD, LevelGameVars.EXPERIENCE, LevelGameVars.HEALTH, GameVars.SCORE, GameVars.ENEMIES_TO_SPAWN, GameVars.ALIVE_ENEMIES)
+    }
+  }
+}
+
+/**
+ * All [GameVars] will be initialized before loading the level.
+ */
+enum class GameVars(val initial: Int) : IntGameVar {
+  ENEMIES_TO_SPAWN(2),
+  ALIVE_ENEMIES(0),
   SCORE(0)
   ;
 
-  val id: String = name
+  override val id: String = name
+}
 
-  fun increment(increment: Int) {
-    getGameState().increment(name, increment)
-  }
+/**
+ * [LevelGameVars] are initialized from the level data file.
+ */
+enum class LevelGameVars : IntGameVar {
+  GOLD,
+  EXPERIENCE,
+  HEALTH
+  ;
 
-  fun get(): Int = getGameState().getInt(name)
-
-  companion object {
-    fun getVarsInTopBar(): List<GameVars> {
-      return listOf(GOLD, EXPERIENCE, HEALTH, SCORE, ENEMIES_TO_SPAWN, ALIVE_ENEMIES)
-    }
-  }
+  override val id: String = name
 }

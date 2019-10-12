@@ -3,7 +3,7 @@ package galacticCombat.ui
 import com.almasb.fxgl.app.GameScene
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.ui.InGamePanel
-import galacticCombat.configs.GameVars
+import galacticCombat.configs.IntGameVar.Companion.getVarsInTopBar
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.geometry.Insets
 import javafx.scene.layout.GridPane
@@ -41,7 +41,7 @@ class TopBar(private val scene: GameScene) {
     pane.hgap = 25.0
     pane.vgap = 10.0
 
-    GameVars.getVarsInTopBar().forEachIndexed { index, key ->
+    getVarsInTopBar().forEachIndexed { index, key ->
       val color = Color.BLUE
       val fontSize = 12.0
       val textKey = FXGL.getUIFactory().newText(key.id, color, fontSize)

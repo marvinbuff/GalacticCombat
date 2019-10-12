@@ -21,17 +21,22 @@ Issue List::
 - Re-enable the label showing damage numbers.
 But improve it with a fade out and maybe accumulation.
 
+Next::
+- Finish implementing GalacticCombatLevelLoader and LevelData
+
 To-Do::
 - Add losing screen
 - Write down design of exp, gold and mana system
 - Implement chain tower and bullet
 - Add wave timer, next wave button, and generally a wave system.
+- Reduce gold on tower set and not prototype creation
 
 Next Features::
 - Nicer UI: shop part, nice display for money and health
 - Background Image
 - Painted Path
 - Implement bomber tower and bullet
+- Add a small main function to create template level files.
 
 Milestone 0.2::
 Having a playable level prototype.
