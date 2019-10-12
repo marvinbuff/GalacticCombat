@@ -1,1 +1,6 @@
-title:Experiment Level
+{
+  "title": "My Title",
+  "initialGold": 100,
+  "initialHP": 10,
+  "timePerWave": 60.0
+}
