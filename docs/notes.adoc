@@ -178,7 +178,10 @@ TODO::
 
 ==== Details
 
-Each level includes the following data:
+Each level contains a list of Entities to spawn on load:
+
+* LevelData
+* WaveTimer
 
 * Title
 * Description

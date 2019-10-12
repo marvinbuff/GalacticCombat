@@ -2,10 +2,7 @@ package galacticCombat
 
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.FXGL
-import com.almasb.fxgl.dsl.getGameScene
-import com.almasb.fxgl.dsl.getGameTimer
-import com.almasb.fxgl.dsl.getGameWorld
+import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.components.CollidableComponent
@@ -23,6 +20,7 @@ import galacticCombat.entities.invader.InvaderType
 import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.events.InvaderEvents
+import galacticCombat.level.GalacticCombatLevelLoader
 import galacticCombat.ui.SideBar
 import galacticCombat.ui.TopBar
 import javafx.beans.property.SimpleBooleanProperty
@@ -56,13 +54,11 @@ class GalacticCombatApp : GameApplication() {
 
 
   override fun initGame() {
-    val factories =
-      listOf(TowerFactory(), InvaderFactory(), BulletFactory(), PlaceholderFactory())
-    factories.forEach(getGameWorld()::addEntityFactory)
+    listOf(TowerFactory(), InvaderFactory(), BulletFactory(), PlaceholderFactory())
+      .forEach(getGameWorld()::addEntityFactory)
 
-    //TODO replace hard-coded level input by file reading
-//    val level = getAssetLoader().loadLevel("experiment.level", GalacticCombatLevelLoader())
-//    getGameWorld().setLevel(level)
+    val level = getAssetLoader().loadLevel("experiment.level", GalacticCombatLevelLoader())
+    getGameWorld().setLevel(level)
     waypoints.addAll(arrayListOf(Point2D(50.0, 150.0), Point2D(150.0, 350.0), Point2D(550.0, 350.0), Point2D(130.0, 120.0)))
 
     showPoints(waypoints)
@@ -172,6 +168,7 @@ class GalacticCombatApp : GameApplication() {
   }
 
   override fun saveState(): DataFile {
+    // possibly not correct and not used!
     val data = FXGL.getGameState().getInt(GameVars.ENEMIES_TO_SPAWN.id)
     println("Saved $data")
     return DataFile(SaveData(data))
