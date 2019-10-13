@@ -14,9 +14,9 @@ import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.fxgl.saving.DataFile
-import galacticCombat.configs.AnyGameVars
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.GameVars
+import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.INVADER_ID
@@ -27,9 +27,10 @@ import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.events.InvaderEvents
 import galacticCombat.level.GalacticCombatLevelLoader
-import galacticCombat.level.LevelData
+import galacticCombat.level.Path
 import galacticCombat.ui.SideBar
 import galacticCombat.ui.TopBar
+import galacticCombat.utils.toPoint
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.event.EventHandler
 import javafx.geometry.Point2D
@@ -46,7 +47,6 @@ fun main(args: Array<String>) {
 
 class GalacticCombatApp : GameApplication() {
   private val enemiesLeft = SimpleBooleanProperty()
-  val waypoints = arrayListOf<Point2D>()
 
   override fun initSettings(settings: GameSettings) {
     settings.width = AppConfig.WIDTH
@@ -66,9 +66,10 @@ class GalacticCombatApp : GameApplication() {
 
     val level = getAssetLoader().loadLevel("experiment.level", GalacticCombatLevelLoader())
     getGameWorld().setLevel(level)
-    waypoints.addAll(arrayListOf(Point2D(50.0, 150.0), Point2D(150.0, 350.0), Point2D(550.0, 350.0), Point2D(130.0, 120.0)))
+    val levelData = LevelDataVar.get()
+    val mainPath = levelData.paths.first()
 
-    showPoints(waypoints)
+    showPoints(mainPath)
 
     enemiesLeft.bind(FXGL.getGameState().intProperty(GameVars.ENEMIES_TO_SPAWN.id).greaterThan(0))
 
@@ -77,12 +78,11 @@ class GalacticCombatApp : GameApplication() {
       val index = GameVars.ENEMIES_TO_SPAWN.get()
       getGameWorld().spawn(
         INVADER_ID,
-          SpawnData(waypoints.first()).put(InvaderType.id, InvaderType.values()[index])
+          SpawnData(mainPath.first().toPoint()).put(InvaderType.id, InvaderType.values()[index])
       )
     }
 
     val trickle = Runnable {
-      val levelData = AnyGameVars.LEVEL_DATA.get() as LevelData
       LevelGameVars.GOLD.increment(levelData.trickleGold)
       GameVars.SCORE.increment(levelData.trickleScore)
     }
@@ -196,10 +196,12 @@ data class SaveData(val scores: Int) : Serializable
 
 //region ---------------- Private Helpers ---------------
 
-private fun showPoints(waypoints: List<Point2D>) {
+private fun showPoints(waypoints: Path) {
   operator fun Point2D.component1(): Double = x
   operator fun Point2D.component2(): Double = y
-  waypoints.forEach { (x, y) ->
+  waypoints.forEach { (_x, _y) ->
+    val x = _x.toDouble()
+    val y = _y.toDouble()
     FXGL.entityBuilder()
       .at(x, y)
       .type(EntityType.BARRICADE)

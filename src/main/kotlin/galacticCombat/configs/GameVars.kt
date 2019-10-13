@@ -1,39 +1,11 @@
 package galacticCombat.configs
 
-import com.almasb.fxgl.dsl.getGameState
 import galacticCombat.level.LevelData
 
-interface GameVar<T : Any> {
-  val id: String
+val varsInTopBar: List<IntGameVar> = listOf(LevelGameVars.GOLD, LevelGameVars.EXPERIENCE, LevelGameVars.HEALTH, GameVars.SCORE, GameVars.ENEMIES_TO_SPAWN, GameVars.ALIVE_ENEMIES)
 
-  fun set(value: T) {
-    getGameState().setValue(id, value)
-  }
-
-  fun get(): T
-}
-
-interface IntGameVar : GameVar<Int> {
-  fun increment(increment: Int) {
-    getGameState().increment(id, increment)
-  }
-
-  override fun get(): Int = getGameState().getInt(id)
-
-  companion object {
-    fun getVarsInTopBar(): List<IntGameVar> { //TODO not nice to have this list in super class
-      return listOf(LevelGameVars.GOLD, LevelGameVars.EXPERIENCE, LevelGameVars.HEALTH, GameVars.SCORE, GameVars.ENEMIES_TO_SPAWN, GameVars.ALIVE_ENEMIES)
-    }
-  }
-}
-
-enum class AnyGameVars : GameVar<Any> {
-  LEVEL_DATA { //Todo maybe just use global object instead?
-    override fun get(): LevelData = getGameState().getObject(id)
-  };
-
-  override val id: String = name
-
+object LevelDataVar : GameVar<LevelData> {
+  override val id = "Level Data Variable"
 }
 
 /**
