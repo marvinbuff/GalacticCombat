@@ -1,18 +1,17 @@
 package galacticCombat.entities.invader
 
-import com.almasb.fxgl.dsl.FXGL
-import galacticCombat.GalacticCombatApp
-import javafx.geometry.Point2D
+import galacticCombat.configs.LevelDataVar
+import galacticCombat.level.Path
 
 data class InvaderData(
-  val texture: String,
-  val maxHealth: Double,
-  val baseSpeed: Speed,
-  val armour: Double,
-  val xp: Int,
-  val bounty: Int = 100,
-  val damage: Int = 1,
-  val wayPoints: List<Point2D> = (FXGL.getApp() as GalacticCombatApp).waypoints
+    val texture: String,
+    val maxHealth: Double,
+    val baseSpeed: Speed,
+    val armour: Double,
+    val xp: Int,
+    val bounty: Int = 100,
+    val damage: Int = 1,
+    val wayPoints: Path = LevelDataVar.get().paths.first()
 ) {
   companion object {
     const val id = "InvaderData"

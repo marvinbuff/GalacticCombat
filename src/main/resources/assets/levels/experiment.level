@@ -4,5 +4,28 @@
   "trickleScore": 30,
   "initialHealth": 3,
   "initialExperience": 300,
-  "timePerWave": 60.0
+  "timePerWave": 60.0,
+  "paths": [
+      {
+        "id": "main_path",
+        "wayPoints": [
+          {
+            "first": 50,
+            "second": 250
+          },
+          {
+            "first": 150,
+            "second": 350
+          },
+          {
+            "first": 550,
+            "second": 350
+          },
+          {
+            "first": 230,
+            "second": 80
+          }
+        ]
+      }
+    ]
 }

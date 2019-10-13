@@ -29,8 +29,8 @@ class InvaderComponent(val data: InvaderData) : Component() {
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
 
-    nextWayPoint = data.wayPoints[wayPointIndex]
-    lastWayPoint = data.wayPoints[wayPointIndex - 1]
+    nextWayPoint = data.wayPoints[wayPointIndex].toPoint()
+    lastWayPoint = data.wayPoints[wayPointIndex - 1].toPoint()
     projectile = ProjectileComponent(Point2D(0.0, 0.0), data.baseSpeed.speed)
     entity.addComponent(projectile)
 
@@ -95,7 +95,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
         FXGL.getEventBus().fireEvent(InvaderEvents(InvaderEvents.INVADER_REACHED_GOAL, this))
       } else {
         lastWayPoint = nextWayPoint
-        nextWayPoint = data.wayPoints[wayPointIndex]
+        nextWayPoint = data.wayPoints[wayPointIndex].toPoint()
       }
     }
   }
