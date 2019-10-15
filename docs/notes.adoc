@@ -21,6 +21,7 @@ Issue List::
 - Re-enable the label showing damage numbers.
 But improve it with a fade out and maybe accumulation.
 - Support multiple paths.
+- Add custom classes for Pair to make level file look nicer.
 
 Next::
 - Finish implementing GalacticCombatLevelLoader and LevelData

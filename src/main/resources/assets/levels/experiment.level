@@ -1,31 +1,60 @@
 {
-  "title": "My Experimental Level",
-  "initialGold": 600,
-  "trickleScore": 30,
-  "initialHealth": 3,
-  "initialExperience": 300,
+  "title": "title",
+  "initialGold": 100,
+  "trickleGold": 5,
+  "trickleScore": 5,
+  "initialHealth": 10,
+  "initialExperience": 0,
   "timePerWave": 60.0,
-  "paths": [
-      {
-        "id": "main_path",
-        "wayPoints": [
-          {
-            "first": 50,
-            "second": 250
-          },
-          {
-            "first": 150,
-            "second": 350
-          },
-          {
-            "first": 550,
-            "second": 350
-          },
-          {
-            "first": 230,
-            "second": 80
+  "waves": [
+    {
+      "invaders": [
+        {
+          "first": 1.0,
+          "second": {
+            "type": "COMMON",
+            "level": 1
           }
-        ]
-      }
-    ]
+        },
+        {
+          "first": 2.0,
+          "second": {
+            "type": "ACCELERATED",
+            "level": 2
+          }
+        },
+        {
+          "first": 4.0,
+          "second": {
+            "type": "REINFORCED",
+            "level": 3
+          }
+        }
+      ],
+      "isBoss": false
+    }
+  ],
+  "paths": [
+    {
+      "id": "main_path",
+      "wayPoints": [
+        {
+          "first": 50,
+          "second": 150
+        },
+        {
+          "first": 150,
+          "second": 350
+        },
+        {
+          "first": 550,
+          "second": 350
+        },
+        {
+          "first": 130,
+          "second": 120
+        }
+      ]
+    }
+  ]
 }

@@ -30,8 +30,8 @@ class InvaderFactory : EntityFactory {
   }
 
   private fun parseInvaderData(data: SpawnData): InvaderData =
-      if (data.hasKey(InvaderType.id)) {
-        getInvaderData(data.get(InvaderType.id), 1)
+      if (data.hasKey(InvaderType.id) && data.hasKey(levelId)) {
+        getInvaderData(data.get(InvaderType.id), data.get(levelId))
       } else {
         data.get(InvaderData.id)
       }
@@ -39,9 +39,9 @@ class InvaderFactory : EntityFactory {
   private fun getInvaderData(type: InvaderType, level: Int): InvaderData {
     val asset = AssetConfig.getInvader(
         when (type) {
-          InvaderType.COMMON      -> "1.2.gif"
-          InvaderType.REINFORCED  -> "2.21.gif"
-          InvaderType.ACCELERATED -> "3.21.gif"
+          InvaderType.COMMON      -> "1.$level.gif"
+          InvaderType.REINFORCED  -> "2.${level}1.gif"
+          InvaderType.ACCELERATED -> "3.${level}1.gif"
         }
     )
 
@@ -62,4 +62,7 @@ class InvaderFactory : EntityFactory {
   }
 
 
+  companion object {
+    const val levelId = "level"
+  }
 }

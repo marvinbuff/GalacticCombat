@@ -76,9 +76,12 @@ class GalacticCombatApp : GameApplication() {
     val spawnInvader = Runnable {
       GameVars.ENEMIES_TO_SPAWN.increment(-1)
       val index = GameVars.ENEMIES_TO_SPAWN.get()
+      require(index <= 3) { "Trying to initialize invader with illegal data." }
       getGameWorld().spawn(
         INVADER_ID,
-          SpawnData(mainPath.first().toPoint()).put(InvaderType.id, InvaderType.values()[index])
+          SpawnData(mainPath.first().toPoint())
+              .put(InvaderType.id, InvaderType.values()[index])
+              .put(InvaderFactory.levelId, index)
       )
     }
 
