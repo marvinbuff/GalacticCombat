@@ -19,8 +19,9 @@ import galacticCombat.configs.GameVars
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.EntityType
-import galacticCombat.entities.INVADER_ID
+import galacticCombat.entities.INVADER_SPAWN_ID
 import galacticCombat.entities.bullet.BulletFactory
+import galacticCombat.entities.controllers.LevelControllerFactory
 import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.entities.invader.InvaderType
 import galacticCombat.entities.tower.PlaceholderFactory
@@ -61,7 +62,7 @@ class GalacticCombatApp : GameApplication() {
 
 
   override fun initGame() {
-    listOf(TowerFactory(), InvaderFactory(), BulletFactory(), PlaceholderFactory())
+    listOf(TowerFactory(), InvaderFactory(), BulletFactory(), PlaceholderFactory(), LevelControllerFactory())
       .forEach(getGameWorld()::addEntityFactory)
 
     val level = getAssetLoader().loadLevel("experiment.level", GalacticCombatLevelLoader())
@@ -78,7 +79,7 @@ class GalacticCombatApp : GameApplication() {
       val index = GameVars.ENEMIES_TO_SPAWN.get()
       require(index <= 3) { "Trying to initialize invader with illegal data." }
       getGameWorld().spawn(
-        INVADER_ID,
+          INVADER_SPAWN_ID,
           SpawnData(mainPath.first().toPoint())
               .put(InvaderType.id, InvaderType.values()[index])
               .put(InvaderFactory.levelId, index)
@@ -90,7 +91,7 @@ class GalacticCombatApp : GameApplication() {
       GameVars.SCORE.increment(levelData.trickleScore)
     }
 
-    getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
+//    getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
     getGameTimer().runAtInterval(trickle, Duration.seconds(AppConfig.TRICKLE_RATE))
 
     // Invader Events
