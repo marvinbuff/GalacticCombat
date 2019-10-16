@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class Wave(
     val invaders: List<Pair<Double, InvaderArgs>>,
     val isBoss: Boolean = false
-)
+) : List<Pair<Double, InvaderArgs>> by invaders
 
 @Serializable
 data class InvaderArgs(

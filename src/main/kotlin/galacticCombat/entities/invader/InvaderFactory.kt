@@ -7,14 +7,15 @@ import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import galacticCombat.configs.AssetConfig
 import galacticCombat.entities.EntityType
-import galacticCombat.entities.INVADER_ID
+import galacticCombat.entities.INVADER_SPAWN_ID
+import galacticCombat.level.InvaderArgs
 import javafx.geometry.Point2D
 import kotlin.math.pow
 
 @Suppress("unused")
 class InvaderFactory : EntityFactory {
 
-  @Spawns(INVADER_ID)
+  @Spawns(INVADER_SPAWN_ID)
   fun spawnEnemy(data: SpawnData): Entity {
     val position = Point2D(data.x, data.y).subtract(InvaderComponent.center)
     val invaderData = parseInvaderData(data)
@@ -30,10 +31,14 @@ class InvaderFactory : EntityFactory {
   }
 
   private fun parseInvaderData(data: SpawnData): InvaderData =
-      if (data.hasKey(InvaderType.id) && data.hasKey(levelId)) {
-        getInvaderData(data.get(InvaderType.id), data.get(levelId))
-      } else {
-        data.get(InvaderData.id)
+      when {
+        data.hasKey(invaderArgsId) -> {
+          val args = data.get(invaderArgsId) as InvaderArgs
+          getInvaderData(args.type, args.level)
+        }
+        data.hasKey(InvaderType.id) && data.hasKey(levelId)
+                                   -> getInvaderData(data.get(InvaderType.id), data.get(levelId))
+        else                       -> data.get(InvaderData.id)
       }
 
   private fun getInvaderData(type: InvaderType, level: Int): InvaderData {
@@ -64,5 +69,6 @@ class InvaderFactory : EntityFactory {
 
   companion object {
     const val levelId = "level"
+    const val invaderArgsId = "invader args"
   }
 }
