@@ -6,7 +6,9 @@ import com.almasb.fxgl.entity.level.Level
 import com.almasb.fxgl.entity.level.LevelLoader
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.LevelDataVar
+import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.LEVEL_CONTROLLER_ID
+import galacticCombat.level.json.LevelData
 import galacticCombat.utils.loadJson
 import java.net.URL
 
@@ -21,10 +23,18 @@ class GalacticCombatLevelLoader : LevelLoader {
     val controller = world.create(LEVEL_CONTROLLER_ID, SpawnData(0.0, 0.0))
 
     val entities = listOf(controller)
-    // Create Timer
-    // Add Entities at specified time to Timer
-    // Calibrate initial settings: gold, hp, pre-built towers, time per wave, etc
 
     return Level(AppConfig.WIDTH, AppConfig.HEIGHT, entities)
+  }
+}
+
+fun LevelData.setGameVars() {
+  LevelGameVars.values().forEach { levelVar ->
+    val initial = when (levelVar) { //using 'when' to make sure all values are initialized
+      LevelGameVars.GOLD       -> settings.initialGold
+      LevelGameVars.EXPERIENCE -> settings.initialExperience
+      LevelGameVars.HEALTH     -> settings.initialHealth
+    }
+    levelVar.set(initial)
   }
 }

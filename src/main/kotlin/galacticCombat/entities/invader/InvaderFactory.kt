@@ -8,7 +8,7 @@ import com.almasb.fxgl.entity.Spawns
 import galacticCombat.configs.AssetConfig
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.INVADER_SPAWN_ID
-import galacticCombat.level.InvaderArgs
+import galacticCombat.level.json.InvaderArgs
 import javafx.geometry.Point2D
 import kotlin.math.pow
 

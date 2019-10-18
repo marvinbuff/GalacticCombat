@@ -12,7 +12,7 @@ import galacticCombat.entities.EntityType
 import galacticCombat.entities.INVADER_SPAWN_ID
 import galacticCombat.entities.LEVEL_CONTROLLER_ID
 import galacticCombat.entities.invader.InvaderFactory
-import galacticCombat.level.LevelData
+import galacticCombat.level.json.LevelData
 import galacticCombat.utils.toPoint
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle

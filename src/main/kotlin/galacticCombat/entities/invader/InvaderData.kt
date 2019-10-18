@@ -1,7 +1,7 @@
 package galacticCombat.entities.invader
 
 import galacticCombat.configs.LevelDataVar
-import galacticCombat.level.Path
+import galacticCombat.level.json.Path
 
 data class InvaderData(
     val texture: String,

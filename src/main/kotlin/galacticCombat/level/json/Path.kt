@@ -1,4 +1,4 @@
-package galacticCombat.level
+package galacticCombat.level.json
 
 import kotlinx.serialization.Serializable
 
