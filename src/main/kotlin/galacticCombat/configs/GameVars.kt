@@ -1,6 +1,6 @@
 package galacticCombat.configs
 
-import galacticCombat.level.LevelData
+import galacticCombat.level.json.LevelData
 
 val varsInTopBar: List<IntGameVar> = listOf(LevelGameVars.GOLD, LevelGameVars.EXPERIENCE, LevelGameVars.HEALTH, GameVars.SCORE, GameVars.ENEMIES_TO_SPAWN, GameVars.ALIVE_ENEMIES)
 

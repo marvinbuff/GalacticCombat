@@ -24,10 +24,11 @@ But improve it with a fade out and maybe accumulation.
 - Add custom classes for Pair to make level file look nicer.
 
 Next::
-- Finish implementing GalacticCombatLevelLoader and LevelData
+- Spawn waves as read in
+- Lose game on health = 0
+- Win game after last wave
 
 To-Do::
-- Add losing screen
 - Write down design of exp, gold and mana system
 - Implement chain tower and bullet
 - Add wave timer, next wave button, and generally a wave system.

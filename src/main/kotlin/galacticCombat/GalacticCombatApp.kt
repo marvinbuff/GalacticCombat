@@ -28,7 +28,7 @@ import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.events.InvaderEvents
 import galacticCombat.level.GalacticCombatLevelLoader
-import galacticCombat.level.Path
+import galacticCombat.level.json.Path
 import galacticCombat.ui.SideBar
 import galacticCombat.ui.TopBar
 import galacticCombat.utils.toPoint
@@ -87,8 +87,8 @@ class GalacticCombatApp : GameApplication() {
     }
 
     val trickle = Runnable {
-      LevelGameVars.GOLD.increment(levelData.trickleGold)
-      GameVars.SCORE.increment(levelData.trickleScore)
+      LevelGameVars.GOLD.increment(levelData.settings.trickleGold)
+      GameVars.SCORE.increment(levelData.settings.trickleScore)
     }
 
 //    getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
@@ -215,7 +215,7 @@ private fun showPoints(waypoints: Path) {
     FXGL.entityBuilder()
       .at(x, y)
       .type(EntityType.BARRICADE)
-      .view(Rectangle(5.0, 5.0, Color.RED))
+        .view(Rectangle(5.0, 5.0, Color.BLUE))
       .buildAndAttach()
   }
 }
