@@ -26,6 +26,7 @@ import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.entities.invader.InvaderType
 import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
+import galacticCombat.events.GameEvents
 import galacticCombat.events.InvaderEvents
 import galacticCombat.level.GalacticCombatLevelLoader
 import galacticCombat.level.json.Path
@@ -110,6 +111,13 @@ class GalacticCombatApp : GameApplication() {
           GameVars.SCORE.increment(event.invader.data.bounty)
           event.invader.entity.removeFromWorld()
         })
+
+      addEventHandler(
+          GameEvents.LEVEL_FINISHED,
+          EventHandler { event ->
+            println("Level Finished!!!")
+            //todo show victory screen, write down stats, return to menu
+          })
     }
 
   }

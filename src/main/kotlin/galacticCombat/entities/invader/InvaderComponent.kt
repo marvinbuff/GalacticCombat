@@ -1,6 +1,5 @@
 package galacticCombat.entities.invader
 
-import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.entity.component.Component
@@ -92,7 +91,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
       entity.position = nextWayPoint
       wayPointIndex++
       if (isLastWaypoint()) {
-        FXGL.getEventBus().fireEvent(InvaderEvents(InvaderEvents.INVADER_REACHED_GOAL, this))
+        InvaderEvents(InvaderEvents.INVADER_REACHED_GOAL, this).fire()
       } else {
         lastWayPoint = nextWayPoint
         nextWayPoint = data.wayPoints[wayPointIndex].toPoint()
@@ -123,7 +122,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
 
   private fun checkHealth() {
     if (health.doubleValue() <= 0.0) {
-      FXGL.getEventBus().fireEvent(InvaderEvents(InvaderEvents.INVADER_KILLED, this))
+      InvaderEvents(InvaderEvents.INVADER_KILLED, this).fire()
     }
   }
 
