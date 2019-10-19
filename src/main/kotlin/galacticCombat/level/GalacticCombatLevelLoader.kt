@@ -6,7 +6,7 @@ import com.almasb.fxgl.entity.level.LevelLoader
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
-import galacticCombat.entities.controllers.LevelControllerFactory
+import galacticCombat.entities.controller.LevelControllerFactory
 import galacticCombat.level.json.LevelData
 import galacticCombat.utils.loadJson
 import java.net.URL

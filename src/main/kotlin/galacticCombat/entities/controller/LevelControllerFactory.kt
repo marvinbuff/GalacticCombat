@@ -1,4 +1,4 @@
-package galacticCombat.entities.controllers
+package galacticCombat.entities.controller
 
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.dsl.getGameWorld
@@ -18,11 +18,13 @@ class LevelControllerFactory : EntityFactory {
   fun spawnLevelController(data: SpawnData): Entity {
     require(data.hasKey(ID_LEVEL_DATA)) { "Spawning a LevelController requires LevelData." }
     val levelData = data.get<LevelData>(ID_LEVEL_DATA)
+    val controller = LevelControllerComponent(levelData)
 
     return entityBuilder().type(EntityType.CONTROLLER)
         .from(data)
         .view(Rectangle(5.0, 5.0, Color.RED))
-        .with(LevelControllerComponent(levelData))
+        .with(controller)
+        .with(NumberDisplayComponent(controller.getTimeProperty()))
         .build()
   }
 
@@ -31,7 +33,7 @@ class LevelControllerFactory : EntityFactory {
     private const val ID_LEVEL_DATA = "LevelData"
 
     private fun createSpawnData(levelData: LevelData): SpawnData {
-      return SpawnData(0.0, 0.0).put(ID_LEVEL_DATA, levelData)
+      return SpawnData(100.0, 100.0).put(ID_LEVEL_DATA, levelData)
     }
 
     fun create(levelData: LevelData) =
