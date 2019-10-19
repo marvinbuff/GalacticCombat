@@ -16,7 +16,7 @@
           "second": {
             "type": "COMMON",
             "level": 1,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -24,7 +24,7 @@
           "second": {
             "type": "REINFORCED",
             "level": 2,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -32,7 +32,7 @@
           "second": {
             "type": "ACCELERATED",
             "level": 2,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -40,7 +40,7 @@
           "second": {
             "type": "COMMON",
             "level": 1,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -48,7 +48,7 @@
           "second": {
             "type": "REINFORCED",
             "level": 3,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -56,7 +56,7 @@
           "second": {
             "type": "ACCELERATED",
             "level": 1,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -64,7 +64,7 @@
           "second": {
             "type": "COMMON",
             "level": 2,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -72,7 +72,7 @@
           "second": {
             "type": "REINFORCED",
             "level": 2,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -80,7 +80,7 @@
           "second": {
             "type": "ACCELERATED",
             "level": 2,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -88,7 +88,7 @@
           "second": {
             "type": "COMMON",
             "level": 2,
-            "path": "default"
+            "pathId": "default"
           }
         }
       ],
@@ -101,7 +101,7 @@
           "second": {
             "type": "COMMON",
             "level": 3,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -109,7 +109,7 @@
           "second": {
             "type": "REINFORCED",
             "level": 3,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -117,7 +117,7 @@
           "second": {
             "type": "ACCELERATED",
             "level": 1,
-            "path": "default"
+            "pathId": "default"
           }
         },
         {
@@ -125,7 +125,7 @@
           "second": {
             "type": "COMMON",
             "level": 2,
-            "path": "default"
+            "pathId": "default"
           }
         }
       ],

@@ -19,7 +19,7 @@ import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.bullet.BulletFactory
-import galacticCombat.entities.controllers.LevelControllerFactory
+import galacticCombat.entities.controller.LevelControllerFactory
 import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory

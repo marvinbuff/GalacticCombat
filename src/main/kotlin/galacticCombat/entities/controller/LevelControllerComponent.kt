@@ -1,13 +1,14 @@
-package galacticCombat.entities.controllers
+package galacticCombat.entities.controller
 
 import com.almasb.fxgl.entity.component.Component
 import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.level.json.InvaderArgs
 import galacticCombat.level.json.LevelData
+import javafx.beans.property.SimpleDoubleProperty
 
-//todo add component which lets it show as countdown
 //todo add super controller component and move wave logic to another one
-class LevelControllerComponent(private val levelData: LevelData) : Component() {
+//todo add clickable component
+class LevelControllerComponent(levelData: LevelData) : Component() {
   private val state: LevelState = LevelState.create(levelData)
 
   override fun onUpdate(tpf: Double) {
@@ -31,6 +32,8 @@ class LevelControllerComponent(private val levelData: LevelData) : Component() {
       } else return
     }
   }
+
+  fun getTimeProperty() = state.getTimeProperty()
 }
 
 /**
@@ -41,7 +44,7 @@ private data class LevelState(
     var isWaveThrough: Boolean = false
 ) {
   // State Variable
-  private var time: Double = 0.0
+  private var time = SimpleDoubleProperty(0.0)
 
   // Indices
   private var currentWaveIndex: Int = 0
@@ -52,17 +55,20 @@ private data class LevelState(
 
   // Utility functions
   fun updateTime(tpf: Double) {
-    time += tpf
+    time.value += tpf
   }
 
   fun resetTime() {
-    time = 0.0
+    time.value = 0.0
   }
-  fun getTime() = time
+
+  fun getTime() = time.value
+  fun getTimeProperty() = time
   fun updateInvader() {
     currentInvaderIndex++
   }
-  fun isWaveOver(): Boolean = time >= data.settings.timePerWave
+
+  fun isWaveOver(): Boolean = time.value >= data.settings.timePerWave
   fun isWaveLast(): Boolean = currentWaveIndex + 1 >= data.waves.size
   fun updateWave() {
     currentWaveIndex++; resetTime()

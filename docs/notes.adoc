@@ -24,7 +24,7 @@ But improve it with a fade out and maybe accumulation.
 - Add custom classes for Pair to make level file look nicer.
 
 Next::
-- Spawn waves as read in
+- Show Level Controller as timer
 - Lose game on health = 0
 - Win game after last wave
 
