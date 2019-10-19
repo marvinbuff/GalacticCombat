@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class InvaderArgs(
     val type: InvaderType,
     val level: Int,
-    val path: String = "default"
+    val pathId: String = "default"
 )

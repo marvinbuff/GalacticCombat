@@ -8,7 +8,6 @@ import com.almasb.fxgl.dsl.getGameScene
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
-import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
@@ -19,11 +18,9 @@ import galacticCombat.configs.GameVars
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.EntityType
-import galacticCombat.entities.INVADER_SPAWN_ID
 import galacticCombat.entities.bullet.BulletFactory
 import galacticCombat.entities.controllers.LevelControllerFactory
 import galacticCombat.entities.invader.InvaderFactory
-import galacticCombat.entities.invader.InvaderType
 import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.events.GameEvents
@@ -32,7 +29,6 @@ import galacticCombat.level.GalacticCombatLevelLoader
 import galacticCombat.level.json.Path
 import galacticCombat.ui.SideBar
 import galacticCombat.ui.TopBar
-import galacticCombat.utils.toPoint
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.event.EventHandler
 import javafx.geometry.Point2D
@@ -73,19 +69,19 @@ class GalacticCombatApp : GameApplication() {
 
     showPoints(mainPath)
 
-    enemiesLeft.bind(FXGL.getGameState().intProperty(GameVars.ENEMIES_TO_SPAWN.id).greaterThan(0))
+//    enemiesLeft.bind(FXGL.getGameState().intProperty(GameVars.ENEMIES_TO_SPAWN.id).greaterThan(0))
 
-    val spawnInvader = Runnable {
-      GameVars.ENEMIES_TO_SPAWN.increment(-1)
-      val index = GameVars.ENEMIES_TO_SPAWN.get()
-      require(index <= 3) { "Trying to initialize invader with illegal data." }
-      getGameWorld().spawn(
-          INVADER_SPAWN_ID,
-          SpawnData(mainPath.first().toPoint())
-              .put(InvaderType.id, InvaderType.values()[index])
-              .put(InvaderFactory.levelId, index)
-      )
-    }
+//    val spawnInvader = Runnable {
+//      GameVars.ENEMIES_TO_SPAWN.increment(-1)
+//      val index = GameVars.ENEMIES_TO_SPAWN.get()
+//      require(index <= 3) { "Trying to initialize invader with illegal data." }
+//      getGameWorld().spawn(
+//          INVADER_SPAWN_ID,
+//          SpawnData(mainPath.first().toPoint())
+//              .put(InvaderType.id, InvaderType.values()[index])
+//              .put(InvaderFactory.ID_LEVEL, index)
+//      )
+//    }
 
     val trickle = Runnable {
       LevelGameVars.GOLD.increment(levelData.settings.trickleGold)
