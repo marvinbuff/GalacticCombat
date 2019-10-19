@@ -8,6 +8,7 @@ import galacticCombat.entities.bullet.BulletData
 import galacticCombat.entities.bullet.BulletEffect
 import galacticCombat.entities.bullet.BulletEffectType
 import galacticCombat.events.InvaderEvents
+import galacticCombat.utils.fire
 import galacticCombat.utils.toPoint
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.geometry.Point2D

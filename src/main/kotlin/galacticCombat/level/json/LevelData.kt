@@ -8,4 +8,6 @@ data class LevelData(
     val settings: Settings,
     val waves: List<Wave>,
     val paths: List<Path>
-)
+) {
+  fun getPathById(id: String): Path = paths.first { it.id == id }
+}

@@ -16,6 +16,7 @@ class LevelControllerFactory : EntityFactory {
 
   @Spawns(SPAWN_ID_LEVEL_CONTROLLER)
   fun spawnLevelController(data: SpawnData): Entity {
+    require(data.hasKey(ID_LEVEL_DATA)) { "Spawning a LevelController requires LevelData." }
     val levelData = data.get<LevelData>(ID_LEVEL_DATA)
 
     return entityBuilder().type(EntityType.CONTROLLER)
@@ -26,7 +27,7 @@ class LevelControllerFactory : EntityFactory {
   }
 
   companion object {
-    private const val SPAWN_ID_LEVEL_CONTROLLER = "Level Controller"
+    private const val SPAWN_ID_LEVEL_CONTROLLER = "LevelController"
     private const val ID_LEVEL_DATA = "LevelData"
 
     private fun createSpawnData(levelData: LevelData): SpawnData {

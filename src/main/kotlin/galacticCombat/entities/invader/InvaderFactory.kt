@@ -1,24 +1,28 @@
 package galacticCombat.entities.invader
 
 import com.almasb.fxgl.dsl.entityBuilder
+import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import galacticCombat.configs.AssetConfig
+import galacticCombat.configs.LevelDataVar
 import galacticCombat.entities.EntityType
-import galacticCombat.entities.INVADER_SPAWN_ID
 import galacticCombat.level.json.InvaderArgs
+import galacticCombat.utils.toPoint
 import javafx.geometry.Point2D
 import kotlin.math.pow
 
 @Suppress("unused")
 class InvaderFactory : EntityFactory {
 
-  @Spawns(INVADER_SPAWN_ID)
+  @Spawns(SPAWN_ID_INVADER)
   fun spawnEnemy(data: SpawnData): Entity {
+    require(data.hasKey(ID_INVADER_ARGS))
+
     val position = Point2D(data.x, data.y).subtract(InvaderComponent.center)
-    val invaderData = parseInvaderData(data)
+    val invaderData = getInvaderData(data.get(ID_INVADER_ARGS))
     val invader = InvaderComponent(invaderData)
     val healthBar = HealthComponent(invader)
 
@@ -30,30 +34,19 @@ class InvaderFactory : EntityFactory {
         .build()
   }
 
-  private fun parseInvaderData(data: SpawnData): InvaderData =
-      when {
-        data.hasKey(invaderArgsId) -> {
-          val args = data.get(invaderArgsId) as InvaderArgs
-          getInvaderData(args.type, args.level)
-        }
-        data.hasKey(InvaderType.id) && data.hasKey(levelId)
-                                   -> getInvaderData(data.get(InvaderType.id), data.get(levelId))
-        else                       -> data.get(InvaderData.id)
-      }
-
-  private fun getInvaderData(type: InvaderType, level: Int): InvaderData {
+  private fun getInvaderData(args: InvaderArgs): InvaderData {
     val asset = AssetConfig.getInvader(
-        when (type) {
-          InvaderType.COMMON      -> "1.$level.gif"
-          InvaderType.REINFORCED  -> "2.${level}1.gif"
-          InvaderType.ACCELERATED -> "3.${level}1.gif"
+        when (args.type) {
+          InvaderType.COMMON      -> "1.${args.level}.gif"
+          InvaderType.REINFORCED  -> "2.${args.level}1.gif"
+          InvaderType.ACCELERATED -> "3.${args.level}1.gif"
         }
     )
 
-    return when (type) {
-      InvaderType.COMMON      -> getInvaderDataFromDynamic(level, asset, Speed.NORMAL, 100.0, 2.0)
-      InvaderType.REINFORCED  -> getInvaderDataFromDynamic(level, asset, Speed.SLOW, 100.0, 8.0)
-      InvaderType.ACCELERATED -> getInvaderDataFromDynamic(level, asset, Speed.FAST, 80.0, 0.0)
+    return when (args.type) {
+      InvaderType.COMMON      -> getInvaderDataFromDynamic(args.level, asset, Speed.NORMAL, 100.0, 2.0)
+      InvaderType.REINFORCED  -> getInvaderDataFromDynamic(args.level, asset, Speed.SLOW, 100.0, 8.0)
+      InvaderType.ACCELERATED -> getInvaderDataFromDynamic(args.level, asset, Speed.FAST, 80.0, 0.0)
     }
   }
 
@@ -68,7 +61,15 @@ class InvaderFactory : EntityFactory {
 
 
   companion object {
-    const val levelId = "level"
-    const val invaderArgsId = "invader args"
+    const val ID_LEVEL = "level"
+    const val ID_INVADER_ARGS = "InvaderArgs"
+    const val SPAWN_ID_INVADER = "Invader"
+
+    fun spawn(args: InvaderArgs) {
+      val position = LevelDataVar.get().getPathById(args.pathId).wayPoints.first()
+      val data = SpawnData(position.toPoint()).put(ID_INVADER_ARGS, args)
+
+      getGameWorld().spawn(SPAWN_ID_INVADER, data)
+    }
   }
 }
