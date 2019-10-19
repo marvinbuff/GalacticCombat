@@ -1,13 +1,12 @@
 package galacticCombat.level
 
 import com.almasb.fxgl.entity.GameWorld
-import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.level.Level
 import com.almasb.fxgl.entity.level.LevelLoader
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
-import galacticCombat.entities.LEVEL_CONTROLLER_ID
+import galacticCombat.entities.controllers.LevelControllerFactory
 import galacticCombat.level.json.LevelData
 import galacticCombat.utils.loadJson
 import java.net.URL
@@ -20,7 +19,7 @@ class GalacticCombatLevelLoader : LevelLoader {
     //todo sanity check of read data
     data.setGameVars()
     LevelDataVar.set(data)
-    val controller = world.create(LEVEL_CONTROLLER_ID, SpawnData(0.0, 0.0))
+    val controller = LevelControllerFactory.create(data)
 
     val entities = listOf(controller)
 

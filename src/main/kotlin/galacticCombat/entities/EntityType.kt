@@ -4,7 +4,6 @@ package galacticCombat.entities
 const val TOWER_SPAWN_ID = "Tower"
 const val INVADER_SPAWN_ID = "Invader"
 const val BULLET_SPAWN_ID = "Bullet"
-const val LEVEL_CONTROLLER_ID = "Level Controller"
 const val PLACEHOLDER_SPAWN_ID = "Placeholder"
 
 enum class EntityType {
