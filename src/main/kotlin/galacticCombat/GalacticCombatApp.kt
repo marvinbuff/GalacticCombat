@@ -3,6 +3,8 @@ package galacticCombat
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.dsl.FXGL
+import com.almasb.fxgl.dsl.getAppHeight
+import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.dsl.getAssetLoader
 import com.almasb.fxgl.dsl.getGameScene
 import com.almasb.fxgl.dsl.getGameTimer
@@ -32,7 +34,9 @@ import galacticCombat.ui.TopBar
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.event.EventHandler
 import javafx.geometry.Point2D
+import javafx.geometry.Rectangle2D
 import javafx.scene.input.KeyCode
+import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
 import javafx.util.Duration
@@ -131,18 +135,16 @@ class GalacticCombatApp : GameApplication() {
 //    }, KeyCode.K)
 
 
-//    input.addAction(object : UserAction("Place Tower") {
-//      private val worldBounds = Rectangle2D(0.0, 0.0, getAppWidth().toDouble(), getAppHeight() - 100.0 - 40)
-//
-//      override fun onActionBegin() {
-//        if (worldBounds.contains(input.mousePositionWorld)) {
-//          getGameWorld().spawn(
-//              TOWER_SPAWN_ID,
-//            SpawnData(input.mouseXWorld, input.mouseYWorld).put(TowerType.id, TowerType.CANNON)
-//          )
-//        }
-//      }
-//    }, MouseButton.PRIMARY)
+    input.addAction(object : UserAction("Place Tower") {
+      private val worldBounds = Rectangle2D(0.0, 0.0, getAppWidth().toDouble(), getAppHeight() - 100.0 - 40)
+
+      override fun onActionBegin() {
+        if (worldBounds.contains(input.mousePositionWorld)) {
+          println("Clicked on (${input.mouseXWorld}/${input.mouseYWorld})")
+          //todo check coordinates and add others like ui
+        }
+      }
+    }, MouseButton.PRIMARY)
 
 
     //add cheats here by checking:
