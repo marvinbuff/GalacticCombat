@@ -1,6 +1,7 @@
 package galacticCombat.entities.controller
 
 import com.almasb.fxgl.dsl.components.view.ChildViewComponent
+import javafx.beans.property.SimpleDoubleProperty
 import javafx.event.EventHandler
 import javafx.scene.control.Button
 import javafx.scene.input.MouseEvent
@@ -10,13 +11,15 @@ class NumberDisplayComponent(timerComponent: LevelTimerComponent) : ChildViewCom
   private val button = Button()
   private val timeProperty = timerComponent.getTimeProperty()
 
-  private val onClick = EventHandler<MouseEvent> { event ->
-    println("Clicked button on time ${timeProperty.value}")
+  private val onClick = EventHandler<MouseEvent> {
+    timerComponent.skipToNextWave()
   }
 
   init {
-    button.textProperty().bind(timeProperty.asString("Next Wave: %.0f"))
+    button.textProperty().bind(timeProperty.formatAsTime())
     viewRoot.children.addAll(button)
     button.addEventHandler(MouseEvent.MOUSE_CLICKED, onClick)
   }
+
+  private fun SimpleDoubleProperty.formatAsTime() = negate().add(60).asString("Next Wave: %.0f")
 }
