@@ -32,6 +32,12 @@ class LevelTimerComponent(levelData: LevelData) : Component() {
   }
 
   fun getTimeProperty() = state.getTimeProperty()
+
+  fun skipToNextWave() {
+    if (state.isWaveThrough && !state.isWaveLast()) {
+      state.updateWave()
+    }
+  }
 }
 
 /**
@@ -56,11 +62,7 @@ private data class LevelState(
     time.value += tpf
   }
 
-  fun resetTime() {
-    time.value = 0.0
-  }
-
-  fun getTime() = time.value
+  fun getTime(): Double = time.value
   fun getTimeProperty() = time
   fun updateInvader() {
     currentInvaderIndex++
@@ -69,7 +71,10 @@ private data class LevelState(
   fun isWaveOver(): Boolean = time.value >= data.settings.timePerWave
   fun isWaveLast(): Boolean = currentWaveIndex + 1 >= data.waves.size
   fun updateWave() {
-    currentWaveIndex++; resetTime()
+    currentWaveIndex++
+    currentInvaderIndex = 0
+    isWaveThrough = false
+    time.value = 0.0
   }
 
   fun getInvader(): Pair<Double, InvaderArgs>? = data.waves[currentWaveIndex].getOrNull(currentInvaderIndex)
