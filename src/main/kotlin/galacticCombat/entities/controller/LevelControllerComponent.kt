@@ -12,7 +12,5 @@ class LevelControllerComponent(private val levelData: LevelData) : Component() {
     entity.addComponent(timerComponent)
     entity.addComponent(viewComponent)
   }
-
-
 }
 

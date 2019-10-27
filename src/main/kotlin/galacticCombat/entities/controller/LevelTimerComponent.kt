@@ -1,6 +1,8 @@
 package galacticCombat.entities.controller
 
 import com.almasb.fxgl.entity.component.Component
+import galacticCombat.configs.GameVarsBoolean
+import galacticCombat.configs.GameVarsInt
 import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.level.json.InvaderArgs
 import galacticCombat.level.json.LevelData
@@ -22,7 +24,9 @@ class LevelTimerComponent(levelData: LevelData) : Component() {
     while (!state.isWaveThrough) {
       val invaderPair = state.getInvader()
       if (invaderPair == null) {
-        state.isWaveThrough = true; return
+        state.isWaveThrough = true
+        if (state.isWaveLast()) GameVarsBoolean.ALL_ENEMIES_SPAWNED.set(true)
+        return
       }
       val (spawnTime, invader) = invaderPair
       if (spawnTime <= state.getTime()) {
@@ -75,6 +79,7 @@ private data class LevelState(
     currentInvaderIndex = 0
     isWaveThrough = false
     time.value = 0.0
+    GameVarsInt.WAVE_INDEX.increment()
   }
 
   fun getInvader(): Pair<Double, InvaderArgs>? = data.waves[currentWaveIndex].getOrNull(currentInvaderIndex)

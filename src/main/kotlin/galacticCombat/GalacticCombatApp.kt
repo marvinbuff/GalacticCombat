@@ -6,6 +6,8 @@ import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.getAppHeight
 import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.dsl.getAssetLoader
+import com.almasb.fxgl.dsl.getDisplay
+import com.almasb.fxgl.dsl.getGameController
 import com.almasb.fxgl.dsl.getGameScene
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.dsl.getGameWorld
@@ -16,7 +18,8 @@ import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.fxgl.saving.DataFile
 import galacticCombat.configs.AppConfig
-import galacticCombat.configs.GameVars
+import galacticCombat.configs.GameVarsBoolean
+import galacticCombat.configs.GameVarsInt
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.EntityType
@@ -31,6 +34,7 @@ import galacticCombat.level.GalacticCombatLevelLoader
 import galacticCombat.level.json.Path
 import galacticCombat.ui.SideBar
 import galacticCombat.ui.TopBar
+import galacticCombat.utils.fire
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.event.EventHandler
 import javafx.geometry.Point2D
@@ -89,7 +93,7 @@ class GalacticCombatApp : GameApplication() {
 
     val trickle = Runnable {
       LevelGameVars.GOLD.increment(levelData.settings.trickleGold)
-      GameVars.SCORE.increment(levelData.settings.trickleScore)
+      GameVarsInt.SCORE.increment(levelData.settings.trickleScore)
     }
 
 //    getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
@@ -108,14 +112,21 @@ class GalacticCombatApp : GameApplication() {
         InvaderEvents.INVADER_KILLED,
         EventHandler { event ->
           LevelGameVars.EXPERIENCE.increment(event.invader.data.xp)
-          GameVars.SCORE.increment(event.invader.data.bounty)
+          GameVarsInt.SCORE.increment(event.invader.data.bounty)
+          GameVarsInt.ALIVE_INVADERS.increment(-1)
           event.invader.entity.removeFromWorld()
+
+          //check if game won
+          if (GameVarsBoolean.ALL_ENEMIES_SPAWNED.get() && GameVarsInt.ALIVE_INVADERS.get() == 0) {
+            GameEvents(GameEvents.LEVEL_FINISHED).fire()
+          }
         })
 
       addEventHandler(
           GameEvents.LEVEL_FINISHED,
-          EventHandler { event ->
+          EventHandler {
             println("Level Finished!!!")
+            showGameWon()
             //todo show victory screen, write down stats, return to menu
           })
     }
@@ -170,7 +181,10 @@ class GalacticCombatApp : GameApplication() {
   }
 
   override fun initGameVars(vars: MutableMap<String, Any>) {
-    GameVars.values().forEach { gameVar ->
+    GameVarsInt.values().forEach { gameVar ->
+      vars[gameVar.id] = gameVar.initial
+    }
+    GameVarsBoolean.values().forEach { gameVar ->
       vars[gameVar.id] = gameVar.initial
     }
   }
@@ -187,7 +201,7 @@ class GalacticCombatApp : GameApplication() {
 
   override fun saveState(): DataFile {
     // possibly not correct and not used!
-    val data = FXGL.getGameState().getInt(GameVars.ENEMIES_TO_SPAWN.id)
+    val data = FXGL.getGameState().getInt(GameVarsInt.ENEMIES_TO_SPAWN.id)
     println("Saved $data")
     return DataFile(SaveData(data))
   }
@@ -196,8 +210,27 @@ class GalacticCombatApp : GameApplication() {
     if (dataFile == null) return
     val data = dataFile.data as SaveData
     println("Loaded ${data.scores}")
-    FXGL.getGameState().increment(GameVars.ENEMIES_TO_SPAWN.id, data.scores)
+    FXGL.getGameState().increment(GameVarsInt.ENEMIES_TO_SPAWN.id, data.scores)
   }
+
+  fun showGameOver() {
+    getDisplay().showMessageBox("Game Over!") {
+      //todo add stats to profile
+      getGameController().gotoMainMenu()
+//      getGameController().gotoGameMenu()
+//      getGameController().startNewGame()
+    }
+  }
+
+  fun showGameWon() {
+    getDisplay().showMessageBox("Game Won!") {
+      //todo add stats to profile
+      getGameController().gotoMainMenu()
+//      getGameController().gotoGameMenu()
+//      getGameController().startNewGame()
+    }
+  }
+
 
 }
 

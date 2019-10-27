@@ -31,7 +31,7 @@ open class BulletData private constructor(
       }
 
     private fun createCannon(level: Int): BulletData {
-      val damage = 10.0 + (level - 1) * 3
+      val damage = 100.0 + (level - 1) * 3
       return BulletData(damage, 2.0)
     }
 

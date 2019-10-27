@@ -11,9 +11,13 @@ interface GameVar<T : Any> {
 }
 
 interface IntGameVar : GameVar<Int> {
-  fun increment(increment: Int) {
+  fun increment(increment: Int = 1) {
     getGameState().increment(id, increment)
   }
 
   override fun get(): Int = getGameState().getInt(id)
+}
+
+interface BooleanGameVar : GameVar<Boolean> {
+  override fun get(): Boolean = getGameState().getBoolean(id)
 }
