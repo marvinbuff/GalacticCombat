@@ -24,7 +24,10 @@ But improve it with a fade out and maybe accumulation.
 - Add custom classes for Pair to make level file look nicer.
 
 Next::
-- Show Level Controller as timer
+- Finish game won behaviour
+- Add game lost behaviour
+- Balance game to be beatable
+- Add game over stats
 - Lose game on health = 0
 - Win game after last wave
 

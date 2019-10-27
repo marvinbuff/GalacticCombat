@@ -3,7 +3,7 @@ package galacticCombat.entities.invader
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.entity.component.Component
-import galacticCombat.configs.GameVars
+import galacticCombat.configs.GameVarsInt
 import galacticCombat.entities.bullet.BulletData
 import galacticCombat.entities.bullet.BulletEffect
 import galacticCombat.entities.bullet.BulletEffectType
@@ -34,7 +34,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
     projectile = ProjectileComponent(Point2D(0.0, 0.0), data.baseSpeed.speed)
     entity.addComponent(projectile)
 
-    GameVars.ALIVE_ENEMIES.increment(+1)
+    GameVarsInt.ALIVE_INVADERS.increment(+1)
   }
 
   override fun onUpdate(tpf: Double) {
@@ -46,10 +46,6 @@ class InvaderComponent(val data: InvaderData) : Component() {
     timeoutEffects()
     sufferPoison(tpf)
     sufferSlow()
-  }
-
-  override fun onRemoved() {
-    GameVars.ALIVE_ENEMIES.increment(-1)
   }
 
   //endregion
