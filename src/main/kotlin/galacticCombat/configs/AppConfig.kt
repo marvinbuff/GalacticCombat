@@ -12,6 +12,14 @@ object AppConfig {
   const val TRICKLE_RATE = 1.0
 }
 
+object GameConfig {
+  const val WORLD_HEIGHT = AppConfig.HEIGHT - UIConfig.TOPBAR_HEIGHT
+}
+
+object UIConfig {
+  const val TOPBAR_HEIGHT = 100
+}
+
 //TODO Refactor the achievements and put into own file
 object AchievementConfig {
   const val GOLD_ACHIEVEMENT_1 = 100

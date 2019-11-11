@@ -1,16 +1,17 @@
 package galacticCombat
 
+import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.getAppHeight
 import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.dsl.getAssetLoader
-import com.almasb.fxgl.dsl.getDisplay
-import com.almasb.fxgl.dsl.getGameController
+import com.almasb.fxgl.dsl.getEventBus
 import com.almasb.fxgl.dsl.getGameScene
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.dsl.getGameWorld
+import com.almasb.fxgl.dsl.getSettings
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.input.Input
@@ -30,6 +31,9 @@ import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.events.GameEvents
 import galacticCombat.events.InvaderEvents
+import galacticCombat.events.handle
+import galacticCombat.handlers.gameLost
+import galacticCombat.handlers.gameWon
 import galacticCombat.level.GalacticCombatLevelLoader
 import galacticCombat.level.json.Path
 import galacticCombat.ui.SideBar
@@ -60,7 +64,7 @@ class GalacticCombatApp : GameApplication() {
     settings.title = AppConfig.TITLE
     settings.version = AppConfig.VERSION
 //    settings.appIcon = "icon.png" //TODO enable icon
-    settings.isMenuEnabled = false
+    settings.isMenuEnabled = true
     settings.isIntroEnabled = false
     settings.applicationMode = AppConfig.MODE
   }
@@ -68,98 +72,72 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initGame() {
     listOf(TowerFactory(), InvaderFactory(), BulletFactory(), PlaceholderFactory(), LevelControllerFactory())
-      .forEach(getGameWorld()::addEntityFactory)
+        .forEach(getGameWorld()::addEntityFactory)
 
     val level = getAssetLoader().loadLevel("experiment.level", GalacticCombatLevelLoader())
     getGameWorld().setLevel(level)
     val levelData = LevelDataVar.get()
-    val mainPath = levelData.paths.first()
 
-    showPoints(mainPath)
+    showPoints(levelData.paths.first())
 
-//    enemiesLeft.bind(FXGL.getGameState().intProperty(GameVars.ENEMIES_TO_SPAWN.id).greaterThan(0))
-
-//    val spawnInvader = Runnable {
-//      GameVars.ENEMIES_TO_SPAWN.increment(-1)
-//      val index = GameVars.ENEMIES_TO_SPAWN.get()
-//      require(index <= 3) { "Trying to initialize invader with illegal data." }
-//      getGameWorld().spawn(
-//          INVADER_SPAWN_ID,
-//          SpawnData(mainPath.first().toPoint())
-//              .put(InvaderType.id, InvaderType.values()[index])
-//              .put(InvaderFactory.ID_LEVEL, index)
-//      )
-//    }
+    LevelGameVars.HEALTH.property().addListener { observable, oldValue, newValue ->
+      if (newValue.toInt() <= 0) {
+        GameEvents(GameEvents.LEVEL_LOST).fire()
+      }
+    }
 
     val trickle = Runnable {
       LevelGameVars.GOLD.increment(levelData.settings.trickleGold)
       GameVarsInt.SCORE.increment(levelData.settings.trickleScore)
     }
 
-//    getGameTimer().runAtIntervalWhile(spawnInvader, Duration.seconds(2.0), enemiesLeft)
     getGameTimer().runAtInterval(trickle, Duration.seconds(AppConfig.TRICKLE_RATE))
 
     // Invader Events
-    FXGL.getEventBus().apply {
+    getEventBus().apply {
       addEventHandler(
-        InvaderEvents.INVADER_REACHED_GOAL,
-        EventHandler { event ->
-          LevelGameVars.HEALTH.increment(-event.invader.data.damage)
-          event.invader.entity.removeFromWorld()
-        })
+          InvaderEvents.INVADER_REACHED_GOAL,
+          EventHandler { event ->
+            LevelGameVars.HEALTH.increment(-event.invader.data.damage)
+            event.invader.entity.removeFromWorld()
+          })
 
-      addEventHandler(
-        InvaderEvents.INVADER_KILLED,
-        EventHandler { event ->
-          LevelGameVars.EXPERIENCE.increment(event.invader.data.xp)
-          GameVarsInt.SCORE.increment(event.invader.data.bounty)
-          GameVarsInt.ALIVE_INVADERS.increment(-1)
-          event.invader.entity.removeFromWorld()
+      addEventHandler( //combine with one above, most is common. only health and score/experience not.
+          InvaderEvents.INVADER_KILLED,
+          EventHandler { event ->
+            LevelGameVars.EXPERIENCE.increment(event.invader.data.xp)
+            GameVarsInt.SCORE.increment(event.invader.data.bounty)
+            GameVarsInt.ALIVE_INVADERS.increment(-1)
+            event.invader.entity.removeFromWorld()
 
-          //check if game won
-          if (GameVarsBoolean.ALL_ENEMIES_SPAWNED.get() && GameVarsInt.ALIVE_INVADERS.get() == 0) {
-            GameEvents(GameEvents.LEVEL_FINISHED).fire()
-          }
-        })
-
-      addEventHandler(
-          GameEvents.LEVEL_FINISHED,
-          EventHandler {
-            println("Level Finished!!!")
-            showGameWon()
-            //todo show victory screen, write down stats, return to menu
+            //check if game won
+            if (GameVarsBoolean.ALL_ENEMIES_SPAWNED.get() && GameVarsInt.ALIVE_INVADERS.get() == 0) {
+              GameEvents(GameEvents.LEVEL_WON).fire()
+            }
           })
     }
+
+    GameEvents.LEVEL_WON.handle { gameWon() }
+    GameEvents.LEVEL_LOST.handle { gameLost() }
 
   }
 
   override fun initInput() {
     val input = FXGL.getInput()
 
-//    input.addAction(object : UserAction("Tower") {
-//      override fun onAction() {
-//        getGameWorld().spawn(
-//            PLACEHOLDER_SPAWN_ID,
-//            SpawnData(input.mousePositionWorld).put(TowerData.id, TowerFactory.getTowerData(TowerType.CANNON))
-//        )
-//      }
-//    }, KeyCode.K)
+    // Developer Commands
+    if (getSettings().applicationMode == ApplicationMode.DEVELOPER) {
 
+      input.addAction(object : UserAction("Check Coordinate") {
+        private val worldBounds = Rectangle2D(0.0, 0.0, getAppWidth().toDouble(), getAppHeight().toDouble())
 
-    input.addAction(object : UserAction("Place Tower") {
-      private val worldBounds = Rectangle2D(0.0, 0.0, getAppWidth().toDouble(), getAppHeight() - 100.0 - 40)
-
-      override fun onActionBegin() {
-        if (worldBounds.contains(input.mousePositionWorld)) {
-          println("Clicked on (${input.mouseXWorld}/${input.mouseYWorld})")
-          //todo check coordinates and add others like ui
+        override fun onActionBegin() {
+          if (worldBounds.contains(input.mousePositionWorld)) {
+            println("Clicked on (${input.mouseXWorld}/${input.mouseYWorld})")
+          }
         }
-      }
-    }, MouseButton.PRIMARY)
-
-
-    //add cheats here by checking:
-    //getSettings().getApplicationMode() == ApplicationMode.DEVELOPER
+      }, MouseButton.PRIMARY)
+    }
   }
 
   override fun initUI() {
@@ -212,26 +190,6 @@ class GalacticCombatApp : GameApplication() {
     println("Loaded ${data.scores}")
     FXGL.getGameState().increment(GameVarsInt.ENEMIES_TO_SPAWN.id, data.scores)
   }
-
-  fun showGameOver() {
-    getDisplay().showMessageBox("Game Over!") {
-      //todo add stats to profile
-      getGameController().gotoMainMenu()
-//      getGameController().gotoGameMenu()
-//      getGameController().startNewGame()
-    }
-  }
-
-  fun showGameWon() {
-    getDisplay().showMessageBox("Game Won!") {
-      //todo add stats to profile
-      getGameController().gotoMainMenu()
-//      getGameController().gotoGameMenu()
-//      getGameController().startNewGame()
-    }
-  }
-
-
 }
 
 data class SaveData(val scores: Int) : Serializable
@@ -246,16 +204,16 @@ private fun showPoints(waypoints: Path) {
     val x = _x.toDouble()
     val y = _y.toDouble()
     FXGL.entityBuilder()
-      .at(x, y)
-      .type(EntityType.BARRICADE)
-      .view(Rectangle(20.0, 20.0, Color.BLUE))
-      .with(CollidableComponent(true))
-      .buildAndAttach()
+        .at(x, y)
+        .type(EntityType.BARRICADE)
+        .view(Rectangle(20.0, 20.0, Color.BLUE))
+        .with(CollidableComponent(true))
+        .buildAndAttach()
     FXGL.entityBuilder()
-      .at(x, y)
-      .type(EntityType.BARRICADE)
+        .at(x, y)
+        .type(EntityType.BARRICADE)
         .view(Rectangle(5.0, 5.0, Color.BLUE))
-      .buildAndAttach()
+        .buildAndAttach()
   }
 }
 

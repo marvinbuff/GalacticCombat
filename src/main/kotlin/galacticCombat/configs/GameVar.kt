@@ -1,6 +1,8 @@
 package galacticCombat.configs
 
 import com.almasb.fxgl.dsl.getGameState
+import javafx.beans.property.BooleanProperty
+import javafx.beans.property.IntegerProperty
 
 interface GameVar<T : Any> {
   val id: String
@@ -16,8 +18,12 @@ interface IntGameVar : GameVar<Int> {
   }
 
   override fun get(): Int = getGameState().getInt(id)
+
+  fun property(): IntegerProperty = getGameState().intProperty(id)
 }
 
 interface BooleanGameVar : GameVar<Boolean> {
   override fun get(): Boolean = getGameState().getBoolean(id)
+
+  fun property(): BooleanProperty = getGameState().booleanProperty(id)
 }
