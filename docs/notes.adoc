@@ -36,6 +36,7 @@ To-Do::
 - Implement chain tower and bullet
 - Add wave timer, next wave button, and generally a wave system.
 - Reduce gold on tower set and not prototype creation
+- Show indicator when tower is not placable
 
 Next Features::
 - Nicer UI: shop part, nice display for money and health
