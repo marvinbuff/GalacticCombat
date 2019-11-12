@@ -80,10 +80,8 @@ class GalacticCombatApp : GameApplication() {
 
     showPoints(levelData.paths.first())
 
-    LevelGameVars.HEALTH.property().addListener { observable, oldValue, newValue ->
-      if (newValue.toInt() <= 0) {
-        GameEvents(GameEvents.LEVEL_LOST).fire()
-      }
+    LevelGameVars.HEALTH.property().addListener { _, _, newValue ->
+      if (newValue.toInt() <= 0) GameEvents(GameEvents.LEVEL_LOST).fire()
     }
 
     val trickle = Runnable {
