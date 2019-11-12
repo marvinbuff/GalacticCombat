@@ -22,6 +22,7 @@ Issue List::
 But improve it with a fade out and maybe accumulation.
 - Support multiple paths.
 - Add custom classes for Pair to make level file look nicer.
+- Fix the unresponsive layer when restarting a game.
 
 Next::
 - Finish game won behaviour

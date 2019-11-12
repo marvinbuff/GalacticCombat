@@ -1,12 +1,12 @@
 package galacticCombat.utils
 
 import com.almasb.fxgl.dsl.FXGL
+import com.almasb.sslogger.Logger
 import javafx.event.Event
 
-//fun Event.fire() = FXGL.getEventBus().fireEvent(this)
+private val logger = Logger.get("Global Utils")
 
 fun Event.fire() {
-  println("this.eventType.name = ${this.eventType.name}")
-  //todo change to logging
+  logger.debug("Fire Event: ${this.eventType.name}")
   return FXGL.getEventBus().fireEvent(this)
 }
