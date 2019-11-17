@@ -23,21 +23,17 @@ But improve it with a fade out and maybe accumulation.
 - Support multiple paths.
 - Add custom classes for Pair to make level file look nicer.
 - Fix the unresponsive layer when restarting a game.
+- Fix trickle values when skipping level end.
 
 Next::
 - Finish game won behaviour
-- Add game lost behaviour
 - Balance game to be beatable
 - Add game over stats
-- Lose game on health = 0
-- Win game after last wave
 
 To-Do::
 - Write down design of exp, gold and mana system
 - Implement chain tower and bullet
-- Add wave timer, next wave button, and generally a wave system.
-- Reduce gold on tower set and not prototype creation
-- Show indicator when tower is not placable
+- Improve tower placeholder indication when not valid
 
 Next Features::
 - Nicer UI: shop part, nice display for money and health
