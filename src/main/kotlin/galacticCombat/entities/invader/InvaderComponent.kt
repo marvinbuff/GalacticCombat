@@ -64,6 +64,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
     when (effect.type) {
       BulletEffectType.POISON -> poisonEffects += effectWithTime
       BulletEffectType.SLOW   -> slowEffects += effectWithTime
+      BulletEffectType.CHAIN  -> TODO()
       BulletEffectType.NONE   -> { /* do nothing */
       }
     }
