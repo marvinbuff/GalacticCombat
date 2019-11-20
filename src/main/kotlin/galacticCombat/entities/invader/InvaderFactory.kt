@@ -24,11 +24,6 @@ class InvaderFactory : EntityFactory {
     val position = Point2D(data.x, data.y).subtract(InvaderComponent.center)
     val invaderData = getInvaderData(data.get(ID_INVADER_ARGS))
     val invader = InvaderComponent(invaderData)
-//    val healthBar = GenericBarViewComponent(-5.0,-15.0, Color.GREEN, invader.health)
-//    healthBar.bar.run {
-//      setWidth(35.0)
-//      setHeight(8.0)
-//    }
     val healthBar = HealthComponent(invader)
 
     return entityBuilder().type(EntityType.INVADER)

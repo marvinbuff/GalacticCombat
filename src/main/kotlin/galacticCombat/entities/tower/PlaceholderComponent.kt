@@ -26,7 +26,6 @@ class PlaceholderComponent(private val towerData: TowerData) : Component() {
       else                  -> {
       }
     }
-
   }
 
   override fun onAdded() {
