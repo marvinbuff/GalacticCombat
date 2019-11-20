@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin("jvm") version "1.3.70"
+  kotlin("jvm") version "1.3.50"
 
   // json serialization
-  id("kotlinx-serialization") version "1.3.70"
+  id("kotlinx-serialization") version "1.3.50"
 
   // FXGL
   id("application")
@@ -21,11 +21,11 @@ application {
   mainClassName = "galacticCombat.GalacticCombatAppKt"
 }
 
+
 repositories {
   mavenCentral()
   jcenter()
   maven("https://nexus.gluonhq.com/nexus/content/repositories/releases")
-    maven("http://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
@@ -34,11 +34,11 @@ dependencies {
   testImplementation("junit:junit:4.12")
 
   // For Json Serialization
-  implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.11.1")
   compile("org.json:json:20190722")
 
   // FXGL
-  compile("com.github.almasb:fxgl:11.8") // dev-SNAPSHOT
+  compile("com.github.almasb:fxgl:11.6")
 }
 
 tasks {
@@ -54,6 +54,6 @@ tasks {
 }
 
 javafx {
-  version = "13.0.2"
-  modules = mutableListOf("javafx.controls", "javafx.fxml")
+  version = "12.0.2"
+  modules = mutableListOf("javafx.controls")
 }
