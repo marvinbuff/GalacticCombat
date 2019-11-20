@@ -8,16 +8,25 @@ import galacticCombat.configs.LevelGameVars
 import javafx.event.EventHandler
 import javafx.geometry.Point2D
 import javafx.geometry.Rectangle2D
+import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 
 class PlaceholderComponent(private val towerData: TowerData) : Component() {
 
   private val onClick = EventHandler<MouseEvent> { event ->
-    if (isValidPosition()) {
-      LevelGameVars.GOLD.increment(-towerData.price)
-      TowerFactory.spawnFromTowerData(towerData, Point2D(event.x, event.y))
-      entity.removeFromWorld()
+    when (event.button) {
+      MouseButton.PRIMARY   -> {
+        if (isValidPosition()) {
+          LevelGameVars.GOLD.increment(-towerData.price)
+          TowerFactory.spawnFromTowerData(towerData, Point2D(event.x, event.y))
+          entity.removeFromWorld()
+        }
+      }
+      MouseButton.SECONDARY -> entity.removeFromWorld()
+      else                  -> {
+      }
     }
+
   }
 
   override fun onAdded() {
@@ -25,15 +34,12 @@ class PlaceholderComponent(private val towerData: TowerData) : Component() {
   }
 
   override fun onUpdate(tpf: Double) {
+    entity.position = getInput().mousePositionWorld.subtract(TowerComponent.center)
     if (isValidPosition()) {
       entity.viewComponent.opacity = 1.0
-      //show as valid
     } else {
       entity.viewComponent.opacity = 0.2
-      //show as invalid
     }
-
-    entity.position = getInput().mousePositionWorld.subtract(TowerComponent.center)
   }
 
   override fun onRemoved() {
