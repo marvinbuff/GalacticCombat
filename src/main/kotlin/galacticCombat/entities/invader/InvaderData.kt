@@ -1,10 +1,11 @@
 package galacticCombat.entities.invader
 
 import galacticCombat.configs.LevelDataVar
+import galacticCombat.entities.generic.animation.FrameData
 import galacticCombat.level.json.Path
 
 data class InvaderData(
-    val texture: String,
+    val texture: FrameData,
     val maxHealth: Double,
     val baseSpeed: Speed,
     val armour: Double,

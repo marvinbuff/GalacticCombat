@@ -3,14 +3,26 @@ package galacticCombat
 import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.*
+import com.almasb.fxgl.dsl.FXGL
+import com.almasb.fxgl.dsl.getAppHeight
+import com.almasb.fxgl.dsl.getAppWidth
+import com.almasb.fxgl.dsl.getAssetLoader
+import com.almasb.fxgl.dsl.getEventBus
+import com.almasb.fxgl.dsl.getGameScene
+import com.almasb.fxgl.dsl.getGameTimer
+import com.almasb.fxgl.dsl.getGameWorld
+import com.almasb.fxgl.dsl.getSettings
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.fxgl.saving.DataFile
-import galacticCombat.configs.*
+import galacticCombat.configs.AppConfig
+import galacticCombat.configs.GameVarsBoolean
+import galacticCombat.configs.GameVarsInt
+import galacticCombat.configs.LevelDataVar
+import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.bullet.BulletFactory
 import galacticCombat.entities.controller.LevelControllerFactory
@@ -50,7 +62,7 @@ class GalacticCombatApp : GameApplication() {
     settings.title = AppConfig.TITLE
     settings.version = AppConfig.VERSION
 //    settings.appIcon = "icon.png" //TODO enable icon
-    settings.isMenuEnabled = true
+    settings.isMenuEnabled = false
     settings.isIntroEnabled = false
     settings.applicationMode = AppConfig.MODE
   }
