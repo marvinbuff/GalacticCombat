@@ -13,7 +13,6 @@ import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.dsl.getSettings
 import com.almasb.fxgl.entity.Entity
-import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
@@ -39,12 +38,14 @@ import galacticCombat.level.json.Path
 import galacticCombat.ui.SideBar
 import galacticCombat.ui.TopBar
 import galacticCombat.utils.fire
+import galacticCombat.utils.toPoint
 import javafx.event.EventHandler
 import javafx.geometry.Point2D
 import javafx.geometry.Rectangle2D
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
+import javafx.scene.shape.Circle
 import javafx.scene.shape.Rectangle
 import javafx.util.Duration
 import java.io.Serializable
@@ -76,7 +77,9 @@ class GalacticCombatApp : GameApplication() {
     getGameWorld().setLevel(level)
     val levelData = LevelDataVar.get()
 
-    showPoints(levelData.paths.first())
+    //Draw Path
+    val points = levelData.paths.first()
+    showPoints(points)
 
     LevelGameVars.HEALTH.property().addListener { _, _, newValue ->
       if (newValue.toInt() <= 0) GameEvents(GameEvents.LEVEL_LOST).fire()
@@ -196,21 +199,57 @@ data class SaveData(val scores: Int) : Serializable
 private fun showPoints(waypoints: Path) {
   operator fun Point2D.component1(): Double = x
   operator fun Point2D.component2(): Double = y
-  waypoints.forEach { (_x, _y) ->
-    val x = _x.toDouble()
-    val y = _y.toDouble()
-    FXGL.entityBuilder()
-        .at(x, y)
-        .type(EntityType.BARRICADE)
-        .view(Rectangle(20.0, 20.0, Color.BLUE))
-        .with(CollidableComponent(true))
-        .buildAndAttach()
-    FXGL.entityBuilder()
-        .at(x, y)
-        .type(EntityType.BARRICADE)
-        .view(Rectangle(5.0, 5.0, Color.BLUE))
-        .buildAndAttach()
+
+  waypoints.zipWithNext().forEach { (first, second) ->
+    addWayVertex(first)
+    addWayEdge(first, second)
+//    val x = _x.toDouble()
+//    val y = _y.toDouble()
+//    FXGL.entityBuilder()
+//        .at(x, y)
+//        .type(EntityType.BARRICADE)
+//        .view(Rectangle(20.0, 20.0, Color.BLUE))
+//        .with(CollidableComponent(true))
+//        .buildAndAttach()
+//    FXGL.entityBuilder()
+//        .at(x, y)
+//        .type(EntityType.BARRICADE)
+//        .view(Rectangle(5.0, 5.0, Color.BLUE))
+//        .buildAndAttach()
   }
+}
+
+fun addWayEdge(_first: Pair<Int, Int>, _second: Pair<Int, Int>, width: Double = 30.0) {
+  operator fun Point2D.component1(): Double = x
+  operator fun Point2D.component2(): Double = y
+
+  val first = _first.toPoint()
+  val second = _second.toPoint()
+  val distance = first.distance(second)
+
+  val entity = FXGL.entityBuilder()
+      .at(first)
+      .type(EntityType.BARRICADE)//todo change type
+      .view(Rectangle(distance, width, Color.BLUE))
+      .build()
+
+  entity.translate(0.0, -width / 2)
+  entity.transformComponent.rotationOrigin = Point2D(0.0, width / 2)
+  entity.rotateToVector(second.subtract(first))
+
+  FXGL.getGameWorld().addEntity(entity)
+}
+
+fun addWayVertex(vertex: Pair<Int, Int>, width: Double = 30.0) {
+  operator fun Point2D.component1(): Double = x
+  operator fun Point2D.component2(): Double = y
+
+  val (x, y) = vertex.toPoint()
+  FXGL.entityBuilder()
+      .at(x, y)
+      .type(EntityType.BARRICADE)//todo change type
+      .view(Circle(width / 2, Color.BLUE))//Draws the circle at the center
+      .buildAndAttach()
 }
 
 private fun Input.addAction(code: KeyCode, title: String, action: () -> Unit) {
