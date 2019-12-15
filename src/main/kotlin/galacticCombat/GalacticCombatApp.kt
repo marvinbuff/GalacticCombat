@@ -78,8 +78,7 @@ class GalacticCombatApp : GameApplication() {
     val levelData = LevelDataVar.get()
 
     //Draw Path
-    val points = levelData.paths.first()
-    showPoints(points)
+    levelData.paths.forEach { showPoints(it) }
 
     LevelGameVars.HEALTH.property().addListener { _, _, newValue ->
       if (newValue.toInt() <= 0) GameEvents(GameEvents.LEVEL_LOST).fire()
@@ -197,14 +196,22 @@ data class SaveData(val scores: Int) : Serializable
 //region ---------------- Private Helpers ---------------
 
 private fun showPoints(waypoints: Path) {
+  waypoints.forEach { addWayVertex(it.toPoint()) }
   waypoints.zipWithNext().forEach { (first, second) ->
-    addWayVertex(first.toPoint())
     addWayEdge(first.toPoint(), second.toPoint())
+  }
+  //helper points, remove!
+  waypoints.forEach { _vertex ->
+    val vertex = _vertex.toPoint()
+    FXGL.entityBuilder()
+        .at(vertex.x, vertex.y)
+        .type(EntityType.PATH)
+        .view(Circle(4.0, Color.BLUEVIOLET))
+        .buildAndAttach()
   }
 }
 
 private fun addWayEdge(first: Point2D, second: Point2D, width: Double = 30.0) {
-
   val entity = FXGL.entityBuilder()
       .at(first)
       .type(EntityType.PATH)

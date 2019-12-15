@@ -7,6 +7,7 @@ import galacticCombat.configs.GameVarsInt
 import galacticCombat.entities.bullet.BulletData
 import galacticCombat.entities.bullet.BulletEffect
 import galacticCombat.entities.bullet.BulletEffectType
+import galacticCombat.entities.invader.InvaderComponent.Companion.center
 import galacticCombat.events.InvaderEvents
 import galacticCombat.utils.fire
 import galacticCombat.utils.toPoint
@@ -83,10 +84,9 @@ class InvaderComponent(val data: InvaderData) : Component() {
   //region -------------------- Private Members ------------------------
 
   private fun followPath(tpf: Double) {
-    projectile.direction = nextWayPoint.subtract(entity.position)
+    projectile.direction = nextWayPoint.subtract(getAdjustedPosition())
 
     if (isAtNextWaypoint(tpf)) {
-      entity.position = nextWayPoint
       wayPointIndex++
       if (isLastWaypoint()) {
         InvaderEvents(InvaderEvents.INVADER_REACHED_GOAL, this).fire()
@@ -97,7 +97,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
     }
   }
 
-  private fun isAtNextWaypoint(tpf: Double) = nextWayPoint.distance(entity.position) < projectile.speed * tpf
+  private fun isAtNextWaypoint(tpf: Double) = nextWayPoint.distance(getAdjustedPosition()) < projectile.speed * tpf
   private fun isLastWaypoint() = data.wayPoints.size <= wayPointIndex
 
   private fun timeoutEffects() {
@@ -130,3 +130,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
     val center = (25 / 2.0).toPoint()
   }
 }
+
+private fun InvaderComponent.getAdjustedPosition() = this.entity.position + center
+
+private operator fun Point2D.plus(other: Point2D): Point2D = Point2D(this.x + other.x, this.y + other.y)
