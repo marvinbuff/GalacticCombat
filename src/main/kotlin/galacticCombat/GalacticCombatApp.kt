@@ -197,40 +197,18 @@ data class SaveData(val scores: Int) : Serializable
 //region ---------------- Private Helpers ---------------
 
 private fun showPoints(waypoints: Path) {
-  operator fun Point2D.component1(): Double = x
-  operator fun Point2D.component2(): Double = y
-
   waypoints.zipWithNext().forEach { (first, second) ->
-    addWayVertex(first)
-    addWayEdge(first, second)
-//    val x = _x.toDouble()
-//    val y = _y.toDouble()
-//    FXGL.entityBuilder()
-//        .at(x, y)
-//        .type(EntityType.BARRICADE)
-//        .view(Rectangle(20.0, 20.0, Color.BLUE))
-//        .with(CollidableComponent(true))
-//        .buildAndAttach()
-//    FXGL.entityBuilder()
-//        .at(x, y)
-//        .type(EntityType.BARRICADE)
-//        .view(Rectangle(5.0, 5.0, Color.BLUE))
-//        .buildAndAttach()
+    addWayVertex(first.toPoint())
+    addWayEdge(first.toPoint(), second.toPoint())
   }
 }
 
-fun addWayEdge(_first: Pair<Int, Int>, _second: Pair<Int, Int>, width: Double = 30.0) {
-  operator fun Point2D.component1(): Double = x
-  operator fun Point2D.component2(): Double = y
-
-  val first = _first.toPoint()
-  val second = _second.toPoint()
-  val distance = first.distance(second)
+private fun addWayEdge(first: Point2D, second: Point2D, width: Double = 30.0) {
 
   val entity = FXGL.entityBuilder()
       .at(first)
-      .type(EntityType.BARRICADE)//todo change type
-      .view(Rectangle(distance, width, Color.BLUE))
+      .type(EntityType.PATH)
+      .view(Rectangle(first.distance(second), width, Color.BLUE))
       .build()
 
   entity.translate(0.0, -width / 2)
@@ -240,15 +218,11 @@ fun addWayEdge(_first: Pair<Int, Int>, _second: Pair<Int, Int>, width: Double = 
   FXGL.getGameWorld().addEntity(entity)
 }
 
-fun addWayVertex(vertex: Pair<Int, Int>, width: Double = 30.0) {
-  operator fun Point2D.component1(): Double = x
-  operator fun Point2D.component2(): Double = y
-
-  val (x, y) = vertex.toPoint()
+private fun addWayVertex(vertex: Point2D, width: Double = 30.0) {
   FXGL.entityBuilder()
-      .at(x, y)
-      .type(EntityType.BARRICADE)//todo change type
-      .view(Circle(width / 2, Color.BLUE))//Draws the circle at the center
+      .at(vertex.x, vertex.y)
+      .type(EntityType.PATH)
+      .view(Circle(width / 2, Color.BLUE))//Draws the circle around the left upper corner
       .buildAndAttach()
 }
 

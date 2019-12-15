@@ -10,6 +10,7 @@ enum class EntityType {
   INVADER,
   BULLET,
   BARRICADE,
-  CONTROLLER
+  CONTROLLER,
+  PATH
   ;
 }
