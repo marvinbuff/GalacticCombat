@@ -9,8 +9,10 @@ import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.dsl.getAssetLoader
 import com.almasb.fxgl.dsl.getEventBus
 import com.almasb.fxgl.dsl.getGameScene
+import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.dsl.getGameWorld
+import com.almasb.fxgl.dsl.getPhysicsWorld
 import com.almasb.fxgl.dsl.getSettings
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.input.Input
@@ -78,7 +80,7 @@ class GalacticCombatApp : GameApplication() {
     val levelData = LevelDataVar.get()
 
     //Draw Path
-    levelData.paths.forEach { showPoints(it) }
+    levelData.paths.forEach { showPath(it) }
 
     LevelGameVars.HEALTH.property().addListener { _, _, newValue ->
       if (newValue.toInt() <= 0) GameEvents(GameEvents.LEVEL_LOST).fire()
@@ -156,6 +158,9 @@ class GalacticCombatApp : GameApplication() {
 //    FXGL.getGameScene().addUINode(activeEnemiesLabel) // add to the scene graph
   }
 
+  /**
+   * Automatically initializes all games variables as defined in [GameVarsInt] and [GameVarsBoolean].
+   */
   override fun initGameVars(vars: MutableMap<String, Any>) {
     GameVarsInt.values().forEach { gameVar ->
       vars[gameVar.id] = gameVar.initial
@@ -167,7 +172,7 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initPhysics() {
     //TODO move physic handler to own method
-    FXGL.getPhysicsWorld().addCollisionHandler(object : CollisionHandler(EntityType.TOWER, EntityType.INVADER) {
+    getPhysicsWorld().addCollisionHandler(object : CollisionHandler(EntityType.TOWER, EntityType.INVADER) {
       // order of types is the same as passed into the constructor of the CollisionHandler
       override fun onCollisionBegin(tower: Entity?, ship: Entity?) {
         tower!!.removeFromWorld()
@@ -177,7 +182,7 @@ class GalacticCombatApp : GameApplication() {
 
   override fun saveState(): DataFile {
     // possibly not correct and not used!
-    val data = FXGL.getGameState().getInt(GameVarsInt.ENEMIES_TO_SPAWN.id)
+    val data = getGameState().getInt(GameVarsInt.ENEMIES_TO_SPAWN.id)
     println("Saved $data")
     return DataFile(SaveData(data))
   }
@@ -186,7 +191,7 @@ class GalacticCombatApp : GameApplication() {
     if (dataFile == null) return
     val data = dataFile.data as SaveData
     println("Loaded ${data.scores}")
-    FXGL.getGameState().increment(GameVarsInt.ENEMIES_TO_SPAWN.id, data.scores)
+    getGameState().increment(GameVarsInt.ENEMIES_TO_SPAWN.id, data.scores)
   }
 }
 
@@ -195,19 +200,10 @@ data class SaveData(val scores: Int) : Serializable
 
 //region ---------------- Private Helpers ---------------
 
-private fun showPoints(waypoints: Path) {
+private fun showPath(waypoints: Path) {
   waypoints.forEach { addWayVertex(it.toPoint()) }
   waypoints.zipWithNext().forEach { (first, second) ->
     addWayEdge(first.toPoint(), second.toPoint())
-  }
-  //helper points, remove!
-  waypoints.forEach { _vertex ->
-    val vertex = _vertex.toPoint()
-    FXGL.entityBuilder()
-        .at(vertex.x, vertex.y)
-        .type(EntityType.PATH)
-        .view(Circle(4.0, Color.BLUEVIOLET))
-        .buildAndAttach()
   }
 }
 
