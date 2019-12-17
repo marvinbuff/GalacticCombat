@@ -2,8 +2,6 @@ package galacticCombat.configs
 
 import galacticCombat.level.json.LevelData
 
-val varsInTopBar: List<IntGameVar> = listOf(LevelGameVars.GOLD, LevelGameVars.EXPERIENCE, LevelGameVars.HEALTH, GameVarsInt.SCORE, GameVarsInt.ENEMIES_TO_SPAWN, GameVarsInt.ALIVE_INVADERS)
-
 object LevelDataVar : GameVar<LevelData> {
   override val id = "Level Data Variable"
 }
