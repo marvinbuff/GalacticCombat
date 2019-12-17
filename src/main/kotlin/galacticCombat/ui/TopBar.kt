@@ -1,15 +1,19 @@
 package galacticCombat.ui
 
 import com.almasb.fxgl.app.GameScene
-import com.almasb.fxgl.dsl.FXGL
+import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.ui.InGamePanel
-import galacticCombat.configs.varsInTopBar
+import galacticCombat.configs.GameVarsInt
+import galacticCombat.configs.IntGameVar
+import galacticCombat.configs.LevelGameVars
+import galacticCombat.ui.Style.hboxStyle
+import galacticCombat.ui.Style.labelStyle
 import javafx.beans.property.SimpleIntegerProperty
-import javafx.geometry.Insets
-import javafx.scene.layout.GridPane
+import javafx.scene.control.Label
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Pane
-import javafx.scene.paint.Color
+
+val varsInTopBar: List<IntGameVar> = listOf(LevelGameVars.GOLD, LevelGameVars.EXPERIENCE, LevelGameVars.HEALTH, GameVarsInt.SCORE)
 
 class TopBar(private val scene: GameScene) {
 
@@ -35,27 +39,38 @@ class TopBar(private val scene: GameScene) {
 
   private fun createGameVarsPane(): Pane {
     val hbox = HBox()
-    hbox.padding = Insets(15.0)
+    hbox.style = hboxStyle
 
-    val pane = GridPane()
-    pane.hgap = 25.0
-    pane.vgap = 10.0
 
-    varsInTopBar.forEachIndexed { index, key ->
-      val color = Color.BLUE
-      val fontSize = 12.0
-      val textKey = FXGL.getUIFactory().newText(key.id, color, fontSize)
+    varsInTopBar.forEachIndexed { _, key ->
+      val value = getGameState().properties.getValueObservable(key.id)
 
-      val value = FXGL.getGameState().properties.getValueObservable(key.id)
-      val textValue = FXGL.getUIFactory().newText("", color, fontSize)
+      val binded = (value as SimpleIntegerProperty).asString("${key.id}: %d")
 
-      textValue.textProperty().bind((value as SimpleIntegerProperty).asString())
+      val label = Label()
+      label.textProperty().bind(binded)
 
-      pane.addColumn(index, textKey, textValue)
+      label.style = labelStyle
+
+      hbox.children += label
     }
-
-    hbox.children += pane
 
     return hbox
   }
+}
+
+object Style {
+  const val hboxStyle =
+      "-fx-padding: 15;" +
+          "-fx-spacing: 10;"
+
+  const val labelStyle = "-fx-background-color: green;" +
+      "-fx-font-size: 15;" +
+      "-fx-font-family: Times New Roman;" +
+      "-fx-border-color: black;" +
+      "-fx-border-width: 2;" +
+      "-fx-padding: 3;" +
+      "-fx-border-style: solid;" +
+      "-fx-font-weight: bold;" +
+      "-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );"
 }

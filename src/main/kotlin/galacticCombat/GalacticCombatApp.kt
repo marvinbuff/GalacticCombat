@@ -151,6 +151,9 @@ class GalacticCombatApp : GameApplication() {
     val sideBar = SideBar(scene)
     sideBar.open()
 
+//    val btn = getUIFactory().newButton("hello")
+//    scene.addUINode(btn)
+
 //    val activeEnemiesLabel = Text()
 //    activeEnemiesLabel.translateX = 150.0
 //    activeEnemiesLabel.translateY = 100.0
