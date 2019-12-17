@@ -8,7 +8,6 @@ import com.almasb.fxgl.dsl.getAppHeight
 import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.dsl.getAssetLoader
 import com.almasb.fxgl.dsl.getEventBus
-import com.almasb.fxgl.dsl.getGameScene
 import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.dsl.getGameWorld
@@ -37,8 +36,7 @@ import galacticCombat.handlers.gameLost
 import galacticCombat.handlers.gameWon
 import galacticCombat.level.GalacticCombatLevelLoader
 import galacticCombat.level.json.Path
-import galacticCombat.ui.SideBar
-import galacticCombat.ui.TopBar
+import galacticCombat.ui.initializeUi
 import galacticCombat.utils.fire
 import galacticCombat.utils.toPoint
 import javafx.event.EventHandler
@@ -141,24 +139,7 @@ class GalacticCombatApp : GameApplication() {
   }
 
   override fun initUI() {
-    // Background
-    val scene = getGameScene()
-    scene.setBackgroundColor(Color.LIGHTGRAY)
-
-    // initialize upper stats
-    val topBar = TopBar(scene)
-    topBar.open()
-    val sideBar = SideBar(scene)
-    sideBar.open()
-
-//    val btn = getUIFactory().newButton("hello")
-//    scene.addUINode(btn)
-
-//    val activeEnemiesLabel = Text()
-//    activeEnemiesLabel.translateX = 150.0
-//    activeEnemiesLabel.translateY = 100.0
-//    activeEnemiesLabel.textProperty().bind(getGameState().intProperty(GameVars.ALIVE_ENEMIES.id).asString())
-//    FXGL.getGameScene().addUINode(activeEnemiesLabel) // add to the scene graph
+    initializeUi()
   }
 
   /**
