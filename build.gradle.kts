@@ -21,11 +21,11 @@ application {
   mainClassName = "galacticCombat.GalacticCombatAppKt"
 }
 
-
 repositories {
   mavenCentral()
   jcenter()
   maven("https://nexus.gluonhq.com/nexus/content/repositories/releases")
+    maven("http://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
@@ -39,6 +39,7 @@ dependencies {
 
   // FXGL
   compile("com.github.almasb:fxgl:11.6")
+//  compile("com.github.almasb:fxgl:dev-SNAPSHOT")
 }
 
 tasks {

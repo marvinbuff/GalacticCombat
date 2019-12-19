@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleDoubleProperty
 import javafx.geometry.Point2D
 import kotlin.math.max
 
+//@Required(Component.class)
 class InvaderComponent(val data: InvaderData) : Component() {
   private lateinit var nextWayPoint: Point2D
   private lateinit var lastWayPoint: Point2D

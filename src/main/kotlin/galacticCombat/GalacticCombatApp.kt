@@ -3,26 +3,13 @@ package galacticCombat
 import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.FXGL
-import com.almasb.fxgl.dsl.getAppHeight
-import com.almasb.fxgl.dsl.getAppWidth
-import com.almasb.fxgl.dsl.getAssetLoader
-import com.almasb.fxgl.dsl.getEventBus
-import com.almasb.fxgl.dsl.getGameState
-import com.almasb.fxgl.dsl.getGameTimer
-import com.almasb.fxgl.dsl.getGameWorld
-import com.almasb.fxgl.dsl.getPhysicsWorld
-import com.almasb.fxgl.dsl.getSettings
+import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.fxgl.saving.DataFile
-import galacticCombat.configs.AppConfig
-import galacticCombat.configs.GameVarsBoolean
-import galacticCombat.configs.GameVarsInt
-import galacticCombat.configs.LevelDataVar
-import galacticCombat.configs.LevelGameVars
+import galacticCombat.configs.*
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.bullet.BulletFactory
 import galacticCombat.entities.controller.LevelControllerFactory
@@ -36,7 +23,7 @@ import galacticCombat.handlers.gameLost
 import galacticCombat.handlers.gameWon
 import galacticCombat.level.GalacticCombatLevelLoader
 import galacticCombat.level.json.Path
-import galacticCombat.ui.initializeUi
+import galacticCombat.ui.GameViewController
 import galacticCombat.utils.fire
 import galacticCombat.utils.toPoint
 import javafx.event.EventHandler
@@ -50,6 +37,7 @@ import javafx.scene.shape.Rectangle
 import javafx.util.Duration
 import java.io.Serializable
 import kotlin.collections.set
+
 
 fun main(args: Array<String>) {
   GameApplication.launch(GalacticCombatApp::class.java, args)
@@ -138,8 +126,23 @@ class GalacticCombatApp : GameApplication() {
     }
   }
 
+    lateinit var uiController: GameViewController
+
   override fun initUI() {
-    initializeUi()
+//    initializeUi()
+
+      uiController = GameViewController(getGameScene())
+//
+//    val ui = getAssetLoader().loadUI(Asset.FXML_MAIN_UI, uiController)
+//
+//    uiController.getLabelScore().textProperty().bind(getip("score").asString("Score: %d"))
+//    uiController.getLabelHighScore().setText("HiScore: " + highScore.toString() + " " + highScoreName.toString() + "")
+//    uiController.getLaserMeter().currentValueProperty().bind(getdp("laserMeter"))
+//
+//    IntStream.range(0, geti("lives"))
+//        .forEach { i: Int -> uiController.addLife() }
+//
+//    getGameScene().addUI(ui)
   }
 
   /**
