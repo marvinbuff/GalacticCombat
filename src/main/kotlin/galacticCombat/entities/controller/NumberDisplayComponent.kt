@@ -6,7 +6,6 @@ import javafx.event.EventHandler
 import javafx.scene.control.Button
 import javafx.scene.input.MouseEvent
 
-//make button clickable with skip action, this will need the levelcontrollcomponent
 class NumberDisplayComponent(timerComponent: LevelTimerComponent) : ChildViewComponent(-5.0, -15.0, false) {
   private val button = Button()
   private val timeProperty = timerComponent.getTimeProperty()
