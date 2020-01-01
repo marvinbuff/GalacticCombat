@@ -7,7 +7,6 @@ import galacticCombat.configs.GameVarsInt
 import galacticCombat.entities.bullet.BulletData
 import galacticCombat.entities.bullet.BulletEffect
 import galacticCombat.entities.bullet.BulletEffectType
-import galacticCombat.entities.invader.InvaderComponent.Companion.center
 import galacticCombat.events.InvaderEvents
 import galacticCombat.utils.fire
 import galacticCombat.utils.toPoint
@@ -15,7 +14,7 @@ import javafx.beans.property.SimpleDoubleProperty
 import javafx.geometry.Point2D
 import kotlin.math.max
 
-//@Required(Component.class)
+//todo determine required components for all entities: @Required(Component.class)
 class InvaderComponent(val data: InvaderData) : Component() {
   private lateinit var nextWayPoint: Point2D
   private lateinit var lastWayPoint: Point2D
@@ -30,6 +29,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
 
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
+    entity.localAnchor = center
 
     nextWayPoint = data.wayPoints[wayPointIndex].toPoint()
     lastWayPoint = data.wayPoints[wayPointIndex - 1].toPoint()
@@ -37,6 +37,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
     entity.addComponent(projectile)
 
     GameVarsInt.ALIVE_INVADERS.increment(+1)
+    entity.z
   }
 
   override fun onUpdate(tpf: Double) {
@@ -77,7 +78,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
    */
   fun getProgress(): Double {
     val progress = (wayPointIndex - 1) * 10000.0 //each wayPoint is closer than 10'000 pixel to each other
-    val distanceFromOld = lastWayPoint.distance(entity.position)
+    val distanceFromOld = lastWayPoint.distance(entity.anchoredPosition)
     return progress + distanceFromOld
   }
 
@@ -85,7 +86,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
   //region -------------------- Private Members ------------------------
 
   private fun followPath(tpf: Double) {
-    projectile.direction = nextWayPoint.subtract(getAdjustedPosition())
+    projectile.direction = nextWayPoint.subtract(entity.anchoredPosition)
 
     if (isAtNextWaypoint(tpf)) {
       wayPointIndex++
@@ -98,7 +99,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
     }
   }
 
-  private fun isAtNextWaypoint(tpf: Double) = nextWayPoint.distance(getAdjustedPosition()) < projectile.speed * tpf
+  private fun isAtNextWaypoint(tpf: Double) = nextWayPoint.distance(entity.anchoredPosition) < projectile.speed * tpf
   private fun isLastWaypoint() = data.wayPoints.size <= wayPointIndex
 
   private fun timeoutEffects() {
@@ -131,7 +132,3 @@ class InvaderComponent(val data: InvaderData) : Component() {
     val center = (25 / 2.0).toPoint()
   }
 }
-
-private fun InvaderComponent.getAdjustedPosition() = this.entity.position + center
-
-private operator fun Point2D.plus(other: Point2D): Point2D = Point2D(this.x + other.x, this.y + other.y)

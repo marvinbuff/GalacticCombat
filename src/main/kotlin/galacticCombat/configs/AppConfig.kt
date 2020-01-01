@@ -7,7 +7,7 @@ object AppConfig {
   val MODE = ApplicationMode.DEVELOPER
 
   const val WIDTH = 800
-  const val HEIGHT = 600
+  const val HEIGHT = 500
   const val TITLE = "Galactic Combat"
   const val TRICKLE_RATE = 1.0
 }
