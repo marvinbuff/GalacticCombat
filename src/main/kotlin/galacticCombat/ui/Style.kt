@@ -25,5 +25,4 @@ object Style {
       "-fx-font-weight: bold;" +
       "-fx-effect: innershadow(three-pass-box , rgba(0,0,0,0.7) ,6 , 0.0, 0, 2);"
 
-
 }

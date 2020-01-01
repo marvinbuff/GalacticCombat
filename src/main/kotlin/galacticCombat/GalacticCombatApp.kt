@@ -24,7 +24,6 @@ import galacticCombat.handlers.gameWon
 import galacticCombat.level.GalacticCombatLevelLoader
 import galacticCombat.level.json.Path
 import galacticCombat.ui.GameViewController
-import galacticCombat.ui.initializeUi
 import galacticCombat.utils.fire
 import galacticCombat.utils.toPoint
 import javafx.event.EventHandler
@@ -128,23 +127,15 @@ class GalacticCombatApp : GameApplication() {
     }
   }
 
-    lateinit var uiController: GameViewController
-
   override fun initUI() {
-    initializeUi()
+    val controller = GameViewController()
+    val ui = getAssetLoader().loadUI("GameView.fxml", controller)
 
-//      uiController = GameViewController()
-//
-//    val ui = getAssetLoader().loadUI(Asset.FXML_MAIN_UI, uiController)
-//
-//    uiController.getLabelScore().textProperty().bind(getip("score").asString("Score: %d"))
-//    uiController.getLabelHighScore().setText("HiScore: " + highScore.toString() + " " + highScoreName.toString() + "")
-//    uiController.getLaserMeter().currentValueProperty().bind(getdp("laserMeter"))
-//
-//    IntStream.range(0, geti("lives"))
-//        .forEach { i: Int -> uiController.addLife() }
-//
-//    getGameScene().addUI(ui)
+    ui.root.stylesheets += getAssetLoader().loadCSS("galacticCombatStyle.css").externalForm
+
+    getGameScene().addUI(ui)
+
+    ui.root.isPickOnBounds = false
   }
 
   /**

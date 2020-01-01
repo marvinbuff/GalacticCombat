@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import galacticCombat.ui.elements.TowerButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -19,11 +20,10 @@
         <VBox alignment="CENTER" prefHeight="420.0" prefWidth="83.0" spacing="10.0" styleClass="background_main"
               BorderPane.alignment="CENTER">
             <children>
-                <Button mnemonicParsing="false" styleClass="button_green" text="Button"/>
-                <Button mnemonicParsing="false" styleClass="button_green" text="Button"/>
-                <Button mnemonicParsing="false" styleClass="button_green" text="Button"/>
-                <Button mnemonicParsing="false" styleClass="button_green" text="Button"/>
-                <Button mnemonicParsing="false" styleClass="button_green" text="Button"/>
+                <TowerButton type="CANNON" mnemonicParsing="false" styleClass="button_green"/>
+                <TowerButton type="SPORE" mnemonicParsing="false" styleClass="button_green"/>
+                <TowerButton type="TACTICAL" mnemonicParsing="false" styleClass="button_green"/>
+                <TowerButton type="CRYONIC" mnemonicParsing="false" styleClass="button_green"/>
             </children>
         </VBox>
     </left>
@@ -54,10 +54,11 @@
         </VBox>
     </right>
     <center>
-        <AnchorPane mouseTransparent="true" prefHeight="420.0" prefWidth="592.0" BorderPane.alignment="CENTER">
+        <AnchorPane disable="true" mouseTransparent="true" prefHeight="420.0" prefWidth="592.0"
+                    BorderPane.alignment="CENTER">
             <styleClass>
-                <String fx:value="background_transparent"/>
                 <String fx:value="border"/>
+                <String fx:value="background_transparent"/>
             </styleClass>
         </AnchorPane>
     </center>
