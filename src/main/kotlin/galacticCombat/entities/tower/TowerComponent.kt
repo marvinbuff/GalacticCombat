@@ -7,7 +7,6 @@ import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.component.Component
 import galacticCombat.entities.BULLET_SPAWN_ID
 import galacticCombat.entities.EntityType
-import galacticCombat.entities.bullet.BulletComponent
 import galacticCombat.entities.bullet.BulletData
 import galacticCombat.entities.invader.InvaderComponent
 import galacticCombat.utils.toPoint
@@ -21,6 +20,7 @@ open class TowerComponent(towerData: TowerData) : Component() {
 
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
+    entity.localAnchor = center
 
     projectile = ProjectileComponent(Point2D(0.0, 0.0), 0.1)
     entity.addComponent(projectile)
@@ -28,25 +28,24 @@ open class TowerComponent(towerData: TowerData) : Component() {
 
   override fun onUpdate(tpf: Double) {
     val closestInvader = getGameWorld()
-      .getEntitiesByType(EntityType.INVADER)
-      .filter { other -> entity.position.distance(other.position) < bullet.range }
+        .getEntitiesByType(EntityType.INVADER)
+        .filter { other -> entity.anchoredPosition.distance(other.anchoredPosition) < bullet.range }
       .maxBy { it.getComponent(InvaderComponent::class.java).getProgress() }
     closestInvader?.let {
-      projectile.direction = Rotate.rotate(-45.0, 0.0, 0.0).transform(it.position.subtract(entity.position))
+      projectile.direction = Rotate.rotate(-45.0, 0.0, 0.0).transform(it.anchoredPosition.subtract(entity.anchoredPosition))
       if (reloadingTime <= 0.0) {
         shoot(closestInvader)
         reloadingTime = bullet.attackDelay
       } else {
         reloadingTime -= tpf
       }
-
     }
   }
 
   private fun shoot(target: Entity) {
     getGameWorld().spawn(
       BULLET_SPAWN_ID,
-      SpawnData(entity.position.add(center.subtract(BulletComponent.center)))
+        SpawnData(entity.anchoredPosition)
           .put("target", target).put(BulletData.id, bullet)
     )
   }

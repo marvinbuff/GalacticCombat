@@ -37,7 +37,6 @@ class InvaderComponent(val data: InvaderData) : Component() {
     entity.addComponent(projectile)
 
     GameVarsInt.ALIVE_INVADERS.increment(+1)
-    entity.z
   }
 
   override fun onUpdate(tpf: Double) {
