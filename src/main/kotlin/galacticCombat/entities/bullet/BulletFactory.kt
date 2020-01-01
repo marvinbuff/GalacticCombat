@@ -7,6 +7,7 @@ import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import galacticCombat.entities.BULLET_SPAWN_ID
 import galacticCombat.entities.EntityType
+import javafx.geometry.Point2D
 
 @Suppress("unused")
 class BulletFactory : EntityFactory {
@@ -21,10 +22,11 @@ class BulletFactory : EntityFactory {
   fun spawnBullet(data: SpawnData): Entity {
     val bulletData: BulletData = data.get(BulletData.id)
     val target: Entity = data.get("target")
+    val position = Point2D(data.x, data.y).subtract(BulletComponent.center)
 
     return entityBuilder().type(EntityType.BULLET)
         .view(bulletData.texture)
-        .from(data)
+        .at(position)
         .scale(0.5, 0.5)
         .with(BulletComponent(target, bulletData))
         .build()

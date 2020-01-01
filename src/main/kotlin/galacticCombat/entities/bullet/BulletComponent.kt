@@ -16,14 +16,14 @@ class BulletComponent(
 
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
+    entity.localAnchor = center
 
     projectile = ProjectileComponent(Point2D(0.0, 0.0), data.bulletSpeed)
     entity.addComponent(projectile)
   }
 
   override fun onUpdate(tpf: Double) {
-    val adjustedTargetPosition = target.position.add(InvaderComponent.center.subtract(center))
-    val vectorToTarget = adjustedTargetPosition.subtract(entity.position)
+    val vectorToTarget = target.anchoredPosition.subtract(entity.anchoredPosition)
     projectile.direction = vectorToTarget
 
     if (vectorToTarget.magnitude() < projectile.speed * tpf) {
