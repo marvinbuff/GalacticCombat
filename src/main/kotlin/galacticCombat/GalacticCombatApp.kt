@@ -24,6 +24,7 @@ import galacticCombat.handlers.gameWon
 import galacticCombat.level.GalacticCombatLevelLoader
 import galacticCombat.level.json.Path
 import galacticCombat.ui.GameViewController
+import galacticCombat.ui.initializeUi
 import galacticCombat.utils.fire
 import galacticCombat.utils.toPoint
 import javafx.event.EventHandler
@@ -35,6 +36,7 @@ import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
 import javafx.scene.shape.Rectangle
 import javafx.util.Duration
+import kotlinx.coroutines.Runnable
 import java.io.Serializable
 import kotlin.collections.set
 
@@ -129,9 +131,9 @@ class GalacticCombatApp : GameApplication() {
     lateinit var uiController: GameViewController
 
   override fun initUI() {
-//    initializeUi()
+    initializeUi()
 
-      uiController = GameViewController(getGameScene())
+//      uiController = GameViewController()
 //
 //    val ui = getAssetLoader().loadUI(Asset.FXML_MAIN_UI, uiController)
 //
