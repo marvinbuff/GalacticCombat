@@ -38,8 +38,8 @@ dependencies {
   compile("org.json:json:20190722")
 
   // FXGL
-  compile("com.github.almasb:fxgl:11.6")
-//  compile("com.github.almasb:fxgl:dev-SNAPSHOT")
+//  compile("com.github.almasb:fxgl:11.6")
+  compile("com.github.almasb:fxgl:dev-SNAPSHOT")
 }
 
 tasks {

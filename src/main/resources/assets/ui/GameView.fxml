@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
+            prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="20.0" prefWidth="800.0" styleClass="background_main"
+              BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Galactic Combat @ Ankou" textAlignment="CENTER"/>
+            </children>
+        </HBox>
+    </bottom>
+    <left>
+        <VBox alignment="CENTER" prefHeight="420.0" prefWidth="83.0" spacing="10.0" styleClass="background_main"
+              BorderPane.alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" styleClass="button_green" text="Button"/>
+                <Button mnemonicParsing="false" styleClass="button_green" text="Button"/>
+                <Button mnemonicParsing="false" styleClass="button_green" text="Button"/>
+                <Button mnemonicParsing="false" styleClass="button_green" text="Button"/>
+                <Button mnemonicParsing="false" styleClass="button_green" text="Button"/>
+            </children>
+        </VBox>
+    </left>
+    <right>
+        <VBox prefHeight="420.0" prefWidth="187.0" styleClass="background_main" BorderPane.alignment="CENTER">
+            <children>
+                <GridPane alignment="CENTER" prefHeight="87.0" prefWidth="177.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Label fx:id="goldLabel" styleClass="label_green"/>
+                        <Label fx:id="healthLabel" styleClass="label_green" GridPane.columnIndex="1"/>
+                        <Label fx:id="experienceLabel" styleClass="label_green" GridPane.rowIndex="1"/>
+                        <Label fx:id="scoreLabel" styleClass="label_green" GridPane.columnIndex="1"
+                               GridPane.rowIndex="1"/>
+                    </children>
+                </GridPane>
+            </children>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0"/>
+            </padding>
+        </VBox>
+    </right>
+    <center>
+        <AnchorPane mouseTransparent="true" prefHeight="420.0" prefWidth="592.0" BorderPane.alignment="CENTER">
+            <styleClass>
+                <String fx:value="background_transparent"/>
+                <String fx:value="border"/>
+            </styleClass>
+        </AnchorPane>
+    </center>
+    <top>
+        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="800.0" styleClass="background_main"
+              BorderPane.alignment="CENTER">
+            <children>
+                <Label prefHeight="37.0" prefWidth="332.0" text="Secondary Title">
+                    <font>
+                        <Font name="Arial Black" size="24.0"/>
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+    </top>
+</BorderPane>
