@@ -15,8 +15,7 @@ class BulletComponent(
 
 
   override fun onAdded() {
-    entity.transformComponent.rotationOrigin = center
-    entity.localAnchor = center
+    entity.transformComponent.rotationOrigin = entity.localAnchor
 
     projectile = ProjectileComponent(Point2D(0.0, 0.0), data.bulletSpeed)
     entity.addComponent(projectile)

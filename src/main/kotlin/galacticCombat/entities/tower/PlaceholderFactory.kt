@@ -7,19 +7,18 @@ import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.PLACEHOLDER_SPAWN_ID
-import javafx.geometry.Point2D
+import galacticCombat.utils.position
 
 @Suppress("unused")
 class PlaceholderFactory : EntityFactory {
 
   @Spawns(PLACEHOLDER_SPAWN_ID)
   fun spawnPlaceholder(data: SpawnData): Entity {
-    val position = Point2D(data.x, data.y).subtract(TowerComponent.center)
     val towerData: TowerData = data.get(TowerData.id)
 
     return entityBuilder().type(EntityType.TOWER)
         .view(towerData.texture)
-        .at(position)
+        .atAnchored(TowerComponent.center, data.position)
         .with(PlaceholderComponent(towerData))
         .build()
   }

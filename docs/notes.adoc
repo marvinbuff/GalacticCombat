@@ -24,6 +24,7 @@ But improve it with a fade out and maybe accumulation.
 - Add custom classes for Pair to make level file look nicer.
 - Fix the unresponsive layer when restarting a game.
 - Fix trickle values when skipping level end.
+- Replace placeholder tower when trying to buy a different one.
 
 Next::
 - Finish game won behaviour
@@ -38,9 +39,9 @@ To-Do::
 Next Features::
 - Nicer UI: shop part, nice display for money and health
 - Background Image
-- Painted Path
 - Implement bomber tower and bullet
 - Add a small main function to create template level files.
+- Implement tower rotation speed
 
 Milestone 0.2::
 Having a playable level prototype.

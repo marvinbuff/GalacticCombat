@@ -20,7 +20,6 @@ open class TowerComponent(towerData: TowerData) : Component() {
 
   override fun onAdded() {
     entity.transformComponent.rotationOrigin = center
-    entity.localAnchor = center
 
     projectile = ProjectileComponent(Point2D(0.0, 0.0), 0.1)
     entity.addComponent(projectile)

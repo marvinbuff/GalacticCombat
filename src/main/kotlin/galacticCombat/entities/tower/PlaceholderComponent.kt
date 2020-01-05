@@ -33,7 +33,7 @@ class PlaceholderComponent(private val towerData: TowerData) : Component() {
   }
 
   override fun onUpdate(tpf: Double) {
-    entity.position = getInput().mousePositionWorld.subtract(TowerComponent.center)
+    entity.anchoredPosition = getInput().mousePositionWorld
     if (isValidPosition()) {
       entity.viewComponent.opacity = 1.0
     } else {
@@ -50,6 +50,7 @@ class PlaceholderComponent(private val towerData: TowerData) : Component() {
   private fun hasSufficientGold(): Boolean = LevelGameVars.GOLD.get() >= towerData.price
 
   private fun isAtValidTowerPosition(): Boolean {
+    //todo implement correctly: check for obstacles, path, bounds.
     val mousePosition = getInput().mousePositionWorld
     val worldBounds = Rectangle2D(0.0, 0.0, getAppWidth().toDouble(), getAppHeight().toDouble())
     return worldBounds.contains(mousePosition)

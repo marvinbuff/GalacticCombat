@@ -3,13 +3,28 @@ package galacticCombat
 import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.*
+import com.almasb.fxgl.dsl.FXGL
+import com.almasb.fxgl.dsl.getAppHeight
+import com.almasb.fxgl.dsl.getAppWidth
+import com.almasb.fxgl.dsl.getAssetLoader
+import com.almasb.fxgl.dsl.getGameScene
+import com.almasb.fxgl.dsl.getGameState
+import com.almasb.fxgl.dsl.getGameTimer
+import com.almasb.fxgl.dsl.getGameWorld
+import com.almasb.fxgl.dsl.getPhysicsWorld
+import com.almasb.fxgl.dsl.getSettings
+import com.almasb.fxgl.dsl.onEvent
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.fxgl.saving.DataFile
-import galacticCombat.configs.*
+import galacticCombat.configs.AppConfig
+import galacticCombat.configs.AssetConfig
+import galacticCombat.configs.GameVarsBoolean
+import galacticCombat.configs.GameVarsInt
+import galacticCombat.configs.LevelDataVar
+import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.bullet.BulletFactory
 import galacticCombat.entities.controller.LevelControllerFactory
@@ -18,7 +33,6 @@ import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.events.GameEvents
 import galacticCombat.events.InvaderEvents
-import galacticCombat.events.handle
 import galacticCombat.handlers.gameLost
 import galacticCombat.handlers.gameWon
 import galacticCombat.level.GalacticCombatLevelLoader
@@ -26,7 +40,6 @@ import galacticCombat.level.json.Path
 import galacticCombat.ui.GameViewController
 import galacticCombat.utils.fire
 import galacticCombat.utils.toPoint
-import javafx.event.EventHandler
 import javafx.geometry.Point2D
 import javafx.geometry.Rectangle2D
 import javafx.scene.input.KeyCode
@@ -51,7 +64,7 @@ class GalacticCombatApp : GameApplication() {
     settings.height = AppConfig.HEIGHT
     settings.title = AppConfig.TITLE
     settings.version = AppConfig.VERSION
-//    settings.appIcon = "icon.png" //TODO enable icon
+    settings.appIcon = AssetConfig.getUI("logo.png")
     settings.isMenuEnabled = false
     settings.isIntroEnabled = false
     settings.applicationMode = AppConfig.MODE
@@ -81,31 +94,25 @@ class GalacticCombatApp : GameApplication() {
     getGameTimer().runAtInterval(trickle, Duration.seconds(AppConfig.TRICKLE_RATE))
 
     // Invader Events
-    getEventBus().apply {
-      addEventHandler(
-          InvaderEvents.INVADER_REACHED_GOAL,
-          EventHandler { event ->
-            LevelGameVars.HEALTH.increment(-event.invader.data.damage)
-            event.invader.entity.removeFromWorld()
-          })
-
-      addEventHandler( //combine with one above, most is common. only health and score/experience not.
-          InvaderEvents.INVADER_KILLED,
-          EventHandler { event ->
-            LevelGameVars.EXPERIENCE.increment(event.invader.data.xp)
-            GameVarsInt.SCORE.increment(event.invader.data.bounty)
-            GameVarsInt.ALIVE_INVADERS.increment(-1)
-            event.invader.entity.removeFromWorld()
-
-            //check if game won
-            if (GameVarsBoolean.ALL_ENEMIES_SPAWNED.get() && GameVarsInt.ALIVE_INVADERS.get() == 0) {
-              GameEvents(GameEvents.LEVEL_WON).fire()
-            }
-          })
+    onEvent(InvaderEvents.INVADER_REACHED_GOAL) { event ->
+      LevelGameVars.HEALTH.increment(-event.invader.data.damage)
+      event.invader.entity.removeFromWorld()
     }
 
-    GameEvents.LEVEL_WON.handle { gameWon() }
-    GameEvents.LEVEL_LOST.handle { gameLost() }
+    onEvent(InvaderEvents.INVADER_KILLED) { event ->
+      LevelGameVars.EXPERIENCE.increment(event.invader.data.xp)
+      GameVarsInt.SCORE.increment(event.invader.data.bounty)
+      GameVarsInt.ALIVE_INVADERS.increment(-1)
+      event.invader.entity.removeFromWorld()
+
+      //check if game won
+      if (GameVarsBoolean.ALL_ENEMIES_SPAWNED.get() && GameVarsInt.ALIVE_INVADERS.get() == 0) {
+        GameEvents(GameEvents.LEVEL_WON).fire()
+      }
+    }
+
+    onEvent(GameEvents.LEVEL_WON) { gameWon() }
+    onEvent(GameEvents.LEVEL_LOST) { gameLost() }
 
   }
 
