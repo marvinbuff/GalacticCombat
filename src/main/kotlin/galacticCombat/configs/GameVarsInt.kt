@@ -1,9 +1,14 @@
 package galacticCombat.configs
 
+import galacticCombat.entities.controller.LevelControllerComponent
 import galacticCombat.level.json.LevelData
 
 object LevelDataVar : GameVar<LevelData> {
   override val id = "Level Data Variable"
+}
+
+object LevelController : GameVar<LevelControllerComponent> {
+  override val id = "Level Controller Component"
 }
 
 /**

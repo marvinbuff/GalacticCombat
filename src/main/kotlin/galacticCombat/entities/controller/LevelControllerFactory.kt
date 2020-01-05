@@ -15,7 +15,7 @@ class LevelControllerFactory : EntityFactory {
 
   @Spawns(SPAWN_ID_LEVEL_CONTROLLER)
   fun spawnLevelController(data: SpawnData): Entity {
-    require(data.hasKey(ID_LEVEL_DATA)) { "Spawning a LevelController requires LevelData." }
+    require(data.hasKey(ID_LEVEL_DATA)) { "Spawning a LevelController requires LevelData." } //todo create annotation for this
     val levelData = data.get<LevelData>(ID_LEVEL_DATA)
     val controller = LevelControllerComponent(levelData)
 

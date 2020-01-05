@@ -7,6 +7,7 @@ import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.level.json.InvaderArgs
 import galacticCombat.level.json.LevelData
 import javafx.beans.property.SimpleDoubleProperty
+import javafx.beans.property.SimpleIntegerProperty
 
 class LevelTimerComponent(levelData: LevelData) : Component() {
   private val state: LevelState = LevelState.create(levelData)
@@ -36,6 +37,7 @@ class LevelTimerComponent(levelData: LevelData) : Component() {
   }
 
   fun getTimeProperty() = state.getTimeProperty()
+  fun getWaveProperty() = state.getWaveProperty()
 
   fun skipToNextWave() {
     if (state.isWaveThrough && !state.isWaveLast()) {
@@ -55,7 +57,7 @@ private data class LevelState(
   private var time = SimpleDoubleProperty(0.0)
 
   // Indices
-  private var currentWaveIndex: Int = 0
+  private var currentWaveIndex = SimpleIntegerProperty(0)
   private var currentInvaderIndex: Int = 0
 
   // Flags
@@ -68,21 +70,22 @@ private data class LevelState(
 
   fun getTime(): Double = time.value
   fun getTimeProperty() = time
+  fun getWaveProperty() = currentWaveIndex
   fun updateInvader() {
     currentInvaderIndex++
   }
 
   fun isWaveOver(): Boolean = time.value >= data.settings.timePerWave
-  fun isWaveLast(): Boolean = currentWaveIndex + 1 >= data.waves.size
+  fun isWaveLast(): Boolean = currentWaveIndex.value + 1 >= data.waves.size
   fun updateWave() {
-    currentWaveIndex++
+    currentWaveIndex.set(currentWaveIndex.value + 1)
     currentInvaderIndex = 0
     isWaveThrough = false
     time.value = 0.0
     GameVarsInt.WAVE_INDEX.increment()
   }
 
-  fun getInvader(): Pair<Double, InvaderArgs>? = data.waves[currentWaveIndex].getOrNull(currentInvaderIndex)
+  fun getInvader(): Pair<Double, InvaderArgs>? = data.waves[currentWaveIndex.value].getOrNull(currentInvaderIndex)
 
   companion object {
     fun create(data: LevelData): LevelState {
