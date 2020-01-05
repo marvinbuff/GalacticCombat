@@ -10,6 +10,7 @@ import galacticCombat.configs.AssetConfig
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.TOWER_SPAWN_ID
 import galacticCombat.entities.bullet.BulletData
+import galacticCombat.utils.position
 import javafx.geometry.Point2D
 
 
@@ -24,11 +25,10 @@ class TowerFactory : EntityFactory {
   @Suppress("unused")
   @Spawns(TOWER_SPAWN_ID)
   fun spawnTower(data: SpawnData): Entity {
-    val position = Point2D(data.x, data.y).subtract(TowerComponent.center)
     val towerData = parseTowerData(data)
 
     return entityBuilder().type(EntityType.TOWER)
-        .at(position)
+        .atAnchored(TowerComponent.center, data.position)
         .view(towerData.texture)
         .with(TowerComponent(towerData))
         .build()

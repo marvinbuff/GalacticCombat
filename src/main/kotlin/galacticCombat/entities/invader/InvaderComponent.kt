@@ -28,8 +28,7 @@ class InvaderComponent(val data: InvaderData) : Component() {
   //region -------------------- Inherited Members ------------------------
 
   override fun onAdded() {
-    entity.transformComponent.rotationOrigin = center
-    entity.localAnchor = center
+    entity.transformComponent.rotationOrigin = entity.localAnchor
 
     nextWayPoint = data.wayPoints[wayPointIndex].toPoint()
     lastWayPoint = data.wayPoints[wayPointIndex - 1].toPoint()

@@ -12,8 +12,8 @@ import galacticCombat.entities.EntityType
 import galacticCombat.entities.generic.animation.AnimationComponent
 import galacticCombat.entities.generic.animation.FrameData
 import galacticCombat.level.json.InvaderArgs
+import galacticCombat.utils.position
 import galacticCombat.utils.toPoint
-import javafx.geometry.Point2D
 import kotlin.math.pow
 
 @Suppress("unused")
@@ -23,13 +23,12 @@ class InvaderFactory : EntityFactory {
   fun spawnEnemy(data: SpawnData): Entity {
     require(data.hasKey(ID_INVADER_ARGS))
 
-    val position = Point2D(data.x, data.y).subtract(InvaderComponent.center)
     val invaderData = getInvaderData(data.get(ID_INVADER_ARGS))
     val invader = InvaderComponent(invaderData)
     val healthBar = HealthComponent(invader)
 
     return entityBuilder().type(EntityType.INVADER)
-        .at(position)
+        .atAnchored(InvaderComponent.center, data.position)
         .with(AnimationComponent(invaderData.texture))
         .with(invader)
         .with(healthBar)
