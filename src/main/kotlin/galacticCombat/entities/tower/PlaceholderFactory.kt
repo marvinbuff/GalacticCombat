@@ -23,5 +23,4 @@ class PlaceholderFactory : EntityFactory {
         .build()
   }
 
-
 }
