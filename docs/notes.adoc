@@ -33,6 +33,7 @@ Next::
 
 To-Do::
 - Write down design of exp, gold and mana system
+- Make all entities clickable with information panel
 - Implement chain tower and bullet
 - Improve tower placeholder indication when not valid
 

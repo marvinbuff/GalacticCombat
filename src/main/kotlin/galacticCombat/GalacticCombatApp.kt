@@ -52,7 +52,6 @@ import kotlinx.coroutines.Runnable
 import java.io.Serializable
 import kotlin.collections.set
 
-
 fun main(args: Array<String>) {
   GameApplication.launch(GalacticCombatApp::class.java, args)
 }
@@ -69,7 +68,6 @@ class GalacticCombatApp : GameApplication() {
     settings.isIntroEnabled = false
     settings.applicationMode = AppConfig.MODE
   }
-
 
   override fun initGame() {
     listOf(TowerFactory(), InvaderFactory(), BulletFactory(), PlaceholderFactory(), LevelControllerFactory())

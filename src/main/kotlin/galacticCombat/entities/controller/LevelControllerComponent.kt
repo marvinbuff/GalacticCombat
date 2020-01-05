@@ -4,9 +4,10 @@ import com.almasb.fxgl.entity.component.Component
 import galacticCombat.level.json.LevelData
 
 class LevelControllerComponent(private val levelData: LevelData) : Component() {
+  lateinit var timerComponent: LevelTimerComponent
 
   override fun onAdded() {
-    val timerComponent = LevelTimerComponent(levelData)
+    timerComponent = LevelTimerComponent(levelData)
     val viewComponent = NumberDisplayComponent(timerComponent)
 
     entity.addComponent(timerComponent)

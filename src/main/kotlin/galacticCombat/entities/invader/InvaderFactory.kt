@@ -36,7 +36,6 @@ class InvaderFactory : EntityFactory {
 
   private fun getInvaderData(args: InvaderArgs): InvaderData {
 
-
     val frames = when (args.type) {
       InvaderType.COMMON      -> listOf("common_level_${args.level}.gif")
       InvaderType.REINFORCED  -> (1..3).map { "reinforced_level_${args.level}_frame_$it.gif" }
