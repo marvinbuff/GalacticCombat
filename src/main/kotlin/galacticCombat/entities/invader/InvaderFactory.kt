@@ -9,7 +9,6 @@ import com.almasb.fxgl.entity.Spawns
 import galacticCombat.configs.AssetConfig
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.entities.EntityType
-import galacticCombat.entities.generic.animation.AnimationComponent
 import galacticCombat.entities.generic.animation.FrameData
 import galacticCombat.level.json.InvaderArgs
 import galacticCombat.utils.position
@@ -29,7 +28,7 @@ class InvaderFactory : EntityFactory {
 
     return entityBuilder().type(EntityType.INVADER)
         .atAnchored(InvaderComponent.center, data.position)
-        .with(AnimationComponent(invaderData.texture))
+        .view(invaderData.texture.toAnimatedTexture())
         .with(invader)
         .with(healthBar)
         .build()
