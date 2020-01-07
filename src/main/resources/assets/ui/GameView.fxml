@@ -2,29 +2,29 @@
 
 <?import galacticCombat.ui.elements.TowerButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import java.lang.String?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
-            prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1">
     <bottom>
-        <HBox alignment="CENTER" prefHeight="20.0" prefWidth="800.0" styleClass="background_main"
-              BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" prefHeight="20.0" prefWidth="800.0" styleClass="background_main" BorderPane.alignment="CENTER">
             <children>
                 <Label text="Galactic Combat @ Ankou" textAlignment="CENTER"/>
             </children>
         </HBox>
     </bottom>
     <left>
-        <VBox alignment="CENTER" prefHeight="420.0" prefWidth="83.0" spacing="10.0" styleClass="background_main"
-              BorderPane.alignment="CENTER">
+        <VBox alignment="CENTER" prefHeight="420.0" prefWidth="83.0" spacing="10.0" styleClass="background_main" BorderPane.alignment="CENTER">
             <children>
                 <TowerButton type="CANNON" mnemonicParsing="false" styleClass="button_green"/>
                 <TowerButton type="SPORE" mnemonicParsing="false" styleClass="button_green"/>
@@ -46,13 +46,18 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Label fx:id="goldLabel" styleClass="label_green"/>
-                        <Label fx:id="healthLabel" styleClass="label_green" GridPane.columnIndex="1"/>
-                        <Label fx:id="experienceLabel" styleClass="label_green" GridPane.rowIndex="1"/>
-                        <Label fx:id="scoreLabel" styleClass="label_green" GridPane.columnIndex="1"
-                               GridPane.rowIndex="1"/>
+                        <Label fx:id="goldLabel" prefWidth="70.0" styleClass="label_green"/>
+                        <Label fx:id="healthLabel" prefWidth="70.0" styleClass="label_green" GridPane.columnIndex="1"/>
+                        <Label fx:id="experienceLabel" prefWidth="70.0" styleClass="label_green" GridPane.rowIndex="1"/>
+                        <Label fx:id="scoreLabel" prefWidth="70.0" styleClass="label_green" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                     </children>
                 </GridPane>
+                <Pane prefHeight="118.0" prefWidth="177.0"/>
+                <HBox alignment="CENTER" prefHeight="36.0" prefWidth="177.0">
+                    <children>
+                        <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" text="Button"/>
+                    </children>
+                </HBox>
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0"/>
@@ -60,8 +65,7 @@
         </VBox>
     </right>
     <center>
-        <AnchorPane disable="true" mouseTransparent="true" prefHeight="420.0" prefWidth="592.0"
-                    BorderPane.alignment="CENTER">
+        <AnchorPane disable="true" mouseTransparent="true" prefHeight="420.0" prefWidth="592.0" BorderPane.alignment="CENTER">
             <styleClass>
                 <String fx:value="border"/>
                 <String fx:value="background_transparent"/>
@@ -69,8 +73,7 @@
         </AnchorPane>
     </center>
     <top>
-        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="800.0" styleClass="background_main"
-              BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="800.0" styleClass="background_main" BorderPane.alignment="CENTER">
             <children>
                 <Label fx:id="waveTitle" prefHeight="37.0" prefWidth="332.0">
                     <font>
