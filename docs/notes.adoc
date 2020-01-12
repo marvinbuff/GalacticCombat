@@ -25,6 +25,7 @@ But improve it with a fade out and maybe accumulation.
 - Fix the unresponsive layer when restarting a game.
 - Fix trickle values when skipping level end.
 - Replace placeholder tower when trying to buy a different one.
+- Modify buttons to be hinted as such
 
 Next::
 - Finish game won behaviour

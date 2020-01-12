@@ -8,10 +8,8 @@ class LevelControllerComponent(private val levelData: LevelData) : Component() {
 
   override fun onAdded() {
     timerComponent = LevelTimerComponent(levelData)
-    val viewComponent = NumberDisplayComponent(timerComponent)
 
     entity.addComponent(timerComponent)
-    entity.addComponent(viewComponent)
   }
 }
 

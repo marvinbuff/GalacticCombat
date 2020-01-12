@@ -56,6 +56,9 @@ fun main(args: Array<String>) {
   GameApplication.launch(GalacticCombatApp::class.java, args)
 }
 
+val backgroundColor = Color.web("#133a19", 1.0)
+val pathColor = Color.web("#5d665f")
+
 class GalacticCombatApp : GameApplication() {
 
   override fun initSettings(settings: GameSettings) {
@@ -139,6 +142,7 @@ class GalacticCombatApp : GameApplication() {
     ui.root.stylesheets += getAssetLoader().loadCSS("galacticCombatStyle.css").externalForm
 
     getGameScene().addUI(ui)
+    getGameScene().setBackgroundColor(backgroundColor)
 
     ui.root.isPickOnBounds = false
   }
@@ -196,7 +200,7 @@ private fun addWayEdge(first: Point2D, second: Point2D, width: Double = 30.0) {
   val entity = FXGL.entityBuilder()
       .at(first)
       .type(EntityType.PATH)
-      .view(Rectangle(first.distance(second), width, Color.BLUE))
+      .view(Rectangle(first.distance(second), width, pathColor))
       .build()
 
   entity.translate(0.0, -width / 2)
@@ -210,7 +214,7 @@ private fun addWayVertex(vertex: Point2D, width: Double = 30.0) {
   FXGL.entityBuilder()
       .at(vertex.x, vertex.y)
       .type(EntityType.PATH)
-      .view(Circle(width / 2, Color.BLUE))//Draws the circle around the left upper corner
+      .view(Circle(width / 2, pathColor))//Draws the circle around the left upper corner
       .buildAndAttach()
 }
 

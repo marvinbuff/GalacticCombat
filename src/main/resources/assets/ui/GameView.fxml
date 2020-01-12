@@ -55,7 +55,7 @@
                 <Pane prefHeight="118.0" prefWidth="177.0"/>
                 <HBox alignment="CENTER" prefHeight="36.0" prefWidth="177.0">
                     <children>
-                        <Button alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" text="Button"/>
+                        <Button fx:id="timerButton" styleClass="button_green" alignment="TOP_LEFT" contentDisplay="CENTER" mnemonicParsing="false" text="Timer Button"/>
                     </children>
                 </HBox>
             </children>
