@@ -37,7 +37,7 @@ class GameViewController : UIController {
 
   private fun bindTimerButton() {
     val timerComponent = LevelController.get().timerComponent
-    timerButton.textProperty().bind(timerComponent.getTimeProperty().negate().add(60).asString("Next Wave: %.0f"))
+    timerButton.textProperty().bind(timerComponent.getTimePropertyConverted().asString("Next Wave: %.0f"))
     timerButton.onAction = EventHandler<ActionEvent> { timerComponent.skipToNextWave() }
   }
 

@@ -6,10 +6,11 @@ import galacticCombat.configs.GameVarsInt
 import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.level.json.InvaderArgs
 import galacticCombat.level.json.LevelData
+import javafx.beans.binding.DoubleBinding
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleIntegerProperty
 
-class LevelTimerComponent(levelData: LevelData) : Component() {
+class LevelTimerComponent(val levelData: LevelData) : Component() {
   private val state: LevelState = LevelState.create(levelData)
 
   override fun onUpdate(tpf: Double) {
@@ -21,6 +22,7 @@ class LevelTimerComponent(levelData: LevelData) : Component() {
         state.isFinished = true; return
       } else state.updateWave()
     }
+
     // Spawn Invader
     while (!state.isWaveThrough) {
       val invaderPair = state.getInvader()
@@ -36,7 +38,7 @@ class LevelTimerComponent(levelData: LevelData) : Component() {
     }
   }
 
-  fun getTimeProperty() = state.getTimeProperty()
+  fun getTimePropertyConverted(): DoubleBinding = state.getTimeProperty().negate().add(levelData.settings.timePerWave)
   fun getWaveProperty() = state.getWaveProperty()
 
   fun skipToNextWave() {

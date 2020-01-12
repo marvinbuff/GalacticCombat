@@ -37,6 +37,7 @@ To-Do::
 - Make all entities clickable with information panel
 - Implement chain tower and bullet
 - Improve tower placeholder indication when not valid
+- Make path draggable to create level
 
 Next Features::
 - Nicer UI: shop part, nice display for money and health
