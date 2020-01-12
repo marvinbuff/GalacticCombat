@@ -1,0 +1,158 @@
+{
+  "title": "Level One",
+  "settings": {
+    "initialGold": 200,
+    "trickleGold": 10,
+    "trickleScore": 10,
+    "initialHealth": 5,
+    "initialExperience": 200,
+    "timePerWave": 60.0
+  },
+  "waves": [
+    {
+      "invaders": [
+        {
+          "first": 0.9224141060135438,
+          "second": {
+            "type": "COMMON",
+            "level": 1,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 1.826190848373165,
+          "second": {
+            "type": "REINFORCED",
+            "level": 2,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 2.6877088394785424,
+          "second": {
+            "type": "ACCELERATED",
+            "level": 2,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 4.1880255997982605,
+          "second": {
+            "type": "COMMON",
+            "level": 1,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 4.376337790910855,
+          "second": {
+            "type": "REINFORCED",
+            "level": 3,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 5.126532116183878,
+          "second": {
+            "type": "ACCELERATED",
+            "level": 1,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 6.923100235734903,
+          "second": {
+            "type": "COMMON",
+            "level": 2,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 8.810285388903344,
+          "second": {
+            "type": "REINFORCED",
+            "level": 2,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 10.182190164380248,
+          "second": {
+            "type": "ACCELERATED",
+            "level": 2,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 11.493608591089863,
+          "second": {
+            "type": "COMMON",
+            "level": 2,
+            "pathId": "default"
+          }
+        }
+      ],
+      "isBoss": false
+    },
+    {
+      "invaders": [
+        {
+          "first": 0.25213088325452515,
+          "second": {
+            "type": "COMMON",
+            "level": 3,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 0.98224336564696,
+          "second": {
+            "type": "REINFORCED",
+            "level": 3,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 1.130998411039466,
+          "second": {
+            "type": "ACCELERATED",
+            "level": 1,
+            "pathId": "default"
+          }
+        },
+        {
+          "first": 2.332751412859725,
+          "second": {
+            "type": "COMMON",
+            "level": 2,
+            "pathId": "default"
+          }
+        }
+      ],
+      "isBoss": false
+    }
+  ],
+  "paths": [
+    {
+      "id": "default",
+      "wayPoints": [
+        {
+          "first": 83,
+          "second": 120
+        },
+        {
+          "first": 530,
+          "second": 120
+        },
+        {
+          "first": 140,
+          "second": 400
+        },
+        {
+          "first": 605,
+          "second": 400
+        }
+      ]
+    }
+  ]
+}

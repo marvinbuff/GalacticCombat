@@ -56,8 +56,8 @@ fun main(args: Array<String>) {
   GameApplication.launch(GalacticCombatApp::class.java, args)
 }
 
-val backgroundColor = Color.web("#133a19", 1.0)
-val pathColor = Color.web("#5d665f")
+val backgroundColor = Color.web("133a19", 1.0)
+val pathColor = Color.web("5d665f")
 
 class GalacticCombatApp : GameApplication() {
 
@@ -76,7 +76,7 @@ class GalacticCombatApp : GameApplication() {
     listOf(TowerFactory(), InvaderFactory(), BulletFactory(), PlaceholderFactory(), LevelControllerFactory())
         .forEach(getGameWorld()::addEntityFactory)
 
-    val level = getAssetLoader().loadLevel("experiment.level", GalacticCombatLevelLoader())
+    val level = getAssetLoader().loadLevel("level_one.level", GalacticCombatLevelLoader())
     getGameWorld().setLevel(level)
     val levelData = LevelDataVar.get()
 
