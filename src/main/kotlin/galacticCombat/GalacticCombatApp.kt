@@ -23,8 +23,11 @@ import galacticCombat.configs.AppConfig
 import galacticCombat.configs.AssetConfig
 import galacticCombat.configs.GameVarsBoolean
 import galacticCombat.configs.GameVarsInt
+import galacticCombat.configs.InfoPanelVar
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
+import galacticCombat.configs.UIConfig.LEVEL_COLOR
+import galacticCombat.configs.UIConfig.PATH_COLOR
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.bullet.BulletFactory
 import galacticCombat.entities.controller.LevelControllerFactory
@@ -44,7 +47,6 @@ import javafx.geometry.Point2D
 import javafx.geometry.Rectangle2D
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
-import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
 import javafx.scene.shape.Rectangle
 import javafx.util.Duration
@@ -55,9 +57,6 @@ import kotlin.collections.set
 fun main(args: Array<String>) {
   GameApplication.launch(GalacticCombatApp::class.java, args)
 }
-
-val backgroundColor = Color.web("133a19", 1.0)
-val pathColor = Color.web("5d665f")
 
 class GalacticCombatApp : GameApplication() {
 
@@ -120,6 +119,12 @@ class GalacticCombatApp : GameApplication() {
   override fun initInput() {
     val input = FXGL.getInput()
 
+    // Mouse Handling
+    input.addMouseAction(MouseButton.SECONDARY, "Discard Information") {
+      InfoPanelVar.property().unbind()
+      InfoPanelVar.reset()
+    }
+
     // Developer Commands
     if (getSettings().applicationMode == ApplicationMode.DEVELOPER) {
 
@@ -142,7 +147,7 @@ class GalacticCombatApp : GameApplication() {
     ui.root.stylesheets += getAssetLoader().loadCSS("galacticCombatStyle.css").externalForm
 
     getGameScene().addUI(ui)
-    getGameScene().setBackgroundColor(backgroundColor)
+    getGameScene().setBackgroundColor(LEVEL_COLOR)
 
     ui.root.isPickOnBounds = false
   }
@@ -200,7 +205,7 @@ private fun addWayEdge(first: Point2D, second: Point2D, width: Double = 30.0) {
   val entity = FXGL.entityBuilder()
       .at(first)
       .type(EntityType.PATH)
-      .view(Rectangle(first.distance(second), width, pathColor))
+      .view(Rectangle(first.distance(second), width, PATH_COLOR))
       .build()
 
   entity.translate(0.0, -width / 2)
@@ -214,11 +219,17 @@ private fun addWayVertex(vertex: Point2D, width: Double = 30.0) {
   FXGL.entityBuilder()
       .at(vertex.x, vertex.y)
       .type(EntityType.PATH)
-      .view(Circle(width / 2, pathColor))//Draws the circle around the left upper corner
+      .view(Circle(width / 2, PATH_COLOR))//Draws the circle around the left upper corner
       .buildAndAttach()
 }
 
-private fun Input.addAction(code: KeyCode, title: String, action: () -> Unit) {
+private fun Input.addKeyAction(code: KeyCode, title: String, action: () -> Unit) {
+  this.addAction(object : UserAction(title) {
+    override fun onAction() = action()
+  }, code)
+}
+
+private fun Input.addMouseAction(code: MouseButton, title: String, action: () -> Unit) {
   this.addAction(object : UserAction(title) {
     override fun onAction() = action()
   }, code)

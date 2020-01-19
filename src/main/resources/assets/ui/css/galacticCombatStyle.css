@@ -29,6 +29,6 @@
 
 .text-area .content {
     -fx-background-color: #a9ff00;
-    -fx-font: 'Monospace';
+    -fx-font-family: sans-serif;
     -fx-wrap-text: true;
 }

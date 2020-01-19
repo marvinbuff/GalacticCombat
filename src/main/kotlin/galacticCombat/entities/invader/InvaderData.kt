@@ -16,6 +16,8 @@ data class InvaderData(
 ) {
   companion object {
     const val id = "InvaderData"
+
+    //todo create builder from args
   }
 }
 
