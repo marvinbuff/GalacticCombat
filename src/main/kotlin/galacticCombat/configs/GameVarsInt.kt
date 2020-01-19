@@ -7,6 +7,10 @@ object LevelDataVar : GameVar<LevelData> {
   override val id = "Level Data Variable"
 }
 
+object InfoPanelVar : StringGameVar {
+  override val id = "Info Panel Variable"
+}
+
 object LevelController : GameVar<LevelControllerComponent> {
   override val id = "Level Controller Component"
 }

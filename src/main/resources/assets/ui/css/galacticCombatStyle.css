@@ -26,3 +26,9 @@
     -fx-background-color: #a9ff00;
     -fx-padding: 2;
 }
+
+.text-area .content {
+    -fx-background-color: #a9ff00;
+    -fx-font: 'Monospace';
+    -fx-wrap-text: true;
+}

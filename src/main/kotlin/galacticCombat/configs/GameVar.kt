@@ -3,6 +3,7 @@ package galacticCombat.configs
 import com.almasb.fxgl.dsl.getGameState
 import javafx.beans.property.BooleanProperty
 import javafx.beans.property.IntegerProperty
+import javafx.beans.property.StringProperty
 
 interface GameVar<T : Any> {
   val id: String
@@ -10,6 +11,9 @@ interface GameVar<T : Any> {
   fun set(value: T) = getGameState().setValue(id, value)
 
   fun get(): T = getGameState().getObject(id)
+
+  //todo how to get object property generalized?
+//  fun objectProperty(): Property<T> = getGameState().properties.objectProperty(id)
 }
 
 interface IntGameVar : GameVar<Int> {
@@ -26,4 +30,10 @@ interface BooleanGameVar : GameVar<Boolean> {
   override fun get(): Boolean = getGameState().getBoolean(id)
 
   fun property(): BooleanProperty = getGameState().booleanProperty(id)
+}
+
+interface StringGameVar : GameVar<String> {
+  override fun get(): String = getGameState().getString(id)
+
+  fun property(): StringProperty = getGameState().stringProperty(id)
 }
