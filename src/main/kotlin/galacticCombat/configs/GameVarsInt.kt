@@ -9,6 +9,10 @@ object LevelDataVar : GameVar<LevelData> {
 
 object InfoPanelVar : StringGameVar {
   override val id = "Info Panel Variable"
+
+  fun reset() {
+    set("")
+  }
 }
 
 object LevelController : GameVar<LevelControllerComponent> {

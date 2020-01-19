@@ -8,14 +8,16 @@ import galacticCombat.entities.bullet.BulletData
 import galacticCombat.entities.bullet.BulletEffect
 import galacticCombat.entities.bullet.BulletEffectType
 import galacticCombat.events.InvaderEvents
+import galacticCombat.ui.HasInfo
 import galacticCombat.utils.fire
 import galacticCombat.utils.toPoint
+import javafx.beans.binding.StringBinding
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.geometry.Point2D
 import kotlin.math.max
 
 //todo determine required components for all entities: @Required(Component.class)
-class InvaderComponent(val data: InvaderData) : Component() {
+class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
   private lateinit var nextWayPoint: Point2D
   private lateinit var lastWayPoint: Point2D
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
@@ -47,6 +49,12 @@ class InvaderComponent(val data: InvaderData) : Component() {
     timeoutEffects()
     sufferPoison(tpf)
     sufferSlow()
+  }
+
+  override fun getInformation(): StringBinding {
+    //todo add more extensive information, add InvaderArgs to InvaderData
+    val formattedMax = "%.0f".format(data.maxHealth)
+    return health.asString("Invader \n %.0f/$formattedMax Hit Points")
   }
 
   //endregion

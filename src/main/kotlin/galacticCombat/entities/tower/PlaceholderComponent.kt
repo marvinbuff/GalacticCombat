@@ -3,17 +3,17 @@ package galacticCombat.entities.tower
 import com.almasb.fxgl.dsl.getAppHeight
 import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.dsl.getInput
-import com.almasb.fxgl.entity.component.Component
 import galacticCombat.configs.LevelGameVars
+import galacticCombat.entities.generic.ClickableComponent
 import javafx.event.EventHandler
 import javafx.geometry.Point2D
 import javafx.geometry.Rectangle2D
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 
-class PlaceholderComponent(private val towerData: TowerData) : Component() {
+class PlaceholderComponent(private val towerData: TowerData) : ClickableComponent() {
 
-  private val onClick = EventHandler<MouseEvent> { event ->
+  override val onClick = EventHandler<MouseEvent> { event ->
     when (event.button) {
       MouseButton.PRIMARY   -> {
         if (isValidPosition()) {
@@ -28,10 +28,6 @@ class PlaceholderComponent(private val towerData: TowerData) : Component() {
     }
   }
 
-  override fun onAdded() {
-    entity.viewComponent.addEventHandler(MouseEvent.MOUSE_CLICKED, onClick)
-  }
-
   override fun onUpdate(tpf: Double) {
     entity.anchoredPosition = getInput().mousePositionWorld
     if (isValidPosition()) {
@@ -39,10 +35,6 @@ class PlaceholderComponent(private val towerData: TowerData) : Component() {
     } else {
       entity.viewComponent.opacity = 0.2
     }
-  }
-
-  override fun onRemoved() {
-    entity.viewComponent.removeEventHandler(MouseEvent.MOUSE_CLICKED, onClick)
   }
 
   private fun isValidPosition() = hasSufficientGold() && isAtValidTowerPosition()

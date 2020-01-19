@@ -1,6 +1,7 @@
 package galacticCombat.configs
 
 import com.almasb.fxgl.app.ApplicationMode
+import javafx.scene.paint.Color
 
 object AppConfig {
   const val VERSION = "0.1"
@@ -18,6 +19,8 @@ object GameConfig {
 
 object UIConfig {
   const val TOPBAR_HEIGHT = 100
+  val LEVEL_COLOR = Color.web("133a19")
+  val PATH_COLOR = Color.web("5d665f")
 }
 
 //TODO Refactor the achievements and put into own file
