@@ -4,6 +4,7 @@ import com.almasb.fxgl.entity.GameWorld
 import com.almasb.fxgl.entity.level.Level
 import com.almasb.fxgl.entity.level.LevelLoader
 import galacticCombat.configs.AppConfig
+import galacticCombat.configs.InfoPanelVar
 import galacticCombat.configs.LevelController
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
@@ -20,6 +21,7 @@ class GalacticCombatLevelLoader : LevelLoader {
     //todo sanity check of read data
     data.setGameVars()
     LevelDataVar.set(data)
+    InfoPanelVar.set("")
     val controller = LevelControllerFactory.create(data)
     LevelController.set(controller.getComponent(LevelControllerComponent::class.java))
 

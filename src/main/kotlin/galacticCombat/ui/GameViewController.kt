@@ -1,8 +1,8 @@
 package galacticCombat.ui
 
-import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.ui.UIController
 import galacticCombat.configs.GameVarsInt
+import galacticCombat.configs.InfoPanelVar
 import galacticCombat.configs.IntGameVar
 import galacticCombat.configs.LevelController
 import galacticCombat.configs.LevelGameVars
@@ -11,28 +11,33 @@ import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.Label
+import javafx.scene.control.TextArea
 
 class GameViewController : UIController {
 
+  // Level Property UI
   @FXML lateinit var goldLabel: Label
-
   @FXML lateinit var healthLabel: Label
-
   @FXML lateinit var experienceLabel: Label
-
   @FXML lateinit var scoreLabel: Label
 
+  // Wave Dependant UI
   @FXML lateinit var waveTitle: Label
-
   @FXML lateinit var timerButton: Button
 
-//    @FXML
-//    fun buttonClicked(event: ActionEvent) = println("Hi: ${label.text}")
+  // Information UI
+  @FXML lateinit var informationArea: TextArea
+
 
   override fun init() {
     bindInfoLabels()
     bindWaveLabel()
     bindTimerButton()
+    bindInformationPanel()
+  }
+
+  private fun bindInformationPanel() {
+    informationArea.textProperty().bind(InfoPanelVar.property())
   }
 
   private fun bindTimerButton() {
@@ -53,7 +58,7 @@ class GameViewController : UIController {
         Triple(GameVarsInt.SCORE, scoreLabel, "Score")
     )
         .forEach { (gameVar, label, title) ->
-          val value = getGameState().properties.intProperty(gameVar.id)
+          val value = gameVar.property()
           val binding = value.asString("$title: %d")
           label.textProperty().bind(binding)
         }
