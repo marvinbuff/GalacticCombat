@@ -12,6 +12,7 @@ import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
+import javafx.scene.image.ImageView
 
 class GameViewController : UIController {
 
@@ -26,7 +27,9 @@ class GameViewController : UIController {
   @FXML lateinit var timerButton: Button
 
   // Information UI
-  @FXML lateinit var informationArea: TextArea
+  @FXML lateinit var infoPanelTitle: Label
+  @FXML lateinit var infoPanelText: TextArea
+  @FXML lateinit var infoPanelImage: ImageView
 
 
   override fun init() {
@@ -37,7 +40,10 @@ class GameViewController : UIController {
   }
 
   private fun bindInformationPanel() {
-    informationArea.textProperty().bind(InfoPanelVar.property())
+    val provider = InfoPanelVar.get()
+    infoPanelText.textProperty().bind(provider.textProperty)
+    infoPanelTitle.textProperty().bind(provider.titleProperty)
+    infoPanelImage.imageProperty().bind(provider.imageProperty)
   }
 
   private fun bindTimerButton() {

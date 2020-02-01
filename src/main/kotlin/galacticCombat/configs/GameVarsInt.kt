@@ -2,17 +2,14 @@ package galacticCombat.configs
 
 import galacticCombat.entities.controller.LevelControllerComponent
 import galacticCombat.level.json.LevelData
+import galacticCombat.ui.InfoPanel
 
 object LevelDataVar : GameVar<LevelData> {
   override val id = "Level Data Variable"
 }
 
-object InfoPanelVar : StringGameVar {
+object InfoPanelVar : GameVar<InfoPanel> {
   override val id = "Info Panel Variable"
-
-  fun reset() {
-    set("")
-  }
 }
 
 object LevelController : GameVar<LevelControllerComponent> {

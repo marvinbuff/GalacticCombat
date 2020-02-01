@@ -121,8 +121,7 @@ class GalacticCombatApp : GameApplication() {
 
     // Mouse Handling
     input.addMouseAction(MouseButton.SECONDARY, "Discard Information") {
-      InfoPanelVar.property().unbind()
-      InfoPanelVar.reset()
+      InfoPanelVar.get().reset()
     }
 
     // Developer Commands

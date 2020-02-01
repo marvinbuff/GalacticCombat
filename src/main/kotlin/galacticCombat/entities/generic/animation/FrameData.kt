@@ -11,9 +11,15 @@ data class FrameData(
     private val frameDuration: Double = 0.1
 ) {
 
+  init {
+    require(frames.isNotEmpty())
+  }
+
   fun toAnimatedTexture() = AnimatedTexture(
       AnimationChannel(this.frames, Duration(1000.0 * this.frameDuration * this.frames.size))
   ).loop()
+
+  fun getRepresentative() = frames.first()
 
   companion object {
     fun create(frames: List<String>) = FrameData(frames.map { FXGL.image(it) })

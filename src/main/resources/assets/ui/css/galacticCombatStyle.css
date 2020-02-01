@@ -27,6 +27,14 @@
     -fx-padding: 2;
 }
 
+.text-area {
+    -fx-border-style: dashed;
+    -fx-border-width: 0;
+    -fx-background-color: #a9ff00;
+    -fx-display-caret: false;
+    -fx-skin: none;
+}
+
 .text-area .content {
     -fx-background-color: #a9ff00;
     -fx-font-family: sans-serif;
