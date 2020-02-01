@@ -14,6 +14,7 @@ import galacticCombat.utils.toPoint
 import javafx.beans.binding.StringBinding
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.geometry.Point2D
+import javafx.scene.image.Image
 import kotlin.math.max
 
 //todo determine required components for all entities: @Required(Component.class)
@@ -56,6 +57,10 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
     val formattedMax = "%.0f".format(data.maxHealth)
     return health.asString("Invader \n %.0f/$formattedMax Hit Points")
   }
+
+  override fun getTitle(): String = "Invader"
+
+  override fun getTexture(): Image = data.texture.getRepresentative()
 
   //endregion
   //region -------------------- Public Members ------------------------
@@ -128,6 +133,7 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
 
   private fun checkHealth() {
     if (health.doubleValue() <= 0.0) {
+      health.value = 0.0
       InvaderEvents(InvaderEvents.INVADER_KILLED, this).fire()
     }
   }

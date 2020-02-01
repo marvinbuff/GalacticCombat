@@ -11,6 +11,7 @@ import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.controller.LevelControllerComponent
 import galacticCombat.entities.controller.LevelControllerFactory
 import galacticCombat.level.json.LevelData
+import galacticCombat.ui.InfoPanel
 import galacticCombat.utils.loadJson
 import java.net.URL
 
@@ -21,7 +22,7 @@ class GalacticCombatLevelLoader : LevelLoader {
     //todo sanity check of read data
     data.setGameVars()
     LevelDataVar.set(data)
-    InfoPanelVar.set("")
+    InfoPanelVar.set(InfoPanel())
     val controller = LevelControllerFactory.create(data)
     LevelController.set(controller.getComponent(LevelControllerComponent::class.java))
 
