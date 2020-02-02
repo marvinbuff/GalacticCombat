@@ -53,12 +53,15 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
   }
 
   override fun getInformation(): StringBinding {
-    //todo add more extensive information, add InvaderArgs to InvaderData
     val formattedMax = "%.0f".format(data.maxHealth)
-    return health.asString("Invader \n %.0f/$formattedMax Hit Points")
+    val infoText = "Health: \t%.0f/$formattedMax\n" +
+        "Armour: \t${"%.0f".format(data.armour)}\n" +
+        "Speed: \t${data.baseSpeed.name.toLowerCase()}\n" +
+        "Bounty: \t${data.bounty}"
+    return health.asString(infoText)
   }
 
-  override fun getTitle(): String = "Invader"
+  override fun getTitle(): String = "${data.args.type.title} - Lvl ${data.args.level}"
 
   override fun getTexture(): Image = data.texture.getRepresentative()
 
