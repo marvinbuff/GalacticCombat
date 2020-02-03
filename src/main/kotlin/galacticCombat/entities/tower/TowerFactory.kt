@@ -11,6 +11,7 @@ import galacticCombat.entities.EntityType
 import galacticCombat.entities.TOWER_SPAWN_ID
 import galacticCombat.entities.bullet.BulletData
 import galacticCombat.entities.generic.InfoComponent
+import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.utils.position
 import javafx.geometry.Point2D
 
@@ -30,12 +31,12 @@ class TowerFactory : EntityFactory {
     val towerComponent = TowerComponent(towerData)
     val infoHandler = InfoComponent(towerComponent)
 
-    return entityBuilder().type(EntityType.TOWER)
-        .atAnchored(TowerComponent.center, data.position)
-        .view(towerData.texture)
-        .with(towerComponent)
-        .with(infoHandler)
-        .build()
+    return entityBuilder().setTypeAdvanced(EntityType.TOWER)
+      .atAnchored(TowerComponent.center, data.position)
+      .view(towerData.texture)
+      .with(towerComponent)
+      .with(infoHandler)
+      .build()
   }
 
   private fun parseTowerData(data: SpawnData): TowerData =

@@ -32,6 +32,7 @@ import galacticCombat.entities.EntityType
 import galacticCombat.entities.bullet.BulletFactory
 import galacticCombat.entities.controller.LevelControllerFactory
 import galacticCombat.entities.invader.InvaderFactory
+import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.events.GameEvents
@@ -202,8 +203,8 @@ private fun showPath(waypoints: Path) {
 
 private fun addWayEdge(first: Point2D, second: Point2D, width: Double = 30.0) {
   val entity = FXGL.entityBuilder()
-      .at(first)
-      .type(EntityType.PATH)
+    .at(first)
+    .setTypeAdvanced(EntityType.PATH)
       .view(Rectangle(first.distance(second), width, PATH_COLOR))
       .build()
 
@@ -216,8 +217,8 @@ private fun addWayEdge(first: Point2D, second: Point2D, width: Double = 30.0) {
 
 private fun addWayVertex(vertex: Point2D, width: Double = 30.0) {
   FXGL.entityBuilder()
-      .at(vertex.x, vertex.y)
-      .type(EntityType.PATH)
+    .at(vertex.x, vertex.y)
+    .setTypeAdvanced(EntityType.PATH)
       .view(Circle(width / 2, PATH_COLOR))//Draws the circle around the left upper corner
       .buildAndAttach()
 }
