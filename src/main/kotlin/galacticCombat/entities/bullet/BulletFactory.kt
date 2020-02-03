@@ -7,6 +7,7 @@ import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import galacticCombat.entities.BULLET_SPAWN_ID
 import galacticCombat.entities.EntityType
+import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.utils.position
 
 @Suppress("unused")
@@ -23,11 +24,11 @@ class BulletFactory : EntityFactory {
     val bulletData: BulletData = data.get(BulletData.id)
     val target: Entity = data.get("target")
 
-    return entityBuilder().type(EntityType.BULLET)
-        .view(bulletData.texture)
-        .atAnchored(BulletComponent.center, data.position)
-        .scale(0.5, 0.5)
-        .with(BulletComponent(target, bulletData))
-        .build()
+    return entityBuilder().setTypeAdvanced(EntityType.BULLET)
+      .view(bulletData.texture)
+      .atAnchored(BulletComponent.center, data.position)
+      .scale(0.5, 0.5)
+      .with(BulletComponent(target, bulletData))
+      .build()
   }
 }

@@ -55,5 +55,5 @@ tasks {
 
 javafx {
   version = "12.0.2"
-  modules = mutableListOf("javafx.controls")
+  modules = mutableListOf("javafx.controls", "javafx.fxml")
 }

@@ -9,6 +9,7 @@ import com.almasb.fxgl.entity.Spawns
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.generic.InfoComponent
+import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.level.json.InvaderArgs
 import galacticCombat.utils.position
 import galacticCombat.utils.toPoint
@@ -25,13 +26,13 @@ class InvaderFactory : EntityFactory {
     val healthBar = HealthComponent(invader)
     val infoHandler = InfoComponent(invader)
 
-    return entityBuilder().type(EntityType.INVADER)
-        .atAnchored(InvaderComponent.center, data.position)
-        .view(invaderData.texture.toAnimatedTexture())
-        .with(invader)
-        .with(healthBar)
-        .with(infoHandler)
-        .build()
+    return entityBuilder().setTypeAdvanced(EntityType.INVADER)
+      .atAnchored(InvaderComponent.center, data.position)
+      .view(invaderData.texture.toAnimatedTexture())
+      .with(invader)
+      .with(healthBar)
+      .with(infoHandler)
+      .build()
   }
 
 
