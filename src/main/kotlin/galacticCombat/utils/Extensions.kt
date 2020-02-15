@@ -6,6 +6,7 @@ import javafx.geometry.Point2D
 fun Double.toPoint(): Point2D = Point2D(this, this)
 
 fun Pair<Int, Int>.toPoint(): Point2D = Point2D(first.toDouble(), second.toDouble())
+fun Point2D.toIntegerPair() = x.toInt() to y.toInt()
 
 val SpawnData.position: Point2D
   get() = Point2D(this.x, this.y)

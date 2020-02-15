@@ -26,12 +26,12 @@ class PathFactory : EntityFactory {
   fun spawnPathVertex(data: SpawnData): Entity {
     require(data.hasKey(ID_PATH_VERTEX_ARGS))
 
-    val (startVertex, endVertex) = data.get<PathVertexArgs>(ID_PATH_VERTEX_ARGS)
+    val pathVertexArgs = data.get<PathVertexArgs>(ID_PATH_VERTEX_ARGS)
 
     return entityBuilder().setTypeAdvanced(EntityType.PATH)
         .from(data)
         .with(DraggableComponent())
-        .with(PathVertexComponent(startVertex, endVertex)) //todo check if we should not just pass the args object
+        .with(PathVertexComponent(pathVertexArgs)) //todo check if we should not just pass the args object
         .view(Circle(halfPathWidth, UIConfig.PATH_COLOR))
         .build()
   }
@@ -55,7 +55,7 @@ class PathFactory : EntityFactory {
       val paths = LevelDataVar.get().paths
       return paths.map { path ->
         val entities: MutableList<Entity> = mutableListOf()
-        var previousEdge: Entity? = null
+        var previousEdge: Entity?
         var nextEdge: Entity? = null
         for (i in 0 until path.size) {
           previousEdge = nextEdge
@@ -70,7 +70,7 @@ class PathFactory : EntityFactory {
           }
 
           // Create Vertex
-          getGameWorld().create(PATH_VERTEX_SPAWN_ID, SpawnData(current).put(ID_PATH_VERTEX_ARGS, PathVertexArgs(previousEdge, nextEdge))).apply { entities.add(this) }
+          getGameWorld().create(PATH_VERTEX_SPAWN_ID, SpawnData(current).put(ID_PATH_VERTEX_ARGS, PathVertexArgs(path.id, i, previousEdge, nextEdge))).apply { entities.add(this) }
         }
         entities
       }.flatten()
@@ -84,7 +84,7 @@ private data class PathEdgeArgs(val startVertex: Point2D, val endVertex: Point2D
   }
 }
 
-private data class PathVertexArgs(val previousEdge: Entity?, val nextEdge: Entity?) {
+data class PathVertexArgs(val pathID: String, val wayPointIndex: Int, val previousEdge: Entity?, val nextEdge: Entity?) {
   companion object {
     const val ID_PATH_VERTEX_ARGS = "Path Vertex Args"
   }
