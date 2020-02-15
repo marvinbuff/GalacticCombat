@@ -32,6 +32,7 @@ import galacticCombat.entities.EntityType
 import galacticCombat.entities.bullet.BulletFactory
 import galacticCombat.entities.controller.LevelControllerFactory
 import galacticCombat.entities.invader.InvaderFactory
+import galacticCombat.entities.path.PathFactory
 import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
@@ -40,12 +41,11 @@ import galacticCombat.events.InvaderEvents
 import galacticCombat.handlers.gameLost
 import galacticCombat.handlers.gameWon
 import galacticCombat.level.GalacticCombatLevelLoader
-import galacticCombat.level.json.Path
 import galacticCombat.ui.GameViewController
 import galacticCombat.utils.fire
-import galacticCombat.utils.toPoint
 import javafx.geometry.Point2D
 import javafx.geometry.Rectangle2D
+import javafx.scene.Group
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
 import javafx.scene.shape.Circle
@@ -73,15 +73,14 @@ class GalacticCombatApp : GameApplication() {
   }
 
   override fun initGame() {
-    listOf(TowerFactory(), InvaderFactory(), BulletFactory(), PlaceholderFactory(), LevelControllerFactory())
-        .forEach(getGameWorld()::addEntityFactory)
+    listOf(
+        TowerFactory(), InvaderFactory(), BulletFactory(),
+        PlaceholderFactory(), LevelControllerFactory(), PathFactory()
+    ).forEach(getGameWorld()::addEntityFactory)
 
     val level = getAssetLoader().loadLevel("level_one.level", GalacticCombatLevelLoader())
     getGameWorld().setLevel(level)
     val levelData = LevelDataVar.get()
-
-    //Draw Path
-    levelData.paths.forEach { showPath(it) }
 
     LevelGameVars.HEALTH.property().addListener { _, _, newValue ->
       if (newValue.toInt() <= 0) GameEvents(GameEvents.LEVEL_LOST).fire()
@@ -194,18 +193,17 @@ data class SaveData(val scores: Int) : Serializable
 
 //region ---------------- Private Helpers ---------------
 
-private fun showPath(waypoints: Path) {
-  waypoints.forEach { addWayVertex(it.toPoint()) }
-  waypoints.zipWithNext().forEach { (first, second) ->
-    addWayEdge(first.toPoint(), second.toPoint())
-  }
-}
-
 private fun addWayEdge(first: Point2D, second: Point2D, width: Double = 30.0) {
+  val leftCircle = Circle(0.0, width / 2, width / 2, PATH_COLOR)
+  val rightCircle = Circle(first.distance(second), width / 2, width / 2, PATH_COLOR)
+  val rectangle = Rectangle(first.distance(second), width, PATH_COLOR)
+
+  val shape = Group(leftCircle, rectangle, rightCircle)
+
   val entity = FXGL.entityBuilder()
-    .at(first)
-    .setTypeAdvanced(EntityType.PATH)
-      .view(Rectangle(first.distance(second), width, PATH_COLOR))
+      .at(first)
+      .setTypeAdvanced(EntityType.PATH)
+      .view(shape)
       .build()
 
   entity.translate(0.0, -width / 2)
@@ -213,14 +211,6 @@ private fun addWayEdge(first: Point2D, second: Point2D, width: Double = 30.0) {
   entity.rotateToVector(second.subtract(first))
 
   FXGL.getGameWorld().addEntity(entity)
-}
-
-private fun addWayVertex(vertex: Point2D, width: Double = 30.0) {
-  FXGL.entityBuilder()
-    .at(vertex.x, vertex.y)
-    .setTypeAdvanced(EntityType.PATH)
-      .view(Circle(width / 2, PATH_COLOR))//Draws the circle around the left upper corner
-      .buildAndAttach()
 }
 
 private fun Input.addKeyAction(code: KeyCode, title: String, action: () -> Unit) {

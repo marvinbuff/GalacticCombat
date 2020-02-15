@@ -19,8 +19,8 @@ object GameConfig {
 
 object UIConfig {
   const val TOPBAR_HEIGHT = 100
-  val LEVEL_COLOR = Color.web("133a19")
-  val PATH_COLOR = Color.web("5d665f")
+  val LEVEL_COLOR: Color = Color.web("133a19")
+  val PATH_COLOR: Color = Color.web("5d665f")
 }
 
 //TODO Refactor the achievements and put into own file
