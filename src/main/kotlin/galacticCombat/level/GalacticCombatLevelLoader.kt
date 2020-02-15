@@ -33,7 +33,6 @@ class GalacticCombatLevelLoader : LevelLoader {
     val paths = PathFactory.createPath()
 
     val entities = listOf(controller) + paths
-
     return Level(AppConfig.WIDTH, AppConfig.HEIGHT, entities)
   }
 }
