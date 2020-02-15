@@ -10,6 +10,7 @@ import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.controller.LevelControllerComponent
 import galacticCombat.entities.controller.LevelControllerFactory
+import galacticCombat.entities.path.PathFactory
 import galacticCombat.level.json.LevelData
 import galacticCombat.ui.InfoPanel
 import galacticCombat.utils.loadJson
@@ -23,10 +24,15 @@ class GalacticCombatLevelLoader : LevelLoader {
     data.setGameVars()
     LevelDataVar.set(data)
     InfoPanelVar.set(InfoPanel())
+
+    // Initialize Controller
     val controller = LevelControllerFactory.create(data)
     LevelController.set(controller.getComponent(LevelControllerComponent::class.java))
 
-    val entities = listOf(controller)
+    // Initialize Path
+    val paths = PathFactory.createPath()
+
+    val entities = listOf(controller) + paths
 
     return Level(AppConfig.WIDTH, AppConfig.HEIGHT, entities)
   }

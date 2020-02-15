@@ -11,9 +11,6 @@ interface GameVar<T : Any> {
   fun set(value: T) = getGameState().setValue(id, value)
 
   fun get(): T = getGameState().getObject(id)
-
-  //todo how to get object property generalized?
-//  fun objectProperty(): Property<T> = getGameState().properties.objectProperty(id)
 }
 
 interface IntGameVar : GameVar<Int> {

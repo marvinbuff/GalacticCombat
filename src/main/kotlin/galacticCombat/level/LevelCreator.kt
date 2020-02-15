@@ -23,7 +23,7 @@ fun main() {
       "Experiment Level",
       settings = createSettings(),
       waves = listOf(createWave(10), createWave(4)),
-      paths = listOf(createPath("default"))
+      paths = mutableListOf(createPath("default"))
   )
 
   val json = jsonSerializer.stringify(data)
@@ -36,7 +36,7 @@ private fun createWave(invaders: Int) = Wave(createSpawnTimes(invaders).zip(crea
 
 private fun createSettings() = Settings(500, 5, 10, 5, 200, 60.0)
 
-private fun createPath(title: String) = Path(title, listOf(50 to 150, 150 to 350, 550 to 350, 130 to 120))
+private fun createPath(title: String) = Path(title, mutableListOf(50 to 150, 150 to 350, 550 to 350, 130 to 120))
 
 private fun createSpawnTimes(number: Int): DoubleArray {
   val times = mutableListOf<Double>()

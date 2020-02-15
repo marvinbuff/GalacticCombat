@@ -137,7 +137,7 @@
       "id": "default",
       "wayPoints": [
         {
-          "first": 83,
+          "first": 183,
           "second": 120
         },
         {
@@ -149,7 +149,7 @@
           "second": 400
         },
         {
-          "first": 605,
+          "first": 505,
           "second": 400
         }
       ]
