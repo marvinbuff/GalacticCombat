@@ -5,6 +5,7 @@ import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.component.Component
+import com.almasb.fxgl.entity.component.Required
 import galacticCombat.configs.loadImage
 import galacticCombat.entities.BULLET_SPAWN_ID
 import galacticCombat.entities.EntityType
@@ -14,21 +15,14 @@ import galacticCombat.ui.HasInfo
 import galacticCombat.utils.toPoint
 import javafx.beans.binding.Bindings
 import javafx.beans.binding.StringBinding
-import javafx.geometry.Point2D
 import javafx.scene.image.Image
 import javafx.scene.transform.Rotate
 
+@Required(ProjectileComponent::class)
 open class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
-  private lateinit var projectile: ProjectileComponent
+  private val projectile: ProjectileComponent by lazy { entity.getComponent(ProjectileComponent::class.java) }
   private var reloadingTime: Double = 0.0
   private val bullet = towerData.bulletData
-
-  override fun onAdded() {
-    entity.transformComponent.rotationOrigin = center
-
-    projectile = ProjectileComponent(Point2D(0.0, 0.0), 0.1)
-    entity.addComponent(projectile)
-  }
 
   override fun onUpdate(tpf: Double) {
     val closestInvader = getGameWorld()

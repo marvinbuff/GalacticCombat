@@ -1,5 +1,6 @@
 package galacticCombat.entities.bullet
 
+import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
@@ -9,6 +10,7 @@ import galacticCombat.entities.BULLET_SPAWN_ID
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.utils.position
+import javafx.geometry.Point2D
 
 @Suppress("unused")
 class BulletFactory : EntityFactory {
@@ -24,11 +26,16 @@ class BulletFactory : EntityFactory {
     val bulletData: BulletData = data.get(BulletData.id)
     val target: Entity = data.get("target")
 
+    val projectile = ProjectileComponent(Point2D(0.0, 0.0), bulletData.bulletSpeed)
+    val bulletComponent = BulletComponent(target, bulletData)
+
     return entityBuilder().setTypeAdvanced(EntityType.BULLET)
-      .view(bulletData.texture)
-      .atAnchored(BulletComponent.center, data.position)
-      .scale(0.5, 0.5)
-      .with(BulletComponent(target, bulletData))
-      .build()
+        .view(bulletData.texture)
+        .atAnchored(BulletComponent.center, data.position)
+        .rotationOrigin(BulletComponent.center)
+        .scale(0.5, 0.5)
+        .with(projectile)
+        .with(bulletComponent)
+        .build()
   }
 }

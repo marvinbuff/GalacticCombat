@@ -5,7 +5,7 @@ import galacticCombat.configs.UIConfig
 import javafx.geometry.Point2D
 import javafx.scene.shape.Rectangle
 
-class PathEdgeComponent(var startVertex: Point2D, var endVertex: Point2D) : Component() {
+class PathEdgeComponent(private var startVertex: Point2D, private var endVertex: Point2D) : Component() {
 
   override fun onAdded() {
     super.onAdded()

@@ -8,17 +8,12 @@ import galacticCombat.utils.toIntegerPair
 
 @Required(DraggableComponent::class)
 class PathVertexComponent(pathVertexArgs: PathVertexArgs) : Component() {
-  lateinit var draggableComponent: DraggableComponent
+  private val draggableComponent: DraggableComponent by lazy { entity.getComponent(DraggableComponent::class.java) }
 
   private val pathID = pathVertexArgs.pathID
   private val wayPointIndex = pathVertexArgs.wayPointIndex
   private val previousEdge: PathEdgeComponent? = pathVertexArgs.previousEdge?.getComponent(PathEdgeComponent::class.java)
   private val nextEdge: PathEdgeComponent? = pathVertexArgs.nextEdge?.getComponent(PathEdgeComponent::class.java)
-
-  override fun onAdded() {
-    super.onAdded()
-    draggableComponent = entity.getComponent(DraggableComponent::class.java)
-  }
 
   override fun onUpdate(tpf: Double) {
     super.onUpdate(tpf)

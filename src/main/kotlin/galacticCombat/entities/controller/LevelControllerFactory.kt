@@ -17,11 +17,14 @@ class LevelControllerFactory : EntityFactory {
   fun spawnLevelController(data: SpawnData): Entity {
     require(data.hasKey(ID_LEVEL_DATA)) { "Spawning a LevelController requires LevelData." } //todo create annotation for this
     val levelData = data.get<LevelData>(ID_LEVEL_DATA)
-    val controller = LevelControllerComponent(levelData)
+
+    val timerComponent = LevelTimerComponent(levelData)
+    val controllerComponent = LevelControllerComponent(levelData)
 
     return entityBuilder().type(EntityType.CONTROLLER)
         .from(data)
-        .with(controller)
+        .with(timerComponent)
+        .with(controllerComponent)
         .build()
   }
 

@@ -23,6 +23,6 @@ class HealthComponent(invaderComponent: InvaderComponent) : ChildViewComponent(-
         invaderComponent.health.divide(invaderComponent.data.maxHealth * 1.0).multiply(100)
     )
 
-    viewRoot.children.addAll(hpBar)
+    viewRoot.children.add(hpBar)
   }
 }

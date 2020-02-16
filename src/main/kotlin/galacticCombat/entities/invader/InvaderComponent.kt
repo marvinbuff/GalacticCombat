@@ -3,6 +3,7 @@ package galacticCombat.entities.invader
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.entity.component.Component
+import com.almasb.fxgl.entity.component.Required
 import galacticCombat.configs.GameVarsInt
 import galacticCombat.entities.bullet.BulletData
 import galacticCombat.entities.bullet.BulletEffect
@@ -17,12 +18,12 @@ import javafx.geometry.Point2D
 import javafx.scene.image.Image
 import kotlin.math.max
 
-//todo determine required components for all entities: @Required(Component.class)
+@Required(ProjectileComponent::class)
 class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
   private lateinit var nextWayPoint: Point2D
   private lateinit var lastWayPoint: Point2D
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
-  private lateinit var projectile: ProjectileComponent
+  private val projectile: ProjectileComponent by lazy { entity.getComponent(ProjectileComponent::class.java) }
   var health: SimpleDoubleProperty = SimpleDoubleProperty(data.maxHealth)
 
   private val poisonEffects: ArrayList<Pair<Double, BulletEffect>> = arrayListOf()
@@ -31,12 +32,8 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
   //region -------------------- Inherited Members ------------------------
 
   override fun onAdded() {
-    entity.transformComponent.rotationOrigin = entity.localAnchor
-
     nextWayPoint = data.wayPoints[wayPointIndex].toPoint()
     lastWayPoint = data.wayPoints[wayPointIndex - 1].toPoint()
-    projectile = ProjectileComponent(Point2D(0.0, 0.0), data.baseSpeed.speed)
-    entity.addComponent(projectile)
 
     GameVarsInt.ALIVE_INVADERS.increment(+1)
   }
@@ -130,8 +127,8 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
   }
 
   private fun sufferSlow() {
-    if (slowEffects.isEmpty()) projectile.speed = data.baseSpeed.speed
-    else projectile.speed = (slowEffects.map { it.second }.minBy { it.amount }?.amount ?: 1.0) * data.baseSpeed.speed
+    if (slowEffects.isEmpty()) projectile.speed = data.baseSpeed.value
+    else projectile.speed = (slowEffects.map { it.second }.minBy { it.amount }?.amount ?: 1.0) * data.baseSpeed.value
   }
 
   private fun checkHealth() {

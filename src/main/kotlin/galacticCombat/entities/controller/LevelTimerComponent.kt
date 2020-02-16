@@ -10,7 +10,7 @@ import javafx.beans.binding.DoubleBinding
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleIntegerProperty
 
-class LevelTimerComponent(val levelData: LevelData) : Component() {
+class LevelTimerComponent(private val levelData: LevelData) : Component() {
   private val state: LevelState = LevelState.create(levelData)
 
   override fun onUpdate(tpf: Double) {
