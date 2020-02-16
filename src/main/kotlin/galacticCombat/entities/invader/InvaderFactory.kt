@@ -1,5 +1,6 @@
 package galacticCombat.entities.invader
 
+import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
@@ -14,6 +15,7 @@ import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.level.json.InvaderArgs
 import galacticCombat.utils.position
 import galacticCombat.utils.toPoint
+import javafx.geometry.Point2D
 
 @Suppress("unused")
 class InvaderFactory : EntityFactory {
@@ -23,17 +25,22 @@ class InvaderFactory : EntityFactory {
     require(data.hasKey(ID_INVADER_ARGS))
 
     val invaderData = InvaderData.createFromArgs(data.get(ID_INVADER_ARGS))
+
+    // Components
+    val projectile = ProjectileComponent(Point2D(0.0, 0.0), invaderData.baseSpeed.value)
     val invader = InvaderComponent(invaderData)
     val healthBar = HealthComponent(invader)
     val infoHandler = InfoComponent(invader)
 
     return entityBuilder().setTypeAdvanced(EntityType.INVADER)
-      .atAnchored(InvaderComponent.center, data.position)
-      .view(invaderData.texture.toAnimatedTexture())
-      .with(invader)
-      .with(healthBar)
-      .with(infoHandler)
-      .build()
+        .atAnchored(InvaderComponent.center, data.position)
+        .rotationOrigin(InvaderComponent.center)
+        .view(invaderData.texture.toAnimatedTexture())
+        .with(projectile)
+        .with(invader)
+        .with(healthBar)
+        .with(infoHandler)
+        .build()
   }
 
 

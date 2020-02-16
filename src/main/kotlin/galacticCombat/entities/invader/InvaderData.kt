@@ -49,7 +49,7 @@ data class InvaderData(
   }
 }
 
-enum class Speed(val speed: Double) {
+enum class Speed(val value: Double) {
   FAST(100.0),
   NORMAL(60.0),
   SLOW(40.0)

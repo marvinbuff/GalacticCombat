@@ -1,6 +1,7 @@
 package galacticCombat.entities.tower
 
 import com.almasb.fxgl.dsl.FXGL.Companion.getGameWorld
+import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.entityBuilder
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
@@ -28,15 +29,20 @@ class TowerFactory : EntityFactory {
   @Spawns(TOWER_SPAWN_ID)
   fun spawnTower(data: SpawnData): Entity {
     val towerData = parseTowerData(data)
+
+    // Components
+    val projectile = ProjectileComponent(Point2D(0.0, 0.0), 0.1)
     val towerComponent = TowerComponent(towerData)
     val infoHandler = InfoComponent(towerComponent)
 
     return entityBuilder().setTypeAdvanced(EntityType.TOWER)
-      .atAnchored(TowerComponent.center, data.position)
-      .view(towerData.texture)
-      .with(towerComponent)
-      .with(infoHandler)
-      .build()
+        .atAnchored(TowerComponent.center, data.position)
+        .rotationOrigin(TowerComponent.center)
+        .view(towerData.texture)
+        .with(projectile)
+        .with(towerComponent)
+        .with(infoHandler)
+        .build()
   }
 
   private fun parseTowerData(data: SpawnData): TowerData =
@@ -49,7 +55,7 @@ class TowerFactory : EntityFactory {
   companion object {
     fun spawnFromTowerData(data: TowerData, position: Point2D) {
       getGameWorld().spawn(
-        TOWER_SPAWN_ID,
+          TOWER_SPAWN_ID,
           SpawnData(position).put(TowerData.id, data)
       )
 
