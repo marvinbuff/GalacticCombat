@@ -75,6 +75,15 @@ class PathFactory : EntityFactory {
         entities
       }.flatten()
     }
+
+    /**
+     * Removes all path entities and then restores them from level data.
+     */
+    fun reload() {
+      val world = getGameWorld()
+      world.removeEntities(world.getEntitiesByType(EntityType.PATH))
+      world.addEntities(*createPath().toTypedArray())
+    }
   }
 }
 
