@@ -19,6 +19,7 @@ import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.fxgl.saving.DataFile
+import com.almasb.sslogger.Logger
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.AssetConfig
 import galacticCombat.configs.GameVarsBoolean
@@ -27,13 +28,11 @@ import galacticCombat.configs.InfoPanelVar
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.configs.UIConfig.LEVEL_COLOR
-import galacticCombat.configs.UIConfig.PATH_COLOR
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.bullet.BulletFactory
 import galacticCombat.entities.controller.LevelControllerFactory
 import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.entities.path.PathFactory
-import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.events.GameEvents
@@ -43,13 +42,9 @@ import galacticCombat.handlers.gameWon
 import galacticCombat.level.GalacticCombatLevelLoader
 import galacticCombat.ui.GameViewController
 import galacticCombat.utils.fire
-import javafx.geometry.Point2D
 import javafx.geometry.Rectangle2D
-import javafx.scene.Group
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
-import javafx.scene.shape.Circle
-import javafx.scene.shape.Rectangle
 import javafx.util.Duration
 import kotlinx.coroutines.Runnable
 import java.io.Serializable
@@ -124,6 +119,14 @@ class GalacticCombatApp : GameApplication() {
       InfoPanelVar.get().reset()
     }
 
+    input.addAction(object : UserAction("Add New Waypoint") {
+      override fun onActionEnd() {
+        LevelDataVar.get().paths.first().wayPoints.add(300 to 300)
+        PathFactory.reload()
+        log.info("Added a new waypoint.")
+      }
+    }, KeyCode.K)
+
     // Developer Commands
     if (getSettings().applicationMode == ApplicationMode.DEVELOPER) {
 
@@ -186,32 +189,16 @@ class GalacticCombatApp : GameApplication() {
     println("Loaded ${data.scores}")
     getGameState().increment(GameVarsInt.ENEMIES_TO_SPAWN.id, data.scores)
   }
+
+  companion object {
+    val log = Logger.get("Galactic Combat App")
+  }
 }
 
 data class SaveData(val scores: Int) : Serializable
 
 
 //region ---------------- Private Helpers ---------------
-
-private fun addWayEdge(first: Point2D, second: Point2D, width: Double = 30.0) {
-  val leftCircle = Circle(0.0, width / 2, width / 2, PATH_COLOR)
-  val rightCircle = Circle(first.distance(second), width / 2, width / 2, PATH_COLOR)
-  val rectangle = Rectangle(first.distance(second), width, PATH_COLOR)
-
-  val shape = Group(leftCircle, rectangle, rightCircle)
-
-  val entity = FXGL.entityBuilder()
-      .at(first)
-      .setTypeAdvanced(EntityType.PATH)
-      .view(shape)
-      .build()
-
-  entity.translate(0.0, -width / 2)
-  entity.transformComponent.rotationOrigin = Point2D(0.0, width / 2)
-  entity.rotateToVector(second.subtract(first))
-
-  FXGL.getGameWorld().addEntity(entity)
-}
 
 private fun Input.addKeyAction(code: KeyCode, title: String, action: () -> Unit) {
   this.addAction(object : UserAction(title) {
