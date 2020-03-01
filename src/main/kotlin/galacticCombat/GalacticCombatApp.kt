@@ -127,6 +127,15 @@ class GalacticCombatApp : GameApplication() {
       }
     }, KeyCode.K)
 
+    input.addAction(object : UserAction("Remove last Waypoint") {
+      override fun onActionEnd() {
+        val waypoints = LevelDataVar.get().paths.first().wayPoints
+        waypoints.removeAt(waypoints.size - 1)
+        PathFactory.reload()
+        log.info("Removed last waypoint.")
+      }
+    }, KeyCode.L)
+
     // Developer Commands
     if (getSettings().applicationMode == ApplicationMode.DEVELOPER) {
 
