@@ -35,7 +35,7 @@
         </VBox>
     </left>
     <right>
-        <VBox prefHeight="420.0" prefWidth="187.0" styleClass="background_main" BorderPane.alignment="CENTER">
+        <VBox styleClass="background_main" BorderPane.alignment="CENTER">
             <children>
                 <GridPane alignment="CENTER" prefHeight="87.0" prefWidth="177.0">
                     <columnConstraints>
@@ -82,16 +82,8 @@
             </padding>
         </VBox>
     </right>
-    <center>
-        <AnchorPane disable="true" mouseTransparent="true" prefHeight="420.0" prefWidth="592.0" BorderPane.alignment="CENTER">
-            <styleClass>
-                <String fx:value="border"/>
-                <String fx:value="background_transparent"/>
-            </styleClass>
-        </AnchorPane>
-    </center>
     <top>
-        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="800.0" styleClass="background_main" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" prefHeight="46.0" prefWidth="799.0" styleClass="background_main" BorderPane.alignment="CENTER">
             <children>
                 <Label fx:id="waveTitle" prefHeight="37.0" prefWidth="332.0">
                     <font>
@@ -101,4 +93,17 @@
             </children>
         </HBox>
     </top>
+    <center>
+        <VBox BorderPane.alignment="CENTER" mouseTransparent="true">
+            <children>
+                <AnchorPane prefWidth="669.0" VBox.vgrow="ALWAYS">
+                    <styleClass>
+                        <String fx:value="border"/>
+                        <String fx:value="background_transparent"/>
+                    </styleClass>
+                </AnchorPane>
+                <AnchorPane fx:id="spawnSliderContainer" prefHeight="38.0" prefWidth="446.0" styleClass="background_main" VBox.vgrow="SOMETIMES"/>
+            </children>
+        </VBox>
+    </center>
 </BorderPane>
