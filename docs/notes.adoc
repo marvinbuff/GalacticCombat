@@ -28,38 +28,9 @@ But improve it with a fade out and maybe accumulation.
 - Modify buttons to be hinted as such
 
 Next::
-- Finish game won behaviour
 - Balance game to be beatable
-- Add game over stats
-
-To-Do::
-- Write down design of exp, gold and mana system
-- Implement chain tower and bullet
-- Improve tower placeholder indication when not valid
-- Make path draggable to create level
-
-Next Features::
-- Nicer UI: shop part, nice display for money and health
-- Background Image
-- Implement bomber tower and bullet
-- Add a small main function to create template level files.
-- Implement tower rotation speed
-
-Milestone 0.2::
-Having a playable level prototype.
-- Shop to buy towers
-- Waves of enemies
-- Boss enemy
-
-Milestone 1.0::
-The game as it exists in Greenfoot.
-- Stat ui activated on click of entity
-- Invaders can be focused, Towers can be set to ignore focus
-- Player Profiles
-- Achievements
-- Rework Mana
-- Menu
-- Physical Cover
+- Add game over statistics
+- move all tickets to github and documentation to wiki
 
 Milestone 2.0::
 - Level Editor
@@ -179,6 +150,9 @@ The game holds various variables which are either kept between waves, levels, or
 Health:: Health is reduced by invaders reaching the goal and on zero health, the game is over.
 Gold:: Gold is earned passively and allows the player to buy towers.
 Experience:: Destroying an invader grants experience, which can be used to level up towers.
+Mana:: Mana can only be acquired by harvesting mana mines or destroying invaders carrying mana tanks.
+(Or maybe they appear randomly and have to be clicked?
+Dunno.)
 Score:: The score is a metric to measure how efficiently a player has beaten a level.
 You gain points over time, by destroying invaders, and from any unspent resource at the end of a level.
 
@@ -202,7 +176,7 @@ Each level contains a list of Entities to spawn on load:
 * A set of Waves, each wave having
 ** as set of mappings from time to Invader
 
-Future Ides:
+Future Ideas:
 
 * (The trickle gold depends on the level)
 * (Environment objects, which are just entities marked by a time.)
