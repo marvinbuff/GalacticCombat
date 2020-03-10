@@ -6,7 +6,6 @@ import galacticCombat.configs.InfoPanelVar
 import galacticCombat.configs.IntGameVar
 import galacticCombat.configs.LevelController
 import galacticCombat.configs.LevelGameVars
-import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -41,7 +40,11 @@ class GameViewController : UIController {
     bindWaveLabel()
     bindTimerButton()
     bindInformationPanel()
-//    spawnSliderContainer.children += Label("Hello")
+    createSpawnSlider()
+  }
+
+  private fun createSpawnSlider() {
+    spawnSliderContainer.children += SpawnSlider()
   }
 
   private fun bindInformationPanel() {
@@ -54,7 +57,7 @@ class GameViewController : UIController {
   private fun bindTimerButton() {
     val timerComponent = LevelController.get().timerComponent
     timerButton.textProperty().bind(timerComponent.getTimePropertyConverted().asString("Next Wave: %.0f"))
-    timerButton.onAction = EventHandler<ActionEvent> { timerComponent.skipToNextWave() }
+    timerButton.onAction = EventHandler { timerComponent.skipToNextWave() }
   }
 
   private fun bindWaveLabel() {

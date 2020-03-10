@@ -10,3 +10,10 @@ class GameEvents(eventType: EventType<GameEvents>) : Event(eventType) {
     val LEVEL_LOST: EventType<GameEvents> = EventType(ANY, "LevelLost")
   }
 }
+
+class WaveEvents(eventType: EventType<WaveEvents>, val waveIndex: Int) : Event(eventType) {
+
+  companion object {
+    val WAVE_STARTED: EventType<WaveEvents> = EventType(ANY, "WaveStarted")
+  }
+}
