@@ -20,10 +20,10 @@ import kotlin.math.max
 
 @Required(ProjectileComponent::class)
 class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
+  lateinit var projectile: ProjectileComponent
   private lateinit var nextWayPoint: Point2D
   private lateinit var lastWayPoint: Point2D
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
-  private val projectile: ProjectileComponent by lazy { entity.getComponent(ProjectileComponent::class.java) }
   var health: SimpleDoubleProperty = SimpleDoubleProperty(data.maxHealth)
 
   private val poisonEffects: ArrayList<Pair<Double, BulletEffect>> = arrayListOf()

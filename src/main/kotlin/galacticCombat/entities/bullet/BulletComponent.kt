@@ -12,7 +12,7 @@ class BulletComponent(
     private val target: Entity,
     private val data: BulletData
 ) : Component() {
-  private val projectile: ProjectileComponent by lazy { entity.getComponent(ProjectileComponent::class.java) }
+  private lateinit var projectile: ProjectileComponent
 
   override fun onUpdate(tpf: Double) {
     val vectorToTarget = target.anchoredPosition.subtract(entity.anchoredPosition)

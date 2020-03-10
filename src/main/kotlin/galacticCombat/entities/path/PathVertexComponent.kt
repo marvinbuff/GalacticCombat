@@ -8,7 +8,7 @@ import galacticCombat.utils.toIntegerPair
 
 @Required(DraggableComponent::class)
 class PathVertexComponent(pathVertexArgs: PathVertexArgs) : Component() {
-  private val draggableComponent: DraggableComponent by lazy { entity.getComponent(DraggableComponent::class.java) }
+  lateinit var draggableComponent: DraggableComponent
 
   private val pathID = pathVertexArgs.pathID
   private val wayPointIndex = pathVertexArgs.wayPointIndex
