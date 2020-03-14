@@ -21,11 +21,11 @@ application {
   mainClassName = "galacticCombat.GalacticCombatAppKt"
 }
 
-
 repositories {
   mavenCentral()
   jcenter()
   maven("https://nexus.gluonhq.com/nexus/content/repositories/releases")
+    maven("http://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
@@ -38,7 +38,7 @@ dependencies {
   compile("org.json:json:20190722")
 
   // FXGL
-  compile("com.github.almasb:fxgl:11.6")
+  compile("com.github.almasb:fxgl:11.8") // dev-SNAPSHOT
 }
 
 tasks {
@@ -54,6 +54,6 @@ tasks {
 }
 
 javafx {
-  version = "12.0.2"
-  modules = mutableListOf("javafx.controls")
+  version = "13.0.2"
+  modules = mutableListOf("javafx.controls", "javafx.fxml")
 }
