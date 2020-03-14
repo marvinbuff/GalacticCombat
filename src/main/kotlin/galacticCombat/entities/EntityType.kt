@@ -11,11 +11,13 @@ const val PATH_VERTEX_SPAWN_ID = "Path Vertex"
 const val PATH_EDGE_SPAWN_ID = "Path Edge"
 
 enum class EntityType(val zLevel: Int = 0) {
-  TOWER(0),
-  INVADER(-2),
-  BULLET(-1),
   BARRICADE,
   CONTROLLER,
+  SLIDER_INVADER(3),
+  SLIDER_PIN(2),
+  TOWER(0),
+  BULLET(-1),
+  INVADER(-2),
   PATH(-5)
   ;
 }

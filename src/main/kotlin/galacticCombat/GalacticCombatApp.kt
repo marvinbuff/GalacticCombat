@@ -8,7 +8,6 @@ import com.almasb.fxgl.dsl.getAppHeight
 import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.dsl.getAssetLoader
 import com.almasb.fxgl.dsl.getGameScene
-import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.dsl.getPhysicsWorld
@@ -18,7 +17,6 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
-import com.almasb.fxgl.saving.DataFile
 import com.almasb.sslogger.Logger
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.AssetConfig
@@ -185,19 +183,19 @@ class GalacticCombatApp : GameApplication() {
     })
   }
 
-  override fun saveState(): DataFile {
-    // possibly not correct and not used!
-    val data = getGameState().getInt(GameVarsInt.ENEMIES_TO_SPAWN.id)
-    println("Saved $data")
-    return DataFile(SaveData(data))
-  }
-
-  override fun loadState(dataFile: DataFile?) {
-    if (dataFile == null) return
-    val data = dataFile.data as SaveData
-    println("Loaded ${data.scores}")
-    getGameState().increment(GameVarsInt.ENEMIES_TO_SPAWN.id, data.scores)
-  }
+//  override fun saveState(): DataFile {
+//    // possibly not correct and not used!
+//    val data = getGameState().getInt(GameVarsInt.ENEMIES_TO_SPAWN.id)
+//    println("Saved $data")
+//    return DataFile(SaveData(data))
+//  }
+//
+//  override fun loadState(dataFile: DataFile?) {
+//    if (dataFile == null) return
+//    val data = dataFile.data as SaveData
+//    println("Loaded ${data.scores}")
+//    getGameState().increment(GameVarsInt.ENEMIES_TO_SPAWN.id, data.scores)
+//  }
 
   companion object {
     val log = Logger.get("Galactic Combat App")

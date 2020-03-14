@@ -12,7 +12,6 @@ import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
 import javafx.scene.image.ImageView
-import javafx.scene.layout.AnchorPane
 
 class GameViewController : UIController {
 
@@ -32,7 +31,7 @@ class GameViewController : UIController {
   @FXML lateinit var infoPanelImage: ImageView
 
   // Spawn Slider
-  @FXML lateinit var spawnSliderContainer: AnchorPane
+//  @FXML lateinit var spawnSlider: AnchorPane
 
 
   override fun init() {
@@ -40,11 +39,6 @@ class GameViewController : UIController {
     bindWaveLabel()
     bindTimerButton()
     bindInformationPanel()
-    createSpawnSlider()
-  }
-
-  private fun createSpawnSlider() {
-    spawnSliderContainer.children += SpawnSlider()
   }
 
   private fun bindInformationPanel() {
