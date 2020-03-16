@@ -3,6 +3,7 @@ package galacticCombat
 import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
+import com.almasb.fxgl.app.scene.GameView
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.getAppHeight
 import com.almasb.fxgl.dsl.getAppWidth
@@ -27,6 +28,7 @@ import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.configs.UIConfig.LEVEL_COLOR
 import galacticCombat.entities.EntityType
+import galacticCombat.entities.UI_Z_LEVEL
 import galacticCombat.entities.bullet.BulletFactory
 import galacticCombat.entities.controller.LevelControllerFactory
 import galacticCombat.entities.invader.InvaderFactory
@@ -154,11 +156,11 @@ class GalacticCombatApp : GameApplication() {
     val ui = getAssetLoader().loadUI("GameView.fxml", controller)
 
     ui.root.stylesheets += getAssetLoader().loadCSS("galacticCombatStyle.css").externalForm
+    ui.root.isPickOnBounds = false
 
-    getGameScene().addUI(ui)
+    getGameScene().addGameView(GameView(ui.root, UI_Z_LEVEL))
     getGameScene().setBackgroundColor(LEVEL_COLOR)
 
-    ui.root.isPickOnBounds = false
   }
 
   /**
