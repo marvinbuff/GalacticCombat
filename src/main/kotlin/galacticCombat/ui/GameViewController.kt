@@ -60,16 +60,16 @@ class GameViewController : UIController {
 
   private fun bindInfoLabels() {
     listOf<Triple<IntGameVar, Label, String>>(
-        Triple(LevelGameVars.GOLD, goldLabel, "Gold"),
-        Triple(LevelGameVars.HEALTH, healthLabel, "Health"),
-        Triple(LevelGameVars.EXPERIENCE, experienceLabel, "Exp"),
-        Triple(GameVarsInt.SCORE, scoreLabel, "Score")
+      Triple(LevelGameVars.GOLD, goldLabel, "Gold"),
+      Triple(LevelGameVars.HEALTH, healthLabel, "Health"),
+      Triple(LevelGameVars.EXPERIENCE, experienceLabel, "Exp"),
+      Triple(GameVarsInt.SCORE, scoreLabel, "Score")
     )
-        .forEach { (gameVar, label, title) ->
-          val value = gameVar.property()
-          val binding = value.asString("$title: %d")
-          label.textProperty().bind(binding)
-        }
+      .forEach { (gameVar, label, title) ->
+        val value = gameVar.property()
+        val binding = value.asString("$title: %d")
+        label.textProperty().bind(binding)
+      }
   }
 
 }
