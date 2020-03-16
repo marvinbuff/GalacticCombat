@@ -49,7 +49,7 @@ class InvaderFactory : EntityFactory {
     const val ID_INVADER_ARGS = "InvaderArgs"
 
     fun spawn(args: InvaderArgs) {
-      val position = LevelDataVar.get().getPathById(args.pathId).wayPoints.first()
+      val position = LevelDataVar.get().getPathById(args.pathId).first()
       val data = SpawnData(position.toPoint()).put(ID_INVADER_ARGS, args)
 
       getGameWorld().spawn(SPAWN_ID_INVADER, data)

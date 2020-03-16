@@ -47,8 +47,8 @@ class PlaceholderComponent(private val towerData: TowerData) : ClickableComponen
       pos.x - anchor.x to pos.y - anchor.y, //top left
       pos.x + anchor.x to pos.y - anchor.y, //top right
       pos.x - anchor.x to pos.y + anchor.y, //bottom left
-      pos.x + anchor.x to pos.y + anchor.y
-    ) //bottom right
+      pos.x + anchor.x to pos.y + anchor.y  //bottom right
+    )
       .map { (x, y) -> Point2D(x, y) }
 
     return corners.all { GameConfig.isPointInWorld(it) }

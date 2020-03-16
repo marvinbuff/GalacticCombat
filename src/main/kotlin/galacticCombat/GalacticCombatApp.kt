@@ -121,7 +121,7 @@ class GalacticCombatApp : GameApplication() {
 
     input.addAction(object : UserAction("Add New Waypoint") {
       override fun onActionEnd() {
-        LevelDataVar.get().paths.first().wayPoints.add(300 to 300)
+        LevelDataVar.get().paths.first().add(150 to 150)
         PathFactory.reload()
         log.info("Added a new waypoint.")
       }
@@ -129,7 +129,7 @@ class GalacticCombatApp : GameApplication() {
 
     input.addAction(object : UserAction("Remove last Waypoint") {
       override fun onActionEnd() {
-        val waypoints = LevelDataVar.get().paths.first().wayPoints
+        val waypoints = LevelDataVar.get().paths.first()
         waypoints.removeAt(waypoints.size - 1)
         PathFactory.reload()
         log.info("Removed last waypoint.")
