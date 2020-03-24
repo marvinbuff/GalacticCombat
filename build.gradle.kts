@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin("jvm") version "1.3.50"
+  kotlin("jvm") version "1.3.70"
 
   // json serialization
-  id("kotlinx-serialization") version "1.3.50"
+  id("kotlinx-serialization") version "1.3.70"
 
   // FXGL
   id("application")
@@ -34,7 +34,7 @@ dependencies {
   testImplementation("junit:junit:4.12")
 
   // For Json Serialization
-  implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.11.1")
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
   compile("org.json:json:20190722")
 
   // FXGL

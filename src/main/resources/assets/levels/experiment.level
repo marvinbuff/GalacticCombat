@@ -1,5 +1,5 @@
 {
-  "title": "title",
+  "title": "Experiment Level",
   "settings": {
     "initialGold": 500,
     "trickleGold": 5,
@@ -12,82 +12,82 @@
     {
       "invaders": [
         {
-          "first": 0.9224141060135438,
-          "second": {
+          "time": 0.8846663415383869,
+          "args": {
             "type": "COMMON",
-            "level": 1,
-            "pathId": "default"
-          }
-        },
-        {
-          "first": 1.826190848373165,
-          "second": {
-            "type": "REINFORCED",
             "level": 2,
             "pathId": "default"
           }
         },
         {
-          "first": 2.6877088394785424,
-          "second": {
+          "time": 2.862895625302711,
+          "args": {
+            "type": "REINFORCED",
+            "level": 1,
+            "pathId": "default"
+          }
+        },
+        {
+          "time": 3.273856415487684,
+          "args": {
             "type": "ACCELERATED",
             "level": 2,
             "pathId": "default"
           }
         },
         {
-          "first": 4.1880255997982605,
-          "second": {
+          "time": 4.196781121068462,
+          "args": {
             "type": "COMMON",
+            "level": 2,
+            "pathId": "default"
+          }
+        },
+        {
+          "time": 4.463210388671546,
+          "args": {
+            "type": "REINFORCED",
             "level": 1,
             "pathId": "default"
           }
         },
         {
-          "first": 4.376337790910855,
-          "second": {
-            "type": "REINFORCED",
+          "time": 5.829292563401822,
+          "args": {
+            "type": "ACCELERATED",
+            "level": 1,
+            "pathId": "default"
+          }
+        },
+        {
+          "time": 6.942521705965392,
+          "args": {
+            "type": "COMMON",
             "level": 3,
             "pathId": "default"
           }
         },
         {
-          "first": 5.126532116183878,
-          "second": {
-            "type": "ACCELERATED",
-            "level": 1,
-            "pathId": "default"
-          }
-        },
-        {
-          "first": 6.923100235734903,
-          "second": {
-            "type": "COMMON",
-            "level": 2,
-            "pathId": "default"
-          }
-        },
-        {
-          "first": 8.810285388903344,
-          "second": {
+          "time": 8.508136122066817,
+          "args": {
             "type": "REINFORCED",
             "level": 2,
             "pathId": "default"
           }
         },
         {
-          "first": 10.182190164380248,
-          "second": {
+          "time": 9.91073477459036,
+          "args": {
             "type": "ACCELERATED",
             "level": 2,
             "pathId": "default"
           }
         },
         {
-          "first": 11.493608591089863,
-          "second": {
+          "time": 11.859750043653856,
+          "args": {
             "type": "COMMON",
-            "level": 2,
+            "level": 3,
             "pathId": "default"
           }
         }
@@ -97,34 +97,34 @@
     {
       "invaders": [
         {
-          "first": 0.25213088325452515,
-          "second": {
+          "time": 1.9664512282469906,
+          "args": {
             "type": "COMMON",
             "level": 3,
             "pathId": "default"
           }
         },
         {
-          "first": 0.98224336564696,
-          "second": {
+          "time": 3.7901869085677222,
+          "args": {
             "type": "REINFORCED",
             "level": 3,
             "pathId": "default"
           }
         },
         {
-          "first": 1.130998411039466,
-          "second": {
+          "time": 4.350281011413011,
+          "args": {
             "type": "ACCELERATED",
-            "level": 1,
+            "level": 2,
             "pathId": "default"
           }
         },
         {
-          "first": 2.332751412859725,
-          "second": {
+          "time": 4.6028373834778336,
+          "args": {
             "type": "COMMON",
-            "level": 2,
+            "level": 3,
             "pathId": "default"
           }
         }
@@ -137,19 +137,19 @@
       "id": "default",
       "wayPoints": [
         {
-          "first": 120,
-          "second": 100
+          "first": 50,
+          "second": 150
         },
         {
           "first": 150,
-          "second": 250
+          "second": 350
         },
         {
           "first": 550,
           "second": 350
         },
         {
-          "first": 330,
+          "first": 130,
           "second": 120
         }
       ]

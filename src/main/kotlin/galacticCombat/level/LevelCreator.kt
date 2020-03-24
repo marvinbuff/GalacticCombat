@@ -2,6 +2,7 @@ package galacticCombat.level
 
 import galacticCombat.entities.invader.InvaderType
 import galacticCombat.level.json.InvaderArgs
+import galacticCombat.level.json.InvaderSpawnArgs
 import galacticCombat.level.json.LevelData
 import galacticCombat.level.json.Path
 import galacticCombat.level.json.Settings
@@ -22,7 +23,7 @@ fun main() {
   val data = LevelData(
       "Experiment Level",
       settings = createSettings(),
-      waves = listOf(createWave(10), createWave(4)),
+      waves = mutableListOf(createWave(10), createWave(4)),
       paths = mutableListOf(createPath("default"))
   )
 
@@ -32,7 +33,7 @@ fun main() {
 
 //region -------------------------- Private Utils -----------------------------
 
-private fun createWave(invaders: Int) = Wave(createSpawnTimes(invaders).zip(createInvaders(invaders)))
+private fun createWave(invaders: Int) = Wave(createSpawnTimes(invaders).zip(createInvaders(invaders)).map { (time, args) -> InvaderSpawnArgs(time, args) })
 
 private fun createSettings() = Settings(500, 5, 10, 5, 200, 60.0)
 

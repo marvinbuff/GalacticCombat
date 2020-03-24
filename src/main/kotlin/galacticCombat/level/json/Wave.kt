@@ -4,6 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Wave(
-    val invaders: List<Pair<Double, InvaderArgs>>,
+    val invaders: List<InvaderSpawnArgs>,
     val isBoss: Boolean = false
-) : List<Pair<Double, InvaderArgs>> by invaders
+) : List<InvaderSpawnArgs> by invaders
+
+
+@Serializable
+data class InvaderSpawnArgs(
+    var time: Double,
+    var args: InvaderArgs
+)

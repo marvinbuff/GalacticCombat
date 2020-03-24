@@ -12,80 +12,88 @@
     {
       "invaders": [
         {
-          "first": 0.9224141060135438,
-          "second": {
+          "time": 0.0,
+          "args": {
             "type": "COMMON",
             "level": 1,
             "pathId": "default"
           }
         },
         {
-          "first": 1.826190848373165,
-          "second": {
+          "time": 1.826190848373165,
+          "args": {
             "type": "REINFORCED",
             "level": 2,
             "pathId": "default"
           }
         },
         {
-          "first": 2.6877088394785424,
-          "second": {
+          "time": 2.6877088394785424,
+          "args": {
             "type": "ACCELERATED",
             "level": 2,
             "pathId": "default"
           }
         },
         {
-          "first": 4.1880255997982605,
-          "second": {
+          "time": 4.1880255997982605,
+          "args": {
             "type": "COMMON",
             "level": 1,
             "pathId": "default"
           }
         },
         {
-          "first": 4.376337790910855,
-          "second": {
+          "time": 4.376337790910855,
+          "args": {
             "type": "REINFORCED",
             "level": 3,
             "pathId": "default"
           }
         },
         {
-          "first": 5.126532116183878,
-          "second": {
+          "time": 5.126532116183878,
+          "args": {
             "type": "ACCELERATED",
             "level": 1,
             "pathId": "default"
           }
         },
         {
-          "first": 6.923100235734903,
-          "second": {
+          "time": 6.923100235734903,
+          "args": {
             "type": "COMMON",
             "level": 2,
             "pathId": "default"
           }
         },
         {
-          "first": 8.810285388903344,
-          "second": {
+          "time": 8.810285388903344,
+          "args": {
             "type": "REINFORCED",
             "level": 2,
             "pathId": "default"
           }
         },
         {
-          "first": 10.182190164380248,
-          "second": {
+          "time": 10.182190164380248,
+          "args": {
             "type": "ACCELERATED",
             "level": 2,
             "pathId": "default"
           }
         },
         {
-          "first": 11.493608591089863,
-          "second": {
+          "time": 11.493608591089863,
+          "args": {
+            "type": "COMMON",
+            "level": 2,
+            "pathId": "default"
+          }
+        },
+        {
+          "time": 59.9,
+          "args": {
             "type": "COMMON",
             "level": 2,
             "pathId": "default"
@@ -97,32 +105,32 @@
     {
       "invaders": [
         {
-          "first": 0.25213088325452515,
-          "second": {
+          "time": 0.0,
+          "args": {
             "type": "COMMON",
             "level": 3,
             "pathId": "default"
           }
         },
         {
-          "first": 0.98224336564696,
-          "second": {
+          "time": 0.98224336564696,
+          "args": {
             "type": "REINFORCED",
             "level": 3,
             "pathId": "default"
           }
         },
         {
-          "first": 1.130998411039466,
-          "second": {
+          "time": 1.130998411039466,
+          "args": {
             "type": "ACCELERATED",
             "level": 1,
             "pathId": "default"
           }
         },
         {
-          "first": 2.332751412859725,
-          "second": {
+          "time": 2.332751412859725,
+          "args": {
             "type": "COMMON",
             "level": 2,
             "pathId": "default"

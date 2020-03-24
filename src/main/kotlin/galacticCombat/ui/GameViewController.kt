@@ -6,8 +6,10 @@ import galacticCombat.configs.InfoPanelVar
 import galacticCombat.configs.IntGameVar
 import galacticCombat.configs.LevelController
 import galacticCombat.configs.LevelGameVars
+import galacticCombat.ui.elements.SpawnSlider
 import javafx.event.EventHandler
 import javafx.fxml.FXML
+import javafx.geometry.Point2D
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
@@ -31,14 +33,20 @@ class GameViewController : UIController {
   @FXML lateinit var infoPanelImage: ImageView
 
   // Spawn Slider
-//  @FXML lateinit var spawnSlider: AnchorPane
+  @FXML lateinit var spawnSlider: SpawnSlider
 
 
   override fun init() {
+
     bindInfoLabels()
     bindWaveLabel()
     bindTimerButton()
     bindInformationPanel()
+    initializeSpawnSlider()
+  }
+
+  private fun initializeSpawnSlider() {
+    SpawnSliderController(spawnSlider)
   }
 
   private fun bindInformationPanel() {

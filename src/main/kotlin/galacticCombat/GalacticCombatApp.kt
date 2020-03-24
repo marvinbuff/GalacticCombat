@@ -33,9 +33,10 @@ import galacticCombat.entities.bullet.BulletFactory
 import galacticCombat.entities.controller.LevelControllerFactory
 import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.entities.path.PathFactory
+import galacticCombat.entities.spawnSlider.SpawnSliderFactory
 import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
-import galacticCombat.events.GameEvents
+import galacticCombat.events.GameEvent
 import galacticCombat.events.InvaderEvents
 import galacticCombat.handlers.gameLost
 import galacticCombat.handlers.gameWon
@@ -69,8 +70,9 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initGame() {
     listOf(
-        TowerFactory(), InvaderFactory(), BulletFactory(),
-        PlaceholderFactory(), LevelControllerFactory(), PathFactory()
+      TowerFactory(), InvaderFactory(), BulletFactory(),
+      PlaceholderFactory(), LevelControllerFactory(), PathFactory(),
+      SpawnSliderFactory()
     ).forEach(getGameWorld()::addEntityFactory)
 
     val level = getAssetLoader().loadLevel("level_one.level", GalacticCombatLevelLoader())
@@ -78,7 +80,7 @@ class GalacticCombatApp : GameApplication() {
     val levelData = LevelDataVar.get()
 
     LevelGameVars.HEALTH.property().addListener { _, _, newValue ->
-      if (newValue.toInt() <= 0) GameEvents(GameEvents.LEVEL_LOST).fire()
+      if (newValue.toInt() <= 0) GameEvent(GameEvent.LEVEL_LOST).fire()
     }
 
     val trickle = Runnable {
@@ -102,12 +104,12 @@ class GalacticCombatApp : GameApplication() {
 
       //check if game won
       if (GameVarsBoolean.ALL_ENEMIES_SPAWNED.get() && GameVarsInt.ALIVE_INVADERS.get() == 0) {
-        GameEvents(GameEvents.LEVEL_WON).fire()
+        GameEvent(GameEvent.LEVEL_WON).fire()
       }
     }
 
-    onEvent(GameEvents.LEVEL_WON) { gameWon() }
-    onEvent(GameEvents.LEVEL_LOST) { gameLost() }
+    onEvent(GameEvent.LEVEL_WON) { gameWon() }
+    onEvent(GameEvent.LEVEL_LOST) { gameLost() }
 
   }
 

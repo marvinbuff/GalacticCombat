@@ -4,8 +4,8 @@ import com.almasb.fxgl.entity.component.Component
 import galacticCombat.configs.GameVarsBoolean
 import galacticCombat.configs.GameVarsInt
 import galacticCombat.entities.invader.InvaderFactory
-import galacticCombat.events.WaveEvents
-import galacticCombat.level.json.InvaderArgs
+import galacticCombat.events.WaveEvent
+import galacticCombat.level.json.InvaderSpawnArgs
 import galacticCombat.level.json.LevelData
 import galacticCombat.utils.fire
 import javafx.beans.binding.DoubleBinding
@@ -90,10 +90,10 @@ private data class LevelState(
     isWaveThrough = false
     time.value = 0.0
     GameVarsInt.WAVE_INDEX.increment()
-    WaveEvents(WaveEvents.WAVE_STARTED, currentWaveIndex.get()).fire()
+    WaveEvent(WaveEvent.WAVE_STARTED, currentWaveIndex.get()).fire()
   }
 
-  fun getInvader(): Pair<Double, InvaderArgs>? = data.waves[currentWaveIndex.value].getOrNull(currentInvaderIndex)
+  fun getInvader(): InvaderSpawnArgs? = data.waves[currentWaveIndex.value].getOrNull(currentInvaderIndex)
 
   companion object {
     fun create(data: LevelData): LevelState {
