@@ -20,7 +20,7 @@ import javafx.scene.transform.Rotate
 
 @Required(ProjectileComponent::class)
 open class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
-  private val projectile: ProjectileComponent by lazy { entity.getComponent(ProjectileComponent::class.java) }
+  lateinit var projectile: ProjectileComponent
   private var reloadingTime: Double = 0.0
   private val bullet = towerData.bulletData
 

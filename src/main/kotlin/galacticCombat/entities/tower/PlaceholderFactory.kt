@@ -7,6 +7,7 @@ import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.PLACEHOLDER_SPAWN_ID
+import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.utils.position
 
 @Suppress("unused")
@@ -16,11 +17,11 @@ class PlaceholderFactory : EntityFactory {
   fun spawnPlaceholder(data: SpawnData): Entity {
     val towerData: TowerData = data.get(TowerData.id)
 
-    return entityBuilder().type(EntityType.TOWER)
-        .view(towerData.texture)
-        .atAnchored(TowerComponent.center, data.position)
-        .with(PlaceholderComponent(towerData))
-        .build()
+    return entityBuilder().setTypeAdvanced(EntityType.TOWER_PLACEHOLDER)
+      .view(towerData.texture)
+      .atAnchored(TowerComponent.center, data.position)
+      .with(PlaceholderComponent(towerData))
+      .build()
   }
 
 }

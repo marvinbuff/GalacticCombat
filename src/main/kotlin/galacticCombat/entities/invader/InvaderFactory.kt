@@ -9,7 +9,7 @@ import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.entities.EntityType
-import galacticCombat.entities.SPAWN_ID_INVADER
+import galacticCombat.entities.INVADER_SPAWN_ID
 import galacticCombat.entities.generic.InfoComponent
 import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.level.json.InvaderArgs
@@ -20,7 +20,7 @@ import javafx.geometry.Point2D
 @Suppress("unused")
 class InvaderFactory : EntityFactory {
 
-  @Spawns(SPAWN_ID_INVADER)
+  @Spawns(INVADER_SPAWN_ID)
   fun spawnEnemy(data: SpawnData): Entity {
     require(data.hasKey(ID_INVADER_ARGS))
 
@@ -45,14 +45,13 @@ class InvaderFactory : EntityFactory {
 
 
   companion object {
-    const val ID_LEVEL = "level"
     const val ID_INVADER_ARGS = "InvaderArgs"
 
     fun spawn(args: InvaderArgs) {
-      val position = LevelDataVar.get().getPathById(args.pathId).wayPoints.first()
+      val position = LevelDataVar.get().getPathById(args.pathId).first()
       val data = SpawnData(position.toPoint()).put(ID_INVADER_ARGS, args)
 
-      getGameWorld().spawn(SPAWN_ID_INVADER, data)
+      getGameWorld().spawn(INVADER_SPAWN_ID, data)
     }
   }
 }

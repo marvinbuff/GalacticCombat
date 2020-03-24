@@ -6,14 +6,14 @@ import galacticCombat.configs.InfoPanelVar
 import galacticCombat.configs.IntGameVar
 import galacticCombat.configs.LevelController
 import galacticCombat.configs.LevelGameVars
-import javafx.event.ActionEvent
+import galacticCombat.ui.elements.SpawnSlider
 import javafx.event.EventHandler
 import javafx.fxml.FXML
+import javafx.geometry.Point2D
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
 import javafx.scene.image.ImageView
-import javafx.scene.layout.AnchorPane
 
 class GameViewController : UIController {
 
@@ -33,15 +33,20 @@ class GameViewController : UIController {
   @FXML lateinit var infoPanelImage: ImageView
 
   // Spawn Slider
-  @FXML lateinit var spawnSliderContainer: AnchorPane
+  @FXML lateinit var spawnSlider: SpawnSlider
 
 
   override fun init() {
+
     bindInfoLabels()
     bindWaveLabel()
     bindTimerButton()
     bindInformationPanel()
-//    spawnSliderContainer.children += Label("Hello")
+    initializeSpawnSlider()
+  }
+
+  private fun initializeSpawnSlider() {
+    SpawnSliderController(spawnSlider)
   }
 
   private fun bindInformationPanel() {
@@ -54,7 +59,7 @@ class GameViewController : UIController {
   private fun bindTimerButton() {
     val timerComponent = LevelController.get().timerComponent
     timerButton.textProperty().bind(timerComponent.getTimePropertyConverted().asString("Next Wave: %.0f"))
-    timerButton.onAction = EventHandler<ActionEvent> { timerComponent.skipToNextWave() }
+    timerButton.onAction = EventHandler { timerComponent.skipToNextWave() }
   }
 
   private fun bindWaveLabel() {
@@ -63,16 +68,16 @@ class GameViewController : UIController {
 
   private fun bindInfoLabels() {
     listOf<Triple<IntGameVar, Label, String>>(
-        Triple(LevelGameVars.GOLD, goldLabel, "Gold"),
-        Triple(LevelGameVars.HEALTH, healthLabel, "Health"),
-        Triple(LevelGameVars.EXPERIENCE, experienceLabel, "Exp"),
-        Triple(GameVarsInt.SCORE, scoreLabel, "Score")
+      Triple(LevelGameVars.GOLD, goldLabel, "Gold"),
+      Triple(LevelGameVars.HEALTH, healthLabel, "Health"),
+      Triple(LevelGameVars.EXPERIENCE, experienceLabel, "Exp"),
+      Triple(GameVarsInt.SCORE, scoreLabel, "Score")
     )
-        .forEach { (gameVar, label, title) ->
-          val value = gameVar.property()
-          val binding = value.asString("$title: %d")
-          label.textProperty().bind(binding)
-        }
+      .forEach { (gameVar, label, title) ->
+        val value = gameVar.property()
+        val binding = value.asString("$title: %d")
+        label.textProperty().bind(binding)
+      }
   }
 
 }

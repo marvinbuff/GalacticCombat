@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import galacticCombat.ui.elements.SpawnSlider?>
 <?import galacticCombat.ui.elements.TowerButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -94,15 +95,19 @@
         </HBox>
     </top>
     <center>
-        <VBox BorderPane.alignment="CENTER" mouseTransparent="true">
+        <VBox prefWidth="530.0" mouseTransparent="true" BorderPane.alignment="CENTER">
             <children>
-                <AnchorPane prefWidth="669.0" VBox.vgrow="ALWAYS">
+                <AnchorPane VBox.vgrow="ALWAYS">
                     <styleClass>
                         <String fx:value="border"/>
                         <String fx:value="background_transparent"/>
                     </styleClass>
                 </AnchorPane>
-                <AnchorPane fx:id="spawnSliderContainer" prefHeight="38.0" prefWidth="446.0" styleClass="background_main" VBox.vgrow="SOMETIMES"/>
+                <AnchorPane styleClass="background_main">
+                    <children>
+                        <SpawnSlider fx:id="spawnSlider" height="40.0" width="530.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"/>
+                    </children>
+                </AnchorPane>
             </children>
         </VBox>
     </center>

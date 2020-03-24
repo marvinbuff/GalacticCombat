@@ -3,12 +3,12 @@ package galacticCombat
 import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
+import com.almasb.fxgl.app.scene.GameView
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.getAppHeight
 import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.dsl.getAssetLoader
 import com.almasb.fxgl.dsl.getGameScene
-import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.dsl.getPhysicsWorld
@@ -18,7 +18,6 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
-import com.almasb.fxgl.saving.DataFile
 import com.almasb.sslogger.Logger
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.AssetConfig
@@ -29,13 +28,15 @@ import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.configs.UIConfig.LEVEL_COLOR
 import galacticCombat.entities.EntityType
+import galacticCombat.entities.UI_Z_LEVEL
 import galacticCombat.entities.bullet.BulletFactory
 import galacticCombat.entities.controller.LevelControllerFactory
 import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.entities.path.PathFactory
+import galacticCombat.entities.spawnSlider.SpawnSliderFactory
 import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerFactory
-import galacticCombat.events.GameEvents
+import galacticCombat.events.GameEvent
 import galacticCombat.events.InvaderEvents
 import galacticCombat.handlers.gameLost
 import galacticCombat.handlers.gameWon
@@ -69,8 +70,9 @@ class GalacticCombatApp : GameApplication() {
 
   override fun initGame() {
     listOf(
-        TowerFactory(), InvaderFactory(), BulletFactory(),
-        PlaceholderFactory(), LevelControllerFactory(), PathFactory()
+      TowerFactory(), InvaderFactory(), BulletFactory(),
+      PlaceholderFactory(), LevelControllerFactory(), PathFactory(),
+      SpawnSliderFactory()
     ).forEach(getGameWorld()::addEntityFactory)
 
     val level = getAssetLoader().loadLevel("level_one.level", GalacticCombatLevelLoader())
@@ -78,7 +80,7 @@ class GalacticCombatApp : GameApplication() {
     val levelData = LevelDataVar.get()
 
     LevelGameVars.HEALTH.property().addListener { _, _, newValue ->
-      if (newValue.toInt() <= 0) GameEvents(GameEvents.LEVEL_LOST).fire()
+      if (newValue.toInt() <= 0) GameEvent(GameEvent.LEVEL_LOST).fire()
     }
 
     val trickle = Runnable {
@@ -102,12 +104,12 @@ class GalacticCombatApp : GameApplication() {
 
       //check if game won
       if (GameVarsBoolean.ALL_ENEMIES_SPAWNED.get() && GameVarsInt.ALIVE_INVADERS.get() == 0) {
-        GameEvents(GameEvents.LEVEL_WON).fire()
+        GameEvent(GameEvent.LEVEL_WON).fire()
       }
     }
 
-    onEvent(GameEvents.LEVEL_WON) { gameWon() }
-    onEvent(GameEvents.LEVEL_LOST) { gameLost() }
+    onEvent(GameEvent.LEVEL_WON) { gameWon() }
+    onEvent(GameEvent.LEVEL_LOST) { gameLost() }
 
   }
 
@@ -121,7 +123,7 @@ class GalacticCombatApp : GameApplication() {
 
     input.addAction(object : UserAction("Add New Waypoint") {
       override fun onActionEnd() {
-        LevelDataVar.get().paths.first().wayPoints.add(300 to 300)
+        LevelDataVar.get().paths.first().add(150 to 150)
         PathFactory.reload()
         log.info("Added a new waypoint.")
       }
@@ -129,7 +131,7 @@ class GalacticCombatApp : GameApplication() {
 
     input.addAction(object : UserAction("Remove last Waypoint") {
       override fun onActionEnd() {
-        val waypoints = LevelDataVar.get().paths.first().wayPoints
+        val waypoints = LevelDataVar.get().paths.first()
         waypoints.removeAt(waypoints.size - 1)
         PathFactory.reload()
         log.info("Removed last waypoint.")
@@ -156,11 +158,11 @@ class GalacticCombatApp : GameApplication() {
     val ui = getAssetLoader().loadUI("GameView.fxml", controller)
 
     ui.root.stylesheets += getAssetLoader().loadCSS("galacticCombatStyle.css").externalForm
+    ui.root.isPickOnBounds = false
 
-    getGameScene().addUI(ui)
+    getGameScene().addGameView(GameView(ui.root, UI_Z_LEVEL))
     getGameScene().setBackgroundColor(LEVEL_COLOR)
 
-    ui.root.isPickOnBounds = false
   }
 
   /**
@@ -185,19 +187,19 @@ class GalacticCombatApp : GameApplication() {
     })
   }
 
-  override fun saveState(): DataFile {
-    // possibly not correct and not used!
-    val data = getGameState().getInt(GameVarsInt.ENEMIES_TO_SPAWN.id)
-    println("Saved $data")
-    return DataFile(SaveData(data))
-  }
-
-  override fun loadState(dataFile: DataFile?) {
-    if (dataFile == null) return
-    val data = dataFile.data as SaveData
-    println("Loaded ${data.scores}")
-    getGameState().increment(GameVarsInt.ENEMIES_TO_SPAWN.id, data.scores)
-  }
+//  override fun saveState(): DataFile {
+//    // possibly not correct and not used!
+//    val data = getGameState().getInt(GameVarsInt.ENEMIES_TO_SPAWN.id)
+//    println("Saved $data")
+//    return DataFile(SaveData(data))
+//  }
+//
+//  override fun loadState(dataFile: DataFile?) {
+//    if (dataFile == null) return
+//    val data = dataFile.data as SaveData
+//    println("Loaded ${data.scores}")
+//    getGameState().increment(GameVarsInt.ENEMIES_TO_SPAWN.id, data.scores)
+//  }
 
   companion object {
     val log = Logger.get("Galactic Combat App")
