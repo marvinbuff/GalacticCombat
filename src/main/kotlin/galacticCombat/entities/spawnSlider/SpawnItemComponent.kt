@@ -2,16 +2,17 @@ package galacticCombat.entities.spawnSlider
 
 import com.almasb.fxgl.dsl.getInput
 import com.almasb.fxgl.entity.component.Component
-import galacticCombat.entities.invader.InvaderData
+import galacticCombat.configs.LevelDataVar
+import galacticCombat.level.json.InvaderSpawnArgs
 import galacticCombat.ui.SpawnSliderController.Companion.SLIDER_WIDTH
 import galacticCombat.ui.SpawnSliderController.Companion.SLIDER_X
+import galacticCombat.ui.SpawnSliderController.Companion.getTimeFromSliderX
 import javafx.event.EventHandler
 import javafx.scene.input.MouseEvent
 
-class SpawnItemComponent(private val invaderData: InvaderData) : Component() {
+class SpawnItemComponent(private val waveIndex: Int, private val invaderSpawnArgs: InvaderSpawnArgs) : Component() {
 
-  var isDragging = false
-    private set
+  private var isDragging = false
 
   private var offsetX = 0.0
 
@@ -20,7 +21,11 @@ class SpawnItemComponent(private val invaderData: InvaderData) : Component() {
     offsetX = getInput().mouseXWorld - entity.anchoredPosition.x
   }
 
-  private val onRelease = EventHandler<MouseEvent> { isDragging = false }
+  private val onRelease = EventHandler<MouseEvent> {
+    isDragging = false
+    val time = getTimeFromSliderX(entity.anchoredPosition.x)
+    LevelDataVar.get().changeInvaderSpawnTime(waveIndex, invaderSpawnArgs, time)
+  }
 
   override fun onAdded() {
     entity.viewComponent.addEventHandler(MouseEvent.MOUSE_PRESSED, onPress)
@@ -31,7 +36,9 @@ class SpawnItemComponent(private val invaderData: InvaderData) : Component() {
     if (!isDragging)
       return
 
-    val newX = (getInput().mouseXWorld - offsetX).coerceAtLeast(SLIDER_X).coerceAtMost(SLIDER_X+SLIDER_WIDTH)
+    val newX = (getInput().mouseXWorld - offsetX)
+      .coerceAtLeast(SLIDER_X)
+      .coerceAtMost(SLIDER_X + SLIDER_WIDTH - 1) // minus 1 to capture a closed interval [0-60)
     entity.setAnchoredPosition(newX, entity.anchoredPosition.y)
   }
 

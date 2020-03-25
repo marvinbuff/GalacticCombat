@@ -9,7 +9,6 @@ import galacticCombat.entities.spawnSlider.SpawnSliderFactory
 import galacticCombat.events.WaveEvent
 import galacticCombat.ui.elements.SpawnSlider
 import galacticCombat.utils.removeEntitiesByType
-import javafx.event.EventType
 import javafx.geometry.Point2D
 import javafx.util.Duration
 
@@ -25,9 +24,9 @@ class SpawnSliderController(private val slider: SpawnSlider) {
 
   private fun updateSliderItems(event: WaveEvent) {
     getGameWorld().removeEntitiesByType(EntityType.SLIDER_ITEM)
-    levelData.waves[event.waveIndex].invaders.forEach{args ->
-      val position = Point2D(SLIDER_X + args.time*SLIDER_STEP, SLIDER_Y)
-      SpawnSliderFactory.spawn(args, position)
+    levelData.waves[event.waveIndex].invaders.forEach{ args ->
+      val position = Point2D(getSliderXFromTime(args.time), SLIDER_Y)
+      SpawnSliderFactory.spawn(event.waveIndex, args, position)
     }
   }
 
@@ -36,6 +35,14 @@ class SpawnSliderController(private val slider: SpawnSlider) {
     const val SLIDER_X = 109.0
     const val SLIDER_Y = 455.0
     const val SLIDER_WIDTH = 480.0
-    const val SLIDER_STEP = SLIDER_WIDTH/60.0
+    const val SLIDER_STEP = SLIDER_WIDTH / 60.0
+
+    fun getSliderXFromTime(t: Double) = SLIDER_X + t * SLIDER_STEP
+
+    fun getTimeFromSliderX(x: Double): Double {
+      require(x - SLIDER_X >= 0) { "Slider value is not within bounds: ${x - SLIDER_X} < 0" }
+      require(x - SLIDER_X < SLIDER_WIDTH) { "Slider value is not within bounds: ${x - SLIDER_X} >= $SLIDER_WIDTH" }
+      return (x - SLIDER_X) / SLIDER_STEP
+    }
   }
 }

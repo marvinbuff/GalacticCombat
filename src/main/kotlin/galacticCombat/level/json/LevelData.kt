@@ -11,13 +11,12 @@ data class LevelData(
 ) {
   fun getPathById(id: String): Path = paths.first { it.id == id }
 
-//  fun changeInvaderSpawnTime(wave: Wave, args: InvaderArgs, prevTime: Double, newTime: Double) {
-//    val index = waves.indexOf(wave)
-//    val oldWave = waves[index]
-//    val newInvaders = oldWave.invaders.toMutableList()
-//    newInvaders.remove(prevTime to args)
-//    newInvaders.add(newTime.args)
-//    val newWave = oldWave
-//    waves[index] = newWave
-//  }
+  fun changeInvaderSpawnTime(waveIndex: Int, args: InvaderSpawnArgs, newTime: Double) {
+    val oldWave = waves[waveIndex]
+    val newInvaders = oldWave.invaders.toMutableList()
+    newInvaders.remove(args)
+    newInvaders.add(InvaderSpawnArgs(newTime, args.args))
+    newInvaders.sortBy { it.time }
+    waves[waveIndex] = Wave(newInvaders, oldWave.isBoss)
+  }
 }
