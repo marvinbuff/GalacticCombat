@@ -1,7 +1,6 @@
 package galacticCombat.utils
 
 import kotlinx.serialization.ImplicitReflectionSerializer
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration.Companion.Stable
 import kotlinx.serialization.parse
@@ -22,7 +21,6 @@ inline fun <reified T : Any> writeJson(url: URL, dataObject: T) {
   }
 }
 
-private val jsonConfiguration = Stable.copy(prettyPrint = true)
+private val jsonConfiguration = Stable.copy(prettyPrint = true, indent = "  ")
 
-@UnstableDefault
 val jsonSerializer = Json(jsonConfiguration)

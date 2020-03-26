@@ -35,6 +35,7 @@ class GalacticCombatLevelLoader : LevelLoader {
     val entities = listOf(controller) + paths
     return Level(AppConfig.WIDTH, AppConfig.HEIGHT, entities)
   }
+
 }
 
 fun LevelData.setGameVars() {

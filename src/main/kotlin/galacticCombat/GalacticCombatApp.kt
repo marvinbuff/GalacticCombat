@@ -16,6 +16,7 @@ import com.almasb.fxgl.dsl.getSettings
 import com.almasb.fxgl.dsl.onEvent
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.input.Input
+import com.almasb.fxgl.input.InputModifier
 import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.sslogger.Logger
@@ -41,8 +42,10 @@ import galacticCombat.events.InvaderEvents
 import galacticCombat.handlers.gameLost
 import galacticCombat.handlers.gameWon
 import galacticCombat.level.GalacticCombatLevelLoader
+import galacticCombat.services.getFileService
 import galacticCombat.ui.GameViewController
 import galacticCombat.utils.fire
+import galacticCombat.utils.writeJson
 import javafx.geometry.Rectangle2D
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseButton
@@ -75,7 +78,8 @@ class GalacticCombatApp : GameApplication() {
       SpawnSliderFactory()
     ).forEach(getGameWorld()::addEntityFactory)
 
-    val level = getAssetLoader().loadLevel("level_one.level", GalacticCombatLevelLoader())
+//    val level = getAssetLoader().loadLevel("level_one.level", GalacticCombatLevelLoader())
+    val level = GalacticCombatLevelLoader().load(getFileService().getLevelURL("level_one"), getGameWorld())
     getGameWorld().setLevel(level)
     val levelData = LevelDataVar.get()
 
@@ -137,6 +141,13 @@ class GalacticCombatApp : GameApplication() {
         log.info("Removed last waypoint.")
       }
     }, KeyCode.L)
+
+    input.addAction(object : UserAction("Save Level") {
+      override fun onActionEnd() {
+        writeJson(getFileService().getLevelURL("level_one"), LevelDataVar.get())
+        println("Saving")
+      }
+    }, KeyCode.S, InputModifier.CTRL)
 
     // Developer Commands
     if (getSettings().applicationMode == ApplicationMode.DEVELOPER) {
