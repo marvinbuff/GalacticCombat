@@ -21,6 +21,4 @@ inline fun <reified T : Any> writeJson(url: URL, dataObject: T) {
   }
 }
 
-private val jsonConfiguration = Stable.copy(prettyPrint = true, indent = "  ")
-
-val jsonSerializer = Json(jsonConfiguration)
+val jsonSerializer = Json(Stable.copy(prettyPrint = true, indent = "  "))

@@ -43,6 +43,7 @@ class LevelTimerComponent(private val levelData: LevelData) : Component() {
     }
   }
 
+  fun getTimeProperty() = state.getTimeProperty()
   fun getTimePropertyConverted(): DoubleBinding = state.getTimeProperty().negate().add(levelData.settings.timePerWave)
   fun getWaveProperty() = state.getWaveProperty()
 

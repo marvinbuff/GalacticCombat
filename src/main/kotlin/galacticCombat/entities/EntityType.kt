@@ -6,6 +6,7 @@ import com.almasb.fxgl.dsl.EntityBuilder
 const val TOWER_SPAWN_ID = "Tower"
 const val PLACEHOLDER_SPAWN_ID = "Tower Placeholder"
 const val SLIDER_ITEM_SPAWN_ID = "Invader Spawn Item"
+const val SLIDER_PIN_SPAWN_ITEM = "Slider Pin"
 const val BULLET_SPAWN_ID = "Bullet"
 const val INVADER_SPAWN_ID = "Invader"
 const val PATH_VERTEX_SPAWN_ID = "Path Vertex"
@@ -17,8 +18,8 @@ enum class EntityType(val zLevel: Int = 0) {
   BARRICADE,
   CONTROLLER,
   TOWER_PLACEHOLDER(5),
+  SLIDER_PIN(4),
   SLIDER_ITEM(3),
-  SLIDER_PIN(2),
 
   //UI_Z_LEVEL = 1
   TOWER(0),

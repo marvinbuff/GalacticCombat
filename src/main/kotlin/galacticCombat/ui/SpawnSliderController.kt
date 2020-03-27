@@ -20,14 +20,16 @@ class SpawnSliderController(private val slider: SpawnSlider) {
     onEvent(WaveEvent.WAVE_STARTED) { event -> updateSliderItems(event) }
     getGameTimer().runAtInterval(updater, Duration.seconds(1.0))
     updateSliderItems(WaveEvent(WaveEvent.WAVE_STARTED, 0))
+    SpawnSliderFactory.spawnPin(Point2D(getSliderXFromTime(0.0), SLIDER_Y))
   }
 
   private fun updateSliderItems(event: WaveEvent) {
     getGameWorld().removeEntitiesByType(EntityType.SLIDER_ITEM)
     levelData.waves[event.waveIndex].invaders.forEach{ args ->
       val position = Point2D(getSliderXFromTime(args.time), SLIDER_Y)
-      SpawnSliderFactory.spawn(event.waveIndex, args, position)
+      SpawnSliderFactory.spawnItem(event.waveIndex, args, position)
     }
+
   }
 
   companion object {
@@ -35,6 +37,7 @@ class SpawnSliderController(private val slider: SpawnSlider) {
     const val SLIDER_X = 109.0
     const val SLIDER_Y = 455.0
     const val SLIDER_WIDTH = 480.0
+    const val SLIDER_HEIGHT = 40.0
     const val SLIDER_STEP = SLIDER_WIDTH / 60.0
 
     fun getSliderXFromTime(t: Double) = SLIDER_X + t * SLIDER_STEP
