@@ -8,7 +8,4 @@ import galacticCombat.level.json.LevelData
 @Required(LevelTimerComponent::class)
 class LevelControllerComponent(private val levelData: LevelData) : Component() {
   lateinit var timerComponent: LevelTimerComponent
-
-
 }
-

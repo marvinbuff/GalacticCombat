@@ -47,10 +47,7 @@ class SpawnSliderFactory : EntityFactory {
 
     val edge = SpawnSliderController.SLIDER_HEIGHT - gap
     val rect = Rectangle(edge, edge, Color.web("000000", 0.0))
-    rect.stroke = Color.BLACK
-    rect.strokeWidth = 2.0
-    rect.arcHeight = 10.0
-    rect.arcWidth = 10.0
+    rect.formatRectangle()
 
     return entityBuilder().setTypeAdvanced(EntityType.SLIDER_PIN)
       .atAnchored(anchor, data.position)
@@ -77,4 +74,11 @@ class SpawnSliderFactory : EntityFactory {
       getGameWorld().spawn(SLIDER_PIN_SPAWN_ITEM, data)
     }
   }
+}
+
+private fun Rectangle.formatRectangle() {
+  stroke = Color.BLACK
+  strokeWidth = 2.0
+  arcHeight = 10.0
+  arcWidth = 10.0
 }
