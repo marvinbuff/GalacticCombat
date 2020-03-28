@@ -11,6 +11,7 @@ import com.almasb.fxgl.dsl.getAssetLoader
 import com.almasb.fxgl.dsl.getGameScene
 import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.dsl.getGameWorld
+import com.almasb.fxgl.dsl.getInput
 import com.almasb.fxgl.dsl.getPhysicsWorld
 import com.almasb.fxgl.dsl.getSettings
 import com.almasb.fxgl.dsl.onEvent
@@ -22,9 +23,11 @@ import com.almasb.fxgl.physics.CollisionHandler
 import com.almasb.sslogger.Logger
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.AssetConfig
+import galacticCombat.configs.GameConfig
 import galacticCombat.configs.GameVarsBoolean
 import galacticCombat.configs.GameVarsInt
 import galacticCombat.configs.InfoPanelVar
+import galacticCombat.configs.LevelController
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.configs.UIConfig.LEVEL_COLOR
@@ -45,6 +48,7 @@ import galacticCombat.level.GalacticCombatLevelLoader
 import galacticCombat.services.getFileService
 import galacticCombat.ui.GameViewController
 import galacticCombat.utils.fire
+import galacticCombat.utils.toIntegerPair
 import galacticCombat.utils.writeJson
 import javafx.geometry.Rectangle2D
 import javafx.scene.input.KeyCode
@@ -125,9 +129,15 @@ class GalacticCombatApp : GameApplication() {
       InfoPanelVar.get().reset()
     }
 
+    input.addKeyAction(KeyCode.E, "Activate Editor Mode") {
+      LevelController.get().timerComponent.togglePause()
+      //todo open editor menu
+    }
+
     input.addAction(object : UserAction("Add New Waypoint") {
       override fun onActionEnd() {
-        LevelDataVar.get().paths.first().add(150 to 150)
+        val position = GameConfig.constrainPointToWorld(getInput().mousePositionWorld)
+        LevelDataVar.get().paths.first().add(position.toIntegerPair())
         PathFactory.reload()
         log.info("Added a new waypoint.")
       }

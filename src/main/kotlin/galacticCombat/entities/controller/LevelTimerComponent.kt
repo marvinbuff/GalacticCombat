@@ -43,6 +43,7 @@ class LevelTimerComponent(private val levelData: LevelData) : Component() {
     }
   }
 
+  fun togglePause() = if (isPaused) resume() else pause()
   fun getTimeProperty() = state.getTimeProperty()
   fun getTimePropertyConverted(): DoubleBinding = state.getTimeProperty().negate().add(levelData.settings.timePerWave)
   fun getWaveProperty() = state.getWaveProperty()

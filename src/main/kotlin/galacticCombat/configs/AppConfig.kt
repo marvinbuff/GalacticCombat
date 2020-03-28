@@ -1,6 +1,8 @@
 package galacticCombat.configs
 
 import com.almasb.fxgl.app.ApplicationMode
+import galacticCombat.utils.coerceIn
+import galacticCombat.utils.plus
 import javafx.geometry.Point2D
 import javafx.geometry.Rectangle2D
 import javafx.scene.paint.Color
@@ -18,10 +20,12 @@ object AppConfig {
 object GameConfig {
   val WORLD_POSITION = Point2D(83.0, 54.0)
   val WORLD_DIMENSION = Point2D(523.0, 368.0)
+  val WORLD_CORNER: Point2D = WORLD_POSITION + WORLD_DIMENSION
 
-  private val worldBounds = Rectangle2D(WORLD_POSITION.x, WORLD_POSITION.y, WORLD_DIMENSION.x, WORLD_DIMENSION.y)
+  private val worldBounds = Rectangle2D(WORLD_POSITION.x, WORLD_POSITION.y, WORLD_CORNER.x, WORLD_CORNER.y)
 
   fun isPointInWorld(point: Point2D): Boolean = worldBounds.contains(point)
+  fun constrainPointToWorld(point: Point2D): Point2D = point.coerceIn(WORLD_POSITION, WORLD_CORNER)
 }
 
 object UIConfig {
