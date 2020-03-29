@@ -107,15 +107,15 @@ A list of all planned and implemented invaders with their stats.
 
 |===
 | Invader | Health Points | Armour | Speed | Speciality
-| Armoured | 100 HP | 8 AC | Slow | -
+| Armoured | 100 HP | 4 AC | Slow | -
 | Balanced | 100 HP | 2 AC | Normal | -
 | Overclocked | 80 HP | 0 AC | Fast | -
 |===
 
 |===
 | Generals | Health Points | Armour | Speed | Speciality
-| Red Square | 1000 HP | 4 AC | Slow | -
-| The Bastion | 1000 HP| 30 AC | Very Slow | Stops to regenerate
+| Red Square | 1000 HP | 3 AC | Slow | -
+| The Bastion | 1000 HP| 5 AC | Very Slow | Stops to regenerate
 
 |===
 

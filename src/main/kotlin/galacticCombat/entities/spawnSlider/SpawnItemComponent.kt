@@ -10,7 +10,7 @@ import galacticCombat.ui.SpawnSliderController.Companion.getTimeFromSliderX
 import javafx.event.EventHandler
 import javafx.scene.input.MouseEvent
 
-class SpawnItemComponent(private val waveIndex: Int, private val invaderSpawnArgs: InvaderSpawnArgs) : Component() {
+class SpawnItemComponent(private val waveIndex: Int, private var invaderSpawnArgs: InvaderSpawnArgs) : Component() {
 
   private var isDragging = false
 
@@ -24,7 +24,7 @@ class SpawnItemComponent(private val waveIndex: Int, private val invaderSpawnArg
   private val onRelease = EventHandler<MouseEvent> {
     isDragging = false
     val time = getTimeFromSliderX(entity.anchoredPosition.x)
-    LevelDataVar.get().changeInvaderSpawnTime(waveIndex, invaderSpawnArgs, time)
+    invaderSpawnArgs = LevelDataVar.get().changeInvaderSpawnTime(waveIndex, invaderSpawnArgs, time)
   }
 
   override fun onAdded() {

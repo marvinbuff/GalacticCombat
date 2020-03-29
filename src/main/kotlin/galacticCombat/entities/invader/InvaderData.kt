@@ -3,6 +3,10 @@ package galacticCombat.entities.invader
 import galacticCombat.configs.AssetConfig
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.entities.generic.animation.FrameData
+import galacticCombat.entities.invader.InvaderType.ACCELERATED
+import galacticCombat.entities.invader.InvaderType.BASTION
+import galacticCombat.entities.invader.InvaderType.COMMON
+import galacticCombat.entities.invader.InvaderType.REINFORCED
 import galacticCombat.level.json.InvaderArgs
 import galacticCombat.level.json.Path
 import kotlin.math.pow
@@ -24,21 +28,23 @@ data class InvaderData(
     fun createFromArgs(args: InvaderArgs): InvaderData {
 
       fun getInvaderDataFromDynamic(level: Int, asset: FrameData, speed: Speed, health: Double, armour: Double): InvaderData {
-        return InvaderData(args, asset, scale(health, level), speed, scale(armour, level), 10)
+        return InvaderData(args, asset, scale(health, level), speed, armour, 10)
       }
 
       val frames = when (args.type) {
-        InvaderType.COMMON      -> listOf("common_level_${args.level}.gif")
-        InvaderType.REINFORCED  -> (1..3).map { "reinforced_level_${args.level}_frame_$it.gif" }
-        InvaderType.ACCELERATED -> (1..3).map { "3.${args.level}$it.gif" }
+        COMMON      -> listOf("common_level_${args.level}.gif")
+        REINFORCED  -> (1..3).map { "reinforced_level_${args.level}_frame_$it.gif" }
+        ACCELERATED -> (1..3).map { "3.${args.level}$it.gif" }
+        BASTION     -> listOf("the_bastion.gif")
       }
 
       val asset = FrameData.create(frames.map { AssetConfig.getInvader(it) })
 
       return when (args.type) {
-        InvaderType.COMMON      -> getInvaderDataFromDynamic(args.level, asset, Speed.NORMAL, 100.0, 2.0)
-        InvaderType.REINFORCED  -> getInvaderDataFromDynamic(args.level, asset, Speed.SLOW, 100.0, 8.0)
-        InvaderType.ACCELERATED -> getInvaderDataFromDynamic(args.level, asset, Speed.FAST, 80.0, 0.0)
+        COMMON      -> getInvaderDataFromDynamic(args.level, asset, Speed.NORMAL, 50.0, 2.0)
+        REINFORCED  -> getInvaderDataFromDynamic(args.level, asset, Speed.SLOW, 50.0, 4.0)
+        ACCELERATED -> getInvaderDataFromDynamic(args.level, asset, Speed.FAST, 30.0, 0.0)
+        BASTION     -> InvaderData(args, asset, 300.0, Speed.SLOW, 6.0, 200)
       }
     }
 

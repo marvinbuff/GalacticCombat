@@ -58,7 +58,6 @@ class TowerFactory : EntityFactory {
           TOWER_SPAWN_ID,
           SpawnData(position).put(TowerData.id, data)
       )
-
     }
 
     fun getTowerData(type: TowerType): TowerData {
