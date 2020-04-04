@@ -15,6 +15,7 @@ import galacticCombat.ui.HasInfo
 import galacticCombat.utils.toPoint
 import javafx.beans.binding.Bindings
 import javafx.beans.binding.StringBinding
+import javafx.geometry.Point2D
 import javafx.scene.image.Image
 import javafx.scene.transform.Rotate
 
@@ -65,6 +66,6 @@ open class TowerComponent(private val towerData: TowerData) : Component(), HasIn
   //endregion
 
   companion object {
-    val center = (38 / 2.0).toPoint()
+    val center: Point2D = (38 / 2.0).toPoint()
   }
 }

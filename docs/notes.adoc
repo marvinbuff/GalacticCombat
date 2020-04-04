@@ -28,14 +28,14 @@ But improve it with a fade out and maybe accumulation.
 - Modify buttons to be hinted as such
 
 Next::
-- Balance game to be beatable
 - Add game over statistics
 - move all tickets to github and documentation to wiki
 
-Milestone 2.0::
-- Level Editor
-- Future Ideas
+Milestone 1.0::
 - Build and Release System
+
+Milestone 1.1::
+- Any Future Idea
 
 == Game Design
 

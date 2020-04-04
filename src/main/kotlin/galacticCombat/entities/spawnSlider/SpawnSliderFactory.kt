@@ -17,8 +17,6 @@ import galacticCombat.ui.SpawnSliderController
 import galacticCombat.utils.position
 import galacticCombat.utils.toPoint
 import javafx.geometry.Point2D
-import javafx.scene.paint.Color
-import javafx.scene.shape.Rectangle
 
 @Suppress("unused")
 class SpawnSliderFactory : EntityFactory {
@@ -46,12 +44,11 @@ class SpawnSliderFactory : EntityFactory {
     val anchor = ((SpawnSliderController.SLIDER_HEIGHT - gap) / 2).toPoint()
 
     val edge = SpawnSliderController.SLIDER_HEIGHT - gap
-    val rect = Rectangle(edge, edge, Color.web("000000", 0.0))
-    rect.formatRectangle()
+    val view = SpawnPinComponent.createViewRectangle(edge)
 
     return entityBuilder().setTypeAdvanced(EntityType.SLIDER_PIN)
       .atAnchored(anchor, data.position)
-      .viewWithBBox(rect)
+      .view(view)
       .with(SpawnPinComponent())
       .build()
   }
@@ -74,11 +71,4 @@ class SpawnSliderFactory : EntityFactory {
       getGameWorld().spawn(SLIDER_PIN_SPAWN_ITEM, data)
     }
   }
-}
-
-private fun Rectangle.formatRectangle() {
-  stroke = Color.BLACK
-  strokeWidth = 2.0
-  arcHeight = 10.0
-  arcWidth = 10.0
 }

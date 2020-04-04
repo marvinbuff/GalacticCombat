@@ -42,7 +42,7 @@ open class BulletData private constructor(
     }
 
     private fun createCryonic(level: Int): BulletData {
-      val bulletEffect = BulletEffect(BulletEffectType.SLOW, 0.2 + (level - 1) * 0.05, 6.0)
+      val bulletEffect = BulletEffect(BulletEffectType.SLOW, 0.7 - (level - 1) * 0.05, 4.0)
       return BulletData(4.0, 0.0, effect = bulletEffect)
     }
 
