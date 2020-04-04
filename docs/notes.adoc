@@ -13,30 +13,6 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-== Game Development
-
-=== Roadmap
-
-Issue List::
-- Re-enable the label showing damage numbers.
-But improve it with a fade out and maybe accumulation.
-- Support multiple paths.
-- Add custom classes for Pair to make level file look nicer.
-- Fix the unresponsive layer when restarting a game.
-- Fix trickle values when skipping level end.
-- Replace placeholder tower when trying to buy a different one.
-- Modify buttons to be hinted as such
-
-Next::
-- Add game over statistics
-- move all tickets to github and documentation to wiki
-
-Milestone 1.0::
-- Build and Release System
-
-Milestone 1.1::
-- Any Future Idea
-
 == Game Design
 
 === Tower
