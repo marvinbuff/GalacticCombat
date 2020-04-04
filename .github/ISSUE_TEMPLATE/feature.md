@@ -1,8 +1,10 @@
 ---
 name: Feature
-about: Feature Request
+about: Feature Template
 labels: Feature
 
 ---
+Short Description
 
-### Feature - Title
+### To-Do
+- [ ] 
