@@ -4,9 +4,13 @@ import javafx.beans.binding.StringBinding
 import javafx.scene.image.Image
 
 interface HasInfo {
-  fun getInformation(): StringBinding
-
   fun getTitle(): String
 
+  fun getInformation(): StringBinding
+
   fun getTexture(): Image
+
+  fun activate()
+
+  fun deactivate()
 }

@@ -25,7 +25,7 @@ repositories {
   mavenCentral()
   jcenter()
   maven("https://nexus.gluonhq.com/nexus/content/repositories/releases")
-    maven("http://oss.sonatype.org/content/repositories/snapshots")
+  maven("http://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {

@@ -22,7 +22,7 @@ object GameConfig {
   val WORLD_DIMENSION = Point2D(523.0, 368.0)
   val WORLD_CORNER: Point2D = WORLD_POSITION + WORLD_DIMENSION
 
-  private val worldBounds = Rectangle2D(WORLD_POSITION.x, WORLD_POSITION.y, WORLD_CORNER.x, WORLD_CORNER.y)
+  private val worldBounds = Rectangle2D(WORLD_POSITION.x, WORLD_POSITION.y, WORLD_DIMENSION.x, WORLD_DIMENSION.y)
 
   fun isPointInWorld(point: Point2D): Boolean = worldBounds.contains(point)
   fun constrainPointToWorld(point: Point2D): Point2D = point.coerceIn(WORLD_POSITION, WORLD_CORNER)

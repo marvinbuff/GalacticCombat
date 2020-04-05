@@ -20,7 +20,7 @@ import kotlin.math.max
 
 @Required(ProjectileComponent::class)
 class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
-  lateinit var projectile: ProjectileComponent
+  private lateinit var projectile: ProjectileComponent
   private lateinit var nextWayPoint: Point2D
   private lateinit var lastWayPoint: Point2D
   private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
@@ -29,7 +29,7 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
   private val poisonEffects: ArrayList<Pair<Double, BulletEffect>> = arrayListOf()
   private val slowEffects: ArrayList<Pair<Double, BulletEffect>> = arrayListOf()
 
-  //region -------------------- Inherited Members ------------------------
+  //region -------------------- Entity Members ------------------------
 
   override fun onAdded() {
     nextWayPoint = data.wayPoints[wayPointIndex].toPoint()
@@ -49,6 +49,9 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
     sufferSlow()
   }
 
+  //endregion
+  //region -------------------- HasInfo ------------------------
+
   override fun getInformation(): StringBinding {
     val formattedMax = "%.0f".format(data.maxHealth)
     val infoText = "Health: \t%.0f/$formattedMax\n" +
@@ -61,6 +64,10 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
   override fun getTitle(): String = "${data.args.type.title} - Lvl ${data.args.level}"
 
   override fun getTexture(): Image = data.texture.getRepresentative()
+
+  override fun activate() = Unit
+
+  override fun deactivate() = Unit
 
   //endregion
   //region -------------------- Public Members ------------------------

@@ -10,6 +10,7 @@ import galacticCombat.configs.loadImage
 import galacticCombat.entities.BULLET_SPAWN_ID
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.bullet.BulletData
+import galacticCombat.entities.generic.RangeIndicatorComponent
 import galacticCombat.entities.invader.InvaderComponent
 import galacticCombat.ui.HasInfo
 import galacticCombat.utils.toPoint
@@ -20,16 +21,16 @@ import javafx.scene.image.Image
 import javafx.scene.transform.Rotate
 
 @Required(ProjectileComponent::class)
-open class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
-  lateinit var projectile: ProjectileComponent
+class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
+  private lateinit var projectile: ProjectileComponent
   private var reloadingTime: Double = 0.0
   private val bullet = towerData.bulletData
 
   override fun onUpdate(tpf: Double) {
     val closestInvader = getGameWorld()
-        .getEntitiesByType(EntityType.INVADER)
-        .filter { other -> entity.anchoredPosition.distance(other.anchoredPosition) < bullet.range }
-        .maxBy { it.getComponent(InvaderComponent::class.java).getProgress() }
+      .getEntitiesByType(EntityType.INVADER)
+      .filter { other -> entity.anchoredPosition.distance(other.anchoredPosition) < bullet.range }
+      .maxBy { it.getComponent(InvaderComponent::class.java).getProgress() }
     closestInvader?.let {
       projectile.direction = Rotate.rotate(-45.0, 0.0, 0.0).transform(it.anchoredPosition.subtract(entity.anchoredPosition))
       if (reloadingTime <= 0.0) {
@@ -43,9 +44,9 @@ open class TowerComponent(private val towerData: TowerData) : Component(), HasIn
 
   private fun shoot(target: Entity) {
     getGameWorld().spawn(
-        BULLET_SPAWN_ID,
-        SpawnData(entity.anchoredPosition)
-            .put("target", target).put(BulletData.id, bullet)
+      BULLET_SPAWN_ID,
+      SpawnData(entity.anchoredPosition)
+        .put("target", target).put(BulletData.id, bullet)
     )
   }
 
@@ -62,6 +63,12 @@ open class TowerComponent(private val towerData: TowerData) : Component(), HasIn
   }
 
   override fun getTexture(): Image = towerData.texture.loadImage()
+
+  override fun activate() = entity.addComponent(RangeIndicatorComponent(bullet.range, center))
+
+  override fun deactivate() {
+    entity.removeComponent(RangeIndicatorComponent::class.java)
+  }
 
   //endregion
 

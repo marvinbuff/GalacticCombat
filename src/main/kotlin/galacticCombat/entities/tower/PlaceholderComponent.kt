@@ -1,15 +1,20 @@
 package galacticCombat.entities.tower
 
 import com.almasb.fxgl.dsl.getInput
+import com.almasb.fxgl.entity.component.Required
 import galacticCombat.configs.GameConfig
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.generic.ClickableComponent
+import galacticCombat.entities.generic.RangeIndicatorComponent
 import javafx.event.EventHandler
 import javafx.geometry.Point2D
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
+import javafx.scene.paint.Color
 
+@Required(RangeIndicatorComponent::class)
 class PlaceholderComponent(private val towerData: TowerData) : ClickableComponent() {
+  private lateinit var rangeIndicatorComponent: RangeIndicatorComponent
 
   override val onClick = EventHandler<MouseEvent> { event ->
     when (event.button) {
@@ -30,8 +35,10 @@ class PlaceholderComponent(private val towerData: TowerData) : ClickableComponen
     entity.anchoredPosition = getInput().mousePositionWorld
     if (isValidPosition()) {
       entity.viewComponent.opacity = 1.0
+      rangeIndicatorComponent.circle.stroke = Color.GREEN.darker()
     } else {
-      entity.viewComponent.opacity = 0.2
+      entity.viewComponent.opacity = 0.8
+      rangeIndicatorComponent.circle.stroke = Color.RED.darker().darker()
     }
   }
 
@@ -47,8 +54,8 @@ class PlaceholderComponent(private val towerData: TowerData) : ClickableComponen
       pos.x - anchor.x to pos.y - anchor.y, //top left
       pos.x + anchor.x to pos.y - anchor.y, //top right
       pos.x - anchor.x to pos.y + anchor.y, //bottom left
-      pos.x + anchor.x to pos.y + anchor.y
-    ) //bottom right
+      pos.x + anchor.x to pos.y + anchor.y  //bottom right
+    )
       .map { (x, y) -> Point2D(x, y) }
 
     return corners.all { GameConfig.isPointInWorld(it) }

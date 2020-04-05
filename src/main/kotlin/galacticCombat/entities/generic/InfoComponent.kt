@@ -10,10 +10,7 @@ class InfoComponent(private val infoSource: HasInfo) : ClickableComponent() {
 
   override val onClick = EventHandler<MouseEvent> { event ->
     if (event.button == MouseButton.PRIMARY) {
-      val infoPanel = InfoPanelVar.get()
-      infoPanel.textProperty.bind(infoSource.getInformation())
-      infoPanel.titleProperty.set(infoSource.getTitle())
-      infoPanel.imageProperty.set(infoSource.getTexture())
+      InfoPanelVar.get().set(infoSource)
     }
   }
 
