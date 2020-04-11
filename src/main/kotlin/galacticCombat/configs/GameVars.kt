@@ -2,7 +2,12 @@ package galacticCombat.configs
 
 import galacticCombat.entities.controller.LevelControllerComponent
 import galacticCombat.level.json.LevelData
+import galacticCombat.moddable.towerConfig.TowerConfiguration
 import galacticCombat.ui.InfoPanel
+
+object TowerConfigVar : GameVar<TowerConfiguration> {
+  override val id = "Level Data Variable"
+}
 
 object LevelDataVar : GameVar<LevelData> {
   override val id = "Level Data Variable"

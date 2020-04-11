@@ -68,7 +68,6 @@ class TowerFactory : EntityFactory {
         TowerType.SPORE    -> AssetConfig.getTower("3.3.gif")
         TowerType.TACTICAL -> AssetConfig.getTower("4.3.gif")
         TowerType.CRYONIC  -> AssetConfig.getTower("2.3.gif")
-        TowerType.STORM    -> AssetConfig.getTower("6.3.gif")
       }
 
       return TowerData(

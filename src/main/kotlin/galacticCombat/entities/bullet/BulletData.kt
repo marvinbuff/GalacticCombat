@@ -5,10 +5,9 @@ import galacticCombat.entities.tower.TowerType
 import galacticCombat.entities.tower.TowerType.CANNON
 import galacticCombat.entities.tower.TowerType.CRYONIC
 import galacticCombat.entities.tower.TowerType.SPORE
-import galacticCombat.entities.tower.TowerType.STORM
 import galacticCombat.entities.tower.TowerType.TACTICAL
 
-open class BulletData private constructor(
+class BulletData private constructor(
   val damage: Double,
   val penetration: Double,
   val attackDelay: Double = 1.0,
@@ -22,12 +21,12 @@ open class BulletData private constructor(
 
     //TODO implement scaling with level and specialization
     fun create(towerType: TowerType, level: Int): BulletData =
+      //todo access towerdataconfig and query map
       when (towerType) {
         CANNON   -> createCannon(level)
         SPORE    -> createSpore(level)
         TACTICAL -> createTactical(level)
         CRYONIC  -> createCryonic(level)
-        STORM    -> createLightning(level)
       }
 
     private fun createCannon(level: Int): BulletData {
@@ -49,11 +48,6 @@ open class BulletData private constructor(
     private fun createTactical(level: Int): BulletData {
       // 15 + range + pen
       return BulletData(20.0 + (level - 1) * 2, 4.0, 2.5, 150.0 + (level - 1) * 30.0)
-    }
-
-    private fun createLightning(level: Int): BulletData {
-      val bulletEffect = BulletEffect(BulletEffectType.CHAIN, 0.6, 2.0)
-      return BulletData(5.0, 0.0, 1.0)
     }
 
   }

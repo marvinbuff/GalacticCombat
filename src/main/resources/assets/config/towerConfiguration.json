@@ -1,0 +1,316 @@
+{
+  "towerConfigs": {
+    "Cannon Tower": {
+      "name": "Cannon Tower",
+      "bulletByLevel": {
+        "First": {
+          "damage": 12.0,
+          "penetration": 2.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Second": {
+          "damage": 15.0,
+          "penetration": 2.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Third": {
+          "damage": 18.0,
+          "penetration": 2.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Fourth": {
+          "damage": 18.0,
+          "penetration": 4.0,
+          "attackDelay": 1.0,
+          "range": 110.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Fifth": {
+          "damage": 21.0,
+          "penetration": 6.0,
+          "attackDelay": 1.0,
+          "range": 120.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        }
+      },
+      "textureByLevel": {
+        "First": "cannon_tower_1",
+        "Second": "cannon_tower_2",
+        "Third": "cannon_tower_3",
+        "Fourth": "cannon_tower_cross_4",
+        "Fifth": "cannon_tower_cross_5"
+      },
+      "price": 100
+    },
+    "Cryonic Emitter": {
+      "name": "Cryonic Emitter",
+      "bulletByLevel": {
+        "First": {
+          "damage": 6.0,
+          "penetration": 0.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "SLOW",
+            "amount": 0.7,
+            "duration": 4.0
+          },
+          "texture": "beeper.png"
+        },
+        "Second": {
+          "damage": 6.0,
+          "penetration": 0.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "SLOW",
+            "amount": 0.65,
+            "duration": 4.0
+          },
+          "texture": "beeper.png"
+        },
+        "Third": {
+          "damage": 6.0,
+          "penetration": 0.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "SLOW",
+            "amount": 0.6,
+            "duration": 4.0
+          },
+          "texture": "beeper.png"
+        },
+        "Fourth": {
+          "damage": 6.0,
+          "penetration": 1.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "SLOW",
+            "amount": 0.55,
+            "duration": 4.0
+          },
+          "texture": "beeper.png"
+        },
+        "Fifth": {
+          "damage": 6.0,
+          "penetration": 1.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "SLOW",
+            "amount": 0.5,
+            "duration": 4.0
+          },
+          "texture": "beeper.png"
+        }
+      },
+      "textureByLevel": {
+        "First": "cryonic_emitter_1",
+        "Second": "cryonic_emitter_2",
+        "Third": "cryonic_emitter_3",
+        "Fourth": "cryonic_emitter_cone_4",
+        "Fifth": "cryonic_emitter_cone_5"
+      },
+      "price": 100
+    },
+    "Spore Launcher": {
+      "name": "Spore Launcher",
+      "bulletByLevel": {
+        "First": {
+          "damage": 6.0,
+          "penetration": 1.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "POISON",
+            "amount": 2.5,
+            "duration": 6.0
+          },
+          "texture": "beeper.png"
+        },
+        "Second": {
+          "damage": 6.0,
+          "penetration": 1.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "POISON",
+            "amount": 3.5,
+            "duration": 6.0
+          },
+          "texture": "beeper.png"
+        },
+        "Third": {
+          "damage": 6.0,
+          "penetration": 1.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "POISON",
+            "amount": 4.5,
+            "duration": 6.0
+          },
+          "texture": "beeper.png"
+        },
+        "Fourth": {
+          "damage": 6.0,
+          "penetration": 1.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "POISON",
+            "amount": 5.5,
+            "duration": 6.0
+          },
+          "texture": "beeper.png"
+        },
+        "Fifth": {
+          "damage": 6.0,
+          "penetration": 1.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "POISON",
+            "amount": 6.5,
+            "duration": 6.0
+          },
+          "texture": "beeper.png"
+        }
+      },
+      "textureByLevel": {
+        "First": "spore_launcher_1",
+        "Second": "spore_launcher_2",
+        "Third": "spore_launcher_3",
+        "Fourth": "spore_launcher_cross_4",
+        "Fifth": "spore_launcher_cross_5"
+      },
+      "price": 100
+    },
+    "Tactical Tower": {
+      "name": "Tactical Tower",
+      "bulletByLevel": {
+        "First": {
+          "damage": 20.0,
+          "penetration": 4.0,
+          "attackDelay": 2.5,
+          "range": 150.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Second": {
+          "damage": 22.0,
+          "penetration": 4.0,
+          "attackDelay": 2.5,
+          "range": 180.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Third": {
+          "damage": 24.0,
+          "penetration": 4.0,
+          "attackDelay": 2.5,
+          "range": 210.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Fourth": {
+          "damage": 24.0,
+          "penetration": 6.0,
+          "attackDelay": 2.5,
+          "range": 240.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Fifth": {
+          "damage": 26.0,
+          "penetration": 8.0,
+          "attackDelay": 2.5,
+          "range": 240.0,
+          "bulletSpeed": 300.0,
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        }
+      },
+      "textureByLevel": {
+        "First": "tactical_tower_1",
+        "Second": "tactical_tower_2",
+        "Third": "tactical_tower_3",
+        "Fourth": "tactical_tower_cross_4",
+        "Fifth": "tactical_tower_cross_5"
+      },
+      "price": 100
+    }
+  }
+}

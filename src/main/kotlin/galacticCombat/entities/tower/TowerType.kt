@@ -4,8 +4,7 @@ enum class TowerType(val title: String) {
   CANNON("Cannon Tower"),
   SPORE("Spore Launcher"),
   TACTICAL("Tactical Tower"),
-  CRYONIC("Cryonic Tower"),
-  STORM("Storm Conjurer");
+  CRYONIC("Cryonic Emitter");
 
   companion object {
     const val id = "TowerType"

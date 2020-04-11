@@ -8,10 +8,10 @@ import kotlinx.serialization.stringify
 import java.io.PrintWriter
 import java.net.URL
 
-@UseExperimental(ImplicitReflectionSerializer::class)
+@OptIn(ImplicitReflectionSerializer::class)
 inline fun <reified T : Any> loadJson(url: URL): T = jsonSerializer.parse(url.readText())
 
-@UseExperimental(ImplicitReflectionSerializer::class)
+@OptIn(ImplicitReflectionSerializer::class)
 inline fun <reified T : Any> writeJson(url: URL, dataObject: T) {
   val data = jsonSerializer.stringify(dataObject)
   val writer = PrintWriter(url.file)
@@ -19,6 +19,12 @@ inline fun <reified T : Any> writeJson(url: URL, dataObject: T) {
     w.write(data)
     w.flush()
   }
+}
+
+@OptIn(ImplicitReflectionSerializer::class)
+inline fun <reified T : Any> printJson(dataObject: T) {
+  val data = jsonSerializer.stringify(dataObject)
+  println("Json: $data")
 }
 
 val jsonSerializer = Json(Stable.copy(prettyPrint = true, indent = "  "))

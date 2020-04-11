@@ -7,54 +7,47 @@ import galacticCombat.level.json.LevelData
 import galacticCombat.level.json.Path
 import galacticCombat.level.json.Settings
 import galacticCombat.level.json.Wave
-import galacticCombat.utils.jsonSerializer
-import kotlinx.serialization.ImplicitReflectionSerializer
-import kotlinx.serialization.UnstableDefault
-import kotlinx.serialization.stringify
+import galacticCombat.utils.printJson
 import kotlin.random.Random
 
 val random = Random(System.currentTimeMillis())
 
-@UnstableDefault
-@ImplicitReflectionSerializer
 fun main() {
-  println("Experiment Level File:")
+  LevelCreator().print()
+}
 
-  val data = LevelData(
-      "Experiment Level",
-      settings = createSettings(),
-      waves = mutableListOf(createWave(10), createWave(4)),
-      paths = mutableListOf(createPath("default"))
+private class LevelCreator {
+  private val data = LevelData(
+    "Experiment Level",
+    settings = createSettings(),
+    waves = mutableListOf(createWave(10), createWave(4)),
+    paths = mutableListOf(createPath("default"))
   )
 
-  val json = jsonSerializer.stringify(data)
-  println(json)
-}
+  fun print() = printJson(data)
 
-//region -------------------------- Private Utils -----------------------------
+  private fun createWave(invaders: Int) = Wave(createSpawnTimes(invaders).zip(createInvaders(invaders)).map { (time, args) -> InvaderSpawnArgs(time, args) })
 
-private fun createWave(invaders: Int) = Wave(createSpawnTimes(invaders).zip(createInvaders(invaders)).map { (time, args) -> InvaderSpawnArgs(time, args) })
+  private fun createSettings() = Settings(500, 5, 10, 5, 200, 60.0)
 
-private fun createSettings() = Settings(500, 5, 10, 5, 200, 60.0)
+  private fun createPath(title: String) = Path(title, mutableListOf(50 to 150, 150 to 350, 550 to 350, 130 to 120))
 
-private fun createPath(title: String) = Path(title, mutableListOf(50 to 150, 150 to 350, 550 to 350, 130 to 120))
-
-private fun createSpawnTimes(number: Int): DoubleArray {
-  val times = mutableListOf<Double>()
-  var lastTime = 0.0
-  repeat(number) {
-    lastTime += random.nextDouble(0.1, 2.0)
-    times.add(lastTime)
+  private fun createSpawnTimes(number: Int): DoubleArray {
+    val times = mutableListOf<Double>()
+    var lastTime = 0.0
+    repeat(number) {
+      lastTime += random.nextDouble(0.1, 2.0)
+      times.add(lastTime)
+    }
+    return times.toDoubleArray()
   }
-  return times.toDoubleArray()
-}
 
-private fun createInvaders(number: Int) = (0..number).map(::createInvader)
+  private fun createInvaders(number: Int) = (0..number).map(::createInvader)
 
-private fun createInvader(key: Int): InvaderArgs {
-  val types = InvaderType.values()
-  val type = types[key % types.size]
-  val level = random.nextInt(1, 4)
-  return InvaderArgs(type, level)
+  private fun createInvader(key: Int): InvaderArgs {
+    val types = InvaderType.values()
+    val type = types[key % types.size]
+    val level = random.nextInt(1, 4)
+    return InvaderArgs(type, level)
+  }
 }
-//endregion
