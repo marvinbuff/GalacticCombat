@@ -64,10 +64,10 @@ class TowerFactory : EntityFactory {
       val bulletData = BulletData.create(type, 1)
 
       val asset = when (type) {
-        TowerType.CANNON   -> AssetConfig.getTower("1.3.gif")
-        TowerType.SPORE    -> AssetConfig.getTower("3.3.gif")
-        TowerType.TACTICAL -> AssetConfig.getTower("4.3.gif")
-        TowerType.CRYONIC  -> AssetConfig.getTower("2.3.gif")
+        TowerType.CANNON   -> AssetConfig.getTower("cannon_tower_3.gif")
+        TowerType.SPORE    -> AssetConfig.getTower("spore_launcher_3.gif")
+        TowerType.TACTICAL -> AssetConfig.getTower("ray_blaster_3.gif")
+        TowerType.CRYONIC  -> AssetConfig.getTower("cryonic_emitter_3.gif")
       }
 
       return TowerData(
