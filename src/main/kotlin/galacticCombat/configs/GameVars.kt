@@ -1,12 +1,21 @@
 package galacticCombat.configs
 
+import com.almasb.fxgl.dsl.getAssetLoader
 import galacticCombat.entities.controller.LevelControllerComponent
 import galacticCombat.level.json.LevelData
 import galacticCombat.moddable.towerConfig.TowerConfiguration
 import galacticCombat.ui.InfoPanel
+import galacticCombat.utils.parseJson
 
 object TowerConfigVar : GameVar<TowerConfiguration> {
-  override val id = "Level Data Variable"
+  override val id = "Tower Config Variable"
+
+  fun initialize() {
+    val towerConfigsText = getAssetLoader().getStream("/assets/config/towerConfiguration.json").bufferedReader().readText()
+    val towerConfigs: TowerConfiguration = parseJson<TowerConfiguration>(towerConfigsText)
+    set(towerConfigs)
+    println(towerConfigs)
+  }
 }
 
 object LevelDataVar : GameVar<LevelData> {
@@ -15,6 +24,8 @@ object LevelDataVar : GameVar<LevelData> {
 
 object InfoPanelVar : GameVar<InfoPanel> {
   override val id = "Info Panel Variable"
+
+  fun initialize() = set(InfoPanel())
 }
 
 object LevelController : GameVar<LevelControllerComponent> {

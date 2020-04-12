@@ -12,6 +12,7 @@ object AssetConfig {
   fun getTower(file: String): String = "$TOWERS$file"
   fun getUI(file: String): String = "$UI$file"
   fun get(file: String): String = file
+
 }
 
 fun String.loadInvaderImage(): Image = FXGL.image(AssetConfig.getInvader(this))

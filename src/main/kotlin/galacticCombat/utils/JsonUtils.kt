@@ -8,8 +8,11 @@ import kotlinx.serialization.stringify
 import java.io.PrintWriter
 import java.net.URL
 
+
+inline fun <reified T : Any> loadJson(url: URL): T = parseJson(url.readText())
+
 @OptIn(ImplicitReflectionSerializer::class)
-inline fun <reified T : Any> loadJson(url: URL): T = jsonSerializer.parse(url.readText())
+inline fun <reified T : Any> parseJson(text: String): T = jsonSerializer.parse(text)
 
 @OptIn(ImplicitReflectionSerializer::class)
 inline fun <reified T : Any> writeJson(url: URL, dataObject: T) {
