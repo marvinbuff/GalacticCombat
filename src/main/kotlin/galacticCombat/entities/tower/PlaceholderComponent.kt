@@ -6,6 +6,7 @@ import galacticCombat.configs.GameConfig
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.entities.generic.ClickableComponent
 import galacticCombat.entities.generic.RangeIndicatorComponent
+import galacticCombat.moddable.towerConfig.TowerData
 import javafx.event.EventHandler
 import javafx.geometry.Point2D
 import javafx.scene.input.MouseButton

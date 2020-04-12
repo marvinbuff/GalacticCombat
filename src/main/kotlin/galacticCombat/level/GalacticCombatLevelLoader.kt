@@ -21,6 +21,7 @@ class GalacticCombatLevelLoader : LevelLoader {
   override fun load(url: URL, world: GameWorld): Level {
     val data = loadJson<LevelData>(url)
     //todo sanity check of read data and error handling
+
     // Initialize Game Vars
     data.setGameVars()
 

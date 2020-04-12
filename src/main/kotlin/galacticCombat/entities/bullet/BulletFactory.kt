@@ -9,6 +9,7 @@ import com.almasb.fxgl.entity.Spawns
 import galacticCombat.entities.BULLET_SPAWN_ID
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.setTypeAdvanced
+import galacticCombat.moddable.towerConfig.BulletData
 import galacticCombat.utils.position
 import javafx.geometry.Point2D
 

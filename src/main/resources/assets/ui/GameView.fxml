@@ -30,7 +30,7 @@
             <children>
                 <TowerButton type="CANNON" mnemonicParsing="false" styleClass="button_green"/>
                 <TowerButton type="SPORE" mnemonicParsing="false" styleClass="button_green"/>
-                <TowerButton type="TACTICAL" mnemonicParsing="false" styleClass="button_green"/>
+                <TowerButton type="RAY" mnemonicParsing="false" styleClass="button_green"/>
                 <TowerButton type="CRYONIC" mnemonicParsing="false" styleClass="button_green"/>
             </children>
         </VBox>

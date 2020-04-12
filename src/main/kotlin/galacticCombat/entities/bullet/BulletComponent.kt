@@ -5,6 +5,7 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.entity.component.Required
 import galacticCombat.entities.invader.InvaderComponent
+import galacticCombat.moddable.towerConfig.BulletData
 import galacticCombat.utils.toPoint
 
 @Required(ProjectileComponent::class)

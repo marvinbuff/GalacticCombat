@@ -5,10 +5,10 @@ import com.almasb.fxgl.dsl.getGameTimer
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.entity.component.Required
 import galacticCombat.configs.GameVarsInt
-import galacticCombat.entities.bullet.BulletData
-import galacticCombat.entities.bullet.BulletEffect
-import galacticCombat.entities.bullet.BulletEffectType
 import galacticCombat.events.InvaderEvents
+import galacticCombat.moddable.towerConfig.BulletData
+import galacticCombat.moddable.towerConfig.BulletEffect
+import galacticCombat.moddable.towerConfig.BulletEffectType
 import galacticCombat.ui.HasInfo
 import galacticCombat.utils.fire
 import galacticCombat.utils.toPoint

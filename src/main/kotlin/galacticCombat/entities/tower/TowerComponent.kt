@@ -9,9 +9,10 @@ import com.almasb.fxgl.entity.component.Required
 import galacticCombat.configs.loadImage
 import galacticCombat.entities.BULLET_SPAWN_ID
 import galacticCombat.entities.EntityType
-import galacticCombat.entities.bullet.BulletData
 import galacticCombat.entities.generic.RangeIndicatorComponent
 import galacticCombat.entities.invader.InvaderComponent
+import galacticCombat.moddable.towerConfig.BulletData
+import galacticCombat.moddable.towerConfig.TowerData
 import galacticCombat.ui.HasInfo
 import galacticCombat.utils.toPoint
 import javafx.beans.binding.Bindings
@@ -24,7 +25,7 @@ import javafx.scene.transform.Rotate
 class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
   private lateinit var projectile: ProjectileComponent
   private var reloadingTime: Double = 0.0
-  private val bullet = towerData.bulletData
+  private val bullet = towerData.getFirstBullet()
 
   override fun onUpdate(tpf: Double) {
     val closestInvader = getGameWorld()
@@ -52,7 +53,7 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
 
   //region -------------------- HasInfo ------------------------
 
-  override fun getTitle(): String = towerData.towerType.title
+  override fun getTitle(): String = towerData.name
 
   override fun getInformation(): StringBinding {
     //todo show also effect
@@ -62,7 +63,7 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
     return Bindings.createStringBinding({ info }, null)
   }
 
-  override fun getTexture(): Image = towerData.texture.loadImage()
+  override fun getTexture(): Image = towerData.getFirstTexture().loadImage()
 
   override fun activate() = entity.addComponent(RangeIndicatorComponent(bullet.range, center))
 

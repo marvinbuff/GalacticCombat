@@ -70,11 +70,11 @@
         }
       },
       "textureByLevel": {
-        "First": "cannon_tower_1",
-        "Second": "cannon_tower_2",
-        "Third": "cannon_tower_3",
-        "Fourth": "cannon_tower_cross_4",
-        "Fifth": "cannon_tower_cross_5"
+        "First": "towers/cannon_tower_1.gif",
+        "Second": "towers/cannon_tower_2.gif",
+        "Third": "towers/cannon_tower_3.gif",
+        "Fourth": "towers/cannon_tower_cross_4.gif",
+        "Fifth": "towers/cannon_tower_cross_5.gif"
       },
       "price": 100
     },
@@ -148,11 +148,11 @@
         }
       },
       "textureByLevel": {
-        "First": "cryonic_emitter_1",
-        "Second": "cryonic_emitter_2",
-        "Third": "cryonic_emitter_3",
-        "Fourth": "cryonic_emitter_cone_4",
-        "Fifth": "cryonic_emitter_cone_5"
+        "First": "towers/cryonic_emitter_1.gif",
+        "Second": "towers/cryonic_emitter_2.gif",
+        "Third": "towers/cryonic_emitter_3.gif",
+        "Fourth": "towers/cryonic_emitter_cone_4.gif",
+        "Fifth": "towers/cryonic_emitter_cone_5.gif"
       },
       "price": 100
     },
@@ -226,16 +226,16 @@
         }
       },
       "textureByLevel": {
-        "First": "spore_launcher_1",
-        "Second": "spore_launcher_2",
-        "Third": "spore_launcher_3",
-        "Fourth": "spore_launcher_cross_4",
-        "Fifth": "spore_launcher_cross_5"
+        "First": "towers/spore_launcher_1.gif",
+        "Second": "towers/spore_launcher_2.gif",
+        "Third": "towers/spore_launcher_3.gif",
+        "Fourth": "towers/spore_launcher_cross_4.gif",
+        "Fifth": "towers/spore_launcher_cross_5.gif"
       },
       "price": 100
     },
-    "Tactical Tower": {
-      "name": "Tactical Tower",
+    "Ray Blaster": {
+      "name": "Ray Blaster",
       "bulletByLevel": {
         "First": {
           "damage": 20.0,
@@ -304,11 +304,11 @@
         }
       },
       "textureByLevel": {
-        "First": "tactical_tower_1",
-        "Second": "tactical_tower_2",
-        "Third": "tactical_tower_3",
-        "Fourth": "tactical_tower_cross_4",
-        "Fifth": "tactical_tower_cross_5"
+        "First": "towers/ray_blaster_1.gif",
+        "Second": "towers/ray_blaster_2.gif",
+        "Third": "towers/ray_blaster_3.gif",
+        "Fourth": "towers/ray_blaster_cross_4.gif",
+        "Fifth": "towers/ray_blaster_cross_5.gif"
       },
       "price": 100
     }

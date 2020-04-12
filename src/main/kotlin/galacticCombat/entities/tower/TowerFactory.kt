@@ -7,12 +7,12 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
-import galacticCombat.configs.AssetConfig
+import galacticCombat.configs.TowerConfigVar
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.TOWER_SPAWN_ID
-import galacticCombat.entities.bullet.BulletData
 import galacticCombat.entities.generic.InfoComponent
 import galacticCombat.entities.setTypeAdvanced
+import galacticCombat.moddable.towerConfig.TowerData
 import galacticCombat.utils.position
 import javafx.geometry.Point2D
 
@@ -36,9 +36,9 @@ class TowerFactory : EntityFactory {
     val infoHandler = InfoComponent(towerComponent)
 
     return entityBuilder().setTypeAdvanced(EntityType.TOWER)
-        .atAnchored(TowerComponent.center, data.position)
-        .rotationOrigin(TowerComponent.center)
-        .view(towerData.texture)
+      .atAnchored(TowerComponent.center, data.position)
+      .rotationOrigin(TowerComponent.center)
+      .view(towerData.getFirstTexture())
         .with(projectile)
         .with(towerComponent)
         .with(infoHandler)
@@ -61,20 +61,9 @@ class TowerFactory : EntityFactory {
     }
 
     fun getTowerData(type: TowerType): TowerData {
-      val bulletData = BulletData.create(type, 1)
-
-      val asset = when (type) {
-        TowerType.CANNON   -> AssetConfig.getTower("cannon_tower_3.gif")
-        TowerType.SPORE    -> AssetConfig.getTower("spore_launcher_3.gif")
-        TowerType.TACTICAL -> AssetConfig.getTower("ray_blaster_3.gif")
-        TowerType.CRYONIC  -> AssetConfig.getTower("cryonic_emitter_3.gif")
-      }
-
-      return TowerData(
-          type,
-          bulletData,
-          asset
-      )
+      val data = TowerConfigVar.get().towerConfigs[type.title]
+      check(data != null) { "Could create TowerData for key ${type.title}, possible values are ${TowerConfigVar.get().towerConfigs.keys}." }
+      return data
     }
   }
 }

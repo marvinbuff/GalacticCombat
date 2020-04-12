@@ -2,8 +2,7 @@ package galacticCombat.moddable.towerConfig
 
 import galacticCombat.utils.printJson
 
-//todo  Try to populate variable with this file.
-// use populated data in tower creation. remove old classes. Clean-up
+// todo use populated data in tower creation. remove old classes. Clean-up
 
 private val levels = UpgradeLevel.values()
 
@@ -14,7 +13,7 @@ fun main() {
     "Cryonic Emitter" to createCryonicEmitter(),
     "Spore Launcher" to createSporeLauncher(),
 //    "Storm Conjurer" to createSporeLauncher(),
-    "Tactical Tower" to createTacticalTower()
+    "Ray Blaster" to createRayBlaster()
   ).toMap()
 
   val config = TowerConfiguration(towers)
@@ -32,17 +31,17 @@ private fun createCannonTower(): TowerData {
   )
   val bulletsByLevel = levels.zip(bullets).toMap()
   val textures = listOf(
-    "cannon_tower_1",
-    "cannon_tower_2",
-    "cannon_tower_3",
-    "cannon_tower_cross_4",
-    "cannon_tower_cross_5"
+    "towers/cannon_tower_1.gif",
+    "towers/cannon_tower_2.gif",
+    "towers/cannon_tower_3.gif",
+    "towers/cannon_tower_cross_4.gif",
+    "towers/cannon_tower_cross_5.gif"
   )
   val textureByLevel = levels.zip(textures).toMap()
   return TowerData("Cannon Tower", bulletsByLevel, textureByLevel)
 }
 
-private fun createTacticalTower(): TowerData {
+private fun createRayBlaster(): TowerData {
   val bullets = listOf(
     // damage = 20.0 + (level - 1) * 2
     // range = 150.0 + (level - 1) * 30.0
@@ -54,14 +53,14 @@ private fun createTacticalTower(): TowerData {
   )
   val bulletsByLevel = levels.zip(bullets).toMap()
   val textures = listOf(
-    "tactical_tower_1",
-    "tactical_tower_2",
-    "tactical_tower_3",
-    "tactical_tower_cross_4",
-    "tactical_tower_cross_5"
+    "towers/ray_blaster_1.gif",
+    "towers/ray_blaster_2.gif",
+    "towers/ray_blaster_3.gif",
+    "towers/ray_blaster_cross_4.gif",
+    "towers/ray_blaster_cross_5.gif"
   )
   val textureByLevel = levels.zip(textures).toMap()
-  return TowerData("Tactical Tower", bulletsByLevel, textureByLevel)
+  return TowerData("Ray Blaster", bulletsByLevel, textureByLevel)
 }
 
 private fun createSporeLauncher(): TowerData {
@@ -90,11 +89,11 @@ private fun createSporeLauncher(): TowerData {
   )
   val bulletsByLevel = levels.zip(bullets).toMap()
   val textures = listOf(
-    "spore_launcher_1",
-    "spore_launcher_2",
-    "spore_launcher_3",
-    "spore_launcher_cross_4",
-    "spore_launcher_cross_5"
+    "towers/spore_launcher_1.gif",
+    "towers/spore_launcher_2.gif",
+    "towers/spore_launcher_3.gif",
+    "towers/spore_launcher_cross_4.gif",
+    "towers/spore_launcher_cross_5.gif"
   )
   val textureByLevel = levels.zip(textures).toMap()
   return TowerData("Spore Launcher", bulletsByLevel, textureByLevel)
@@ -126,11 +125,11 @@ private fun createCryonicEmitter(): TowerData {
   )
   val bulletsByLevel = levels.zip(bullets).toMap()
   val textures = listOf(
-    "cryonic_emitter_1",
-    "cryonic_emitter_2",
-    "cryonic_emitter_3",
-    "cryonic_emitter_cone_4",
-    "cryonic_emitter_cone_5"
+    "towers/cryonic_emitter_1.gif",
+    "towers/cryonic_emitter_2.gif",
+    "towers/cryonic_emitter_3.gif",
+    "towers/cryonic_emitter_cone_4.gif",
+    "towers/cryonic_emitter_cone_5.gif"
   )
   val textureByLevel = levels.zip(textures).toMap()
   return TowerData("Cryonic Emitter", bulletsByLevel, textureByLevel)
