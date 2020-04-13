@@ -14,7 +14,6 @@ object TowerConfigVar : GameVar<TowerConfiguration> {
     val towerConfigsText = getAssetLoader().getStream("/assets/config/towerConfiguration.json").bufferedReader().readText()
     val towerConfigs: TowerConfiguration = parseJson<TowerConfiguration>(towerConfigsText)
     set(towerConfigs)
-    println(towerConfigs)
   }
 }
 

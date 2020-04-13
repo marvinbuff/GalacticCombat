@@ -7,6 +7,7 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
+import com.almasb.fxgl.entity.components.CollidableComponent
 import galacticCombat.configs.TowerConfigVar
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.TOWER_SPAWN_ID
@@ -39,7 +40,8 @@ class TowerFactory : EntityFactory {
     return entityBuilder().setTypeAdvanced(EntityType.TOWER)
       .atAnchored(TowerComponent.center, data.position)
       .rotationOrigin(TowerComponent.center)
-      .view(towerData.getFirstTexture())
+      .viewWithBBox(towerData.getFirstTexture())
+      .with(CollidableComponent(true))
       .with(projectile)
       .with(towerComponent)
       .with(infoHandler)

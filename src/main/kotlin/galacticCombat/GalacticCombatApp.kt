@@ -38,6 +38,7 @@ import galacticCombat.entities.controller.LevelControllerFactory
 import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.entities.path.PathFactory
 import galacticCombat.entities.spawnSlider.SpawnSliderFactory
+import galacticCombat.entities.tower.PlaceholderComponent
 import galacticCombat.entities.tower.PlaceholderFactory
 import galacticCombat.entities.tower.TowerComponent
 import galacticCombat.entities.tower.TowerFactory
@@ -206,11 +207,30 @@ class GalacticCombatApp : GameApplication() {
   }
 
   override fun initPhysics() {
-    //TODO move physic handler to own method
-    getPhysicsWorld().addCollisionHandler(object : CollisionHandler(EntityType.TOWER, EntityType.INVADER) {
-      // order of types is the same as passed into the constructor of the CollisionHandler
-      override fun onCollisionBegin(tower: Entity?, ship: Entity?) {
-        tower!!.removeFromWorld()
+    //Add collision handlers for tower placeholder
+    //todo move to tower placeholder factory or such
+    fun Entity.incrementCollisionCounter() = getComponent(PlaceholderComponent::class.java).isCollidingWith.incrementAndGet()
+    fun Entity.decrementCollisionCounter() = getComponent(PlaceholderComponent::class.java).isCollidingWith.decrementAndGet()
+
+    getPhysicsWorld().addCollisionHandler(object : CollisionHandler(EntityType.TOWER_PLACEHOLDER, EntityType.PATH) {
+      override fun onCollisionBegin(placeholder: Entity, pathElement: Entity) {
+        placeholder.incrementCollisionCounter()
+      }
+
+      override fun onCollisionEnd(placeholder: Entity, pathElement: Entity) {
+        if (!placeholder.isActive) return
+        placeholder.decrementCollisionCounter()
+      }
+    })
+
+    getPhysicsWorld().addCollisionHandler(object : CollisionHandler(EntityType.TOWER_PLACEHOLDER, EntityType.TOWER) {
+      override fun onCollisionBegin(placeholder: Entity, tower: Entity) {
+        placeholder.incrementCollisionCounter()
+      }
+
+      override fun onCollisionEnd(placeholder: Entity, tower: Entity) {
+        if (!placeholder.isActive) return
+        placeholder.decrementCollisionCounter()
       }
     })
   }

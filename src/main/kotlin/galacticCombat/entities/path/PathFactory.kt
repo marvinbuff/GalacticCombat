@@ -7,6 +7,7 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
+import com.almasb.fxgl.entity.components.CollidableComponent
 import galacticCombat.configs.LevelDataVar
 import galacticCombat.configs.UIConfig
 import galacticCombat.entities.EntityType
@@ -29,11 +30,12 @@ class PathFactory : EntityFactory {
     val pathVertexArgs = data.get<PathVertexArgs>(ID_PATH_VERTEX_ARGS)
 
     return entityBuilder().setTypeAdvanced(EntityType.PATH)
-        .from(data)
-        .with(DraggableComponent())
-        .with(PathVertexComponent(pathVertexArgs)) //todo check if we should not just pass the args object
-        .view(Circle(halfPathWidth, UIConfig.PATH_COLOR))
-        .build()
+      .from(data)
+      .with(DraggableComponent())
+      .with(PathVertexComponent(pathVertexArgs)) //todo check if we should not just pass the args object
+      .viewWithBBox(Circle(halfPathWidth, UIConfig.PATH_COLOR))
+//      .with(CollidableComponent(true)) //fixme view and bbox seem not to be in sync
+      .build()
   }
 
   @Spawns(PATH_EDGE_SPAWN_ID)
@@ -43,8 +45,9 @@ class PathFactory : EntityFactory {
     val (startVertex, endVertex) = data.get<PathEdgeArgs>(ID_PATH_EDGE_ARGS)
 
     return entityBuilder().setTypeAdvanced(EntityType.PATH)
-        .with(PathEdgeComponent(startVertex, endVertex)) //todo check if we should not just pass the args object
-        .build()
+      .with(PathEdgeComponent(startVertex, endVertex)) //todo check if we should not just pass the args object
+      .with(CollidableComponent(true))
+      .build()
   }
 
   companion object {

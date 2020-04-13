@@ -5,6 +5,7 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
+import com.almasb.fxgl.entity.components.CollidableComponent
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.PLACEHOLDER_SPAWN_ID
 import galacticCombat.entities.generic.RangeIndicatorComponent
@@ -23,10 +24,11 @@ class PlaceholderFactory : EntityFactory {
     val rangeIndicator = RangeIndicatorComponent(towerData.getFirstBullet().range, TowerComponent.center)
 
     return entityBuilder().setTypeAdvanced(EntityType.TOWER_PLACEHOLDER)
-      .view(towerData.getFirstTexture())
+      .viewWithBBox(towerData.getFirstTexture())
       .atAnchored(TowerComponent.center, data.position)
       .with(rangeIndicator)
       .with(PlaceholderComponent(towerData))
+      .with(CollidableComponent(true))
       .build()
   }
 }

@@ -12,10 +12,12 @@ import javafx.geometry.Point2D
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 import javafx.scene.paint.Color
+import java.util.concurrent.atomic.AtomicInteger
 
 @Required(RangeIndicatorComponent::class)
 class PlaceholderComponent(private val towerData: TowerData) : ClickableComponent() {
   private lateinit var rangeIndicatorComponent: RangeIndicatorComponent
+  var isCollidingWith = AtomicInteger(0)
 
   override val onClick = EventHandler<MouseEvent> { event ->
     when (event.button) {
@@ -48,6 +50,10 @@ class PlaceholderComponent(private val towerData: TowerData) : ClickableComponen
   private fun hasSufficientGold(): Boolean = LevelGameVars.GOLD.get() >= towerData.price
 
   private fun isAtValidTowerPosition(): Boolean {
+    return isCollidingWith.get() == 0 && isPositionWithinWorld()
+  }
+
+  private fun isPositionWithinWorld(): Boolean {
     val pos = entity.anchoredPosition
     val anchor = entity.localAnchor
 
@@ -56,8 +62,7 @@ class PlaceholderComponent(private val towerData: TowerData) : ClickableComponen
       pos.x + anchor.x to pos.y - anchor.y, //top right
       pos.x - anchor.x to pos.y + anchor.y, //bottom left
       pos.x + anchor.x to pos.y + anchor.y  //bottom right
-    )
-      .map { (x, y) -> Point2D(x, y) }
+    ).map { (x, y) -> Point2D(x, y) }
 
     return corners.all { GameConfig.isPointInWorld(it) }
   }

@@ -1,6 +1,8 @@
 package galacticCombat.entities.path
 
 import com.almasb.fxgl.entity.component.Component
+import com.almasb.fxgl.physics.BoundingShape
+import com.almasb.fxgl.physics.HitBox
 import galacticCombat.configs.UIConfig
 import javafx.geometry.Point2D
 import javafx.scene.shape.Rectangle
@@ -32,5 +34,8 @@ class PathEdgeComponent(private var startVertex: Point2D, private var endVertex:
     entity.transformComponent.translate(0.0, -PathFactory.halfPathWidth)
     entity.transformComponent.rotationOrigin = Point2D(0.0, PathFactory.halfPathWidth)
     entity.rotateToVector(endVertex.subtract(startVertex))
+
+    entity.boundingBoxComponent.clearHitBoxes()
+    entity.boundingBoxComponent.addHitBox(HitBox(BoundingShape.box(rectangle.width, rectangle.height)))
   }
 }

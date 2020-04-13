@@ -9,7 +9,6 @@ import galacticCombat.configs.LevelGameVars
 import galacticCombat.ui.elements.SpawnSlider
 import javafx.event.EventHandler
 import javafx.fxml.FXML
-import javafx.geometry.Point2D
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
@@ -37,7 +36,6 @@ class GameViewController : UIController {
 
 
   override fun init() {
-
     bindInfoLabels()
     bindWaveLabel()
     bindTimerButton()
