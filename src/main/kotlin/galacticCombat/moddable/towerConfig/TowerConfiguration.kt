@@ -15,13 +15,14 @@ data class TowerData(
   val textureByLevel: Map<UpgradeLevel, String>,
   val price: Int = 100
 ) {
-  fun getFirstBullet() = bulletByLevel.getValue(UpgradeLevel.First)
-  fun getFirstTexture() = textureByLevel.getValue(UpgradeLevel.First)
 
   companion object {
     const val id = "TowerData"
   }
 }
+
+fun TowerData.getFirstTexture() = textureByLevel.getValue(UpgradeLevel.First)
+fun TowerData.getFirstBullet() = bulletByLevel.getValue(UpgradeLevel.First)
 
 @Serializable
 data class BulletData(
@@ -56,7 +57,10 @@ enum class UpgradeLevel(val level: Int) {
   Second(2),
   Third(3),
   Fourth(4),
-  Fifth(5)
+  Fifth(5);
+
+  fun hasNext() = this.ordinal + 1 < values().size
+  fun next() = values()[this.ordinal + 1]
 }
 
 enum class BulletEffectType {

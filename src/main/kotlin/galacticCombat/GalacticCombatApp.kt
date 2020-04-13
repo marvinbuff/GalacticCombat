@@ -39,6 +39,7 @@ import galacticCombat.entities.invader.InvaderFactory
 import galacticCombat.entities.path.PathFactory
 import galacticCombat.entities.spawnSlider.SpawnSliderFactory
 import galacticCombat.entities.tower.PlaceholderFactory
+import galacticCombat.entities.tower.TowerComponent
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.events.GameEvent
 import galacticCombat.events.InvaderEvents
@@ -171,6 +172,12 @@ class GalacticCombatApp : GameApplication() {
           }
         }
       }, MouseButton.PRIMARY)
+
+      input.addKeyAction(KeyCode.Q, "Level Up") {
+        getGameWorld().getEntitiesByType(EntityType.TOWER)
+          .map { it.getComponent(TowerComponent::class.java) }
+          .forEach { if (it.level.hasNext()) it.upgrade() }
+      }
     }
   }
 
@@ -234,13 +241,13 @@ data class SaveData(val scores: Int) : Serializable
 
 private fun Input.addKeyAction(code: KeyCode, title: String, action: () -> Unit) {
   this.addAction(object : UserAction(title) {
-    override fun onAction() = action()
+    override fun onActionBegin() = action()
   }, code)
 }
 
 private fun Input.addMouseAction(code: MouseButton, title: String, action: () -> Unit) {
   this.addAction(object : UserAction(title) {
-    override fun onAction() = action()
+    override fun onActionBegin() = action()
   }, code)
 }
 

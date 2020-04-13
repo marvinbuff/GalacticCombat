@@ -23,7 +23,7 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
   private lateinit var projectile: ProjectileComponent
   private lateinit var nextWayPoint: Point2D
   private lateinit var lastWayPoint: Point2D
-  private var wayPointIndex: Int = 1 // we skip index 0 as it spawns there
+  private var wayPointIndex: Int = 1 // we skip index 0 as invaders spawns there
   var health: SimpleDoubleProperty = SimpleDoubleProperty(data.maxHealth)
 
   private val poisonEffects: ArrayList<Pair<Double, BulletEffect>> = arrayListOf()

@@ -13,6 +13,7 @@ import galacticCombat.entities.TOWER_SPAWN_ID
 import galacticCombat.entities.generic.InfoComponent
 import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.moddable.towerConfig.TowerData
+import galacticCombat.moddable.towerConfig.getFirstTexture
 import galacticCombat.utils.position
 import javafx.geometry.Point2D
 
@@ -39,24 +40,24 @@ class TowerFactory : EntityFactory {
       .atAnchored(TowerComponent.center, data.position)
       .rotationOrigin(TowerComponent.center)
       .view(towerData.getFirstTexture())
-        .with(projectile)
-        .with(towerComponent)
-        .with(infoHandler)
-        .build()
+      .with(projectile)
+      .with(towerComponent)
+      .with(infoHandler)
+      .build()
   }
 
   private fun parseTowerData(data: SpawnData): TowerData =
-      if (data.hasKey(TowerType.id)) {
-        getTowerData(data.get(TowerType.id))
-      } else {
-        data.get(TowerData.id)
-      }
+    if (data.hasKey(TowerType.id)) {
+      getTowerData(data.get(TowerType.id))
+    } else {
+      data.get(TowerData.id)
+    }
 
   companion object {
     fun spawnFromTowerData(data: TowerData, position: Point2D) {
       getGameWorld().spawn(
-          TOWER_SPAWN_ID,
-          SpawnData(position).put(TowerData.id, data)
+        TOWER_SPAWN_ID,
+        SpawnData(position).put(TowerData.id, data)
       )
     }
 

@@ -12,6 +12,7 @@ import galacticCombat.entities.PLACEHOLDER_SPAWN_ID
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.entities.tower.TowerType
 import galacticCombat.moddable.towerConfig.TowerData
+import galacticCombat.moddable.towerConfig.getFirstTexture
 import javafx.beans.NamedArg
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
@@ -21,7 +22,7 @@ class TowerButton(data: TowerData) : IconButton(getIcon(data), getHandler(data))
 }
 
 private fun getIcon(data: TowerData): Texture {
-  return FXGL.texture(data.getFirstTexture().also(::println))
+  return FXGL.texture(data.getFirstTexture())
 }
 
 private fun getHandler(data: TowerData) = EventHandler<ActionEvent> {

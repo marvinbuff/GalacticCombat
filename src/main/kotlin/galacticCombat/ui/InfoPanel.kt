@@ -29,5 +29,11 @@ class InfoPanel {
     titleProperty.set("")
     textProperty.set("")
     infoSource?.deactivate()
+    infoSource = null
+  }
+
+  fun update(source: HasInfo) {
+    if (source == infoSource)
+      set(source)
   }
 }

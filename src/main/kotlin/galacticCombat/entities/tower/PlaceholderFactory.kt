@@ -10,6 +10,8 @@ import galacticCombat.entities.PLACEHOLDER_SPAWN_ID
 import galacticCombat.entities.generic.RangeIndicatorComponent
 import galacticCombat.entities.setTypeAdvanced
 import galacticCombat.moddable.towerConfig.TowerData
+import galacticCombat.moddable.towerConfig.getFirstBullet
+import galacticCombat.moddable.towerConfig.getFirstTexture
 import galacticCombat.utils.position
 
 @Suppress("unused")
@@ -27,5 +29,4 @@ class PlaceholderFactory : EntityFactory {
       .with(PlaceholderComponent(towerData))
       .build()
   }
-
 }
