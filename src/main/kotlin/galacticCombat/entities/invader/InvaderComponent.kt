@@ -50,7 +50,9 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
   }
 
   //endregion
-  //region -------------------- HasInfo ------------------------
+  //region -- HasInfo --
+
+  override fun getTitle(): String = "${data.args.type.title} - Lvl ${data.args.level}"
 
   override fun getInformation(): StringBinding {
     val formattedMax = "%.0f".format(data.maxHealth)
@@ -61,8 +63,6 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
     return health.asString(infoText)
   }
 
-  override fun getTitle(): String = "${data.args.type.title} - Lvl ${data.args.level}"
-
   override fun getTexture(): Image = data.texture.getRepresentative()
 
   override fun activate() = Unit
@@ -70,7 +70,7 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
   override fun deactivate() = Unit
 
   //endregion
-  //region -------------------- Public Members ------------------------
+  //region -- Public Members --
 
   /**
    *  A bullet hitting an invader registers here to apply its damage and effect.

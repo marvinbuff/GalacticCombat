@@ -8,7 +8,7 @@
 
 .border {
     -fx-border-width: 8;
-    -fx-border-color: Black
+    -fx-border-color: Black;
 }
 
 .button_green {
@@ -23,19 +23,21 @@
 .label_green {
     -fx-border-width: 3;
     -fx-border-color: Black;
-    -fx-background-color: #a9ff00;
+    -fx-background-color: #008000;
     -fx-padding: 2;
+    -fx-background-radius: 12;
+    -fx-border-radius: 10;
 }
 
 .text-area {
-    -fx-border-style: dashed;
     -fx-border-width: 0;
-    -fx-background-color: #a9ff00;
+    -fx-background-color: #008000;
     -fx-font-size: 10;
 }
 
 .text-area .content {
-    -fx-background-color: #a9ff00;
+    -fx-background-color: #008000;
+    -fx-background-radius: 0;
     -fx-font-family: sans-serif;
     -fx-wrap-text: true;
 }

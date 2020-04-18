@@ -9,6 +9,7 @@ import com.almasb.fxgl.entity.Spawns
 import galacticCombat.entities.EntityType
 import galacticCombat.entities.SLIDER_ITEM_SPAWN_ID
 import galacticCombat.entities.SLIDER_PIN_SPAWN_ITEM
+import galacticCombat.entities.generic.InfoComponent
 import galacticCombat.entities.invader.InvaderComponent
 import galacticCombat.entities.invader.InvaderData
 import galacticCombat.entities.setTypeAdvanced
@@ -29,11 +30,12 @@ class SpawnSliderFactory : EntityFactory {
     val spawnArgs: InvaderSpawnArgs = data.get(ID_SPAWN_ARGS)
     val invaderData = InvaderData.createFromArgs(spawnArgs.args)
     val waveIndex: Int = data.get(ID_WAVE_INDEX)
-    val spawnItemComponent = SpawnItemComponent(waveIndex, spawnArgs) //todo only allow dragging when in editor-mode
+    val spawnItemComponent = SpawnItemComponent(waveIndex, spawnArgs, invaderData) //todo only allow dragging when in editor-mode
 
     return entityBuilder().setTypeAdvanced(EntityType.SLIDER_ITEM)
       .atAnchored(InvaderComponent.center, data.position)
       .with(spawnItemComponent)
+      .with(InfoComponent(spawnItemComponent))
       .view(invaderData.texture.toBasicTexture())
       .build()
   }

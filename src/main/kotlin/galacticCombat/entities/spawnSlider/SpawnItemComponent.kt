@@ -3,14 +3,19 @@ package galacticCombat.entities.spawnSlider
 import com.almasb.fxgl.dsl.getInput
 import com.almasb.fxgl.entity.component.Component
 import galacticCombat.configs.LevelDataVar
+import galacticCombat.entities.invader.InvaderData
 import galacticCombat.level.json.InvaderSpawnArgs
+import galacticCombat.ui.HasInfo
 import galacticCombat.ui.SpawnSliderController.Companion.SLIDER_WIDTH
 import galacticCombat.ui.SpawnSliderController.Companion.SLIDER_X
 import galacticCombat.ui.SpawnSliderController.Companion.getTimeFromSliderX
+import javafx.beans.binding.Bindings
+import javafx.beans.binding.StringBinding
 import javafx.event.EventHandler
+import javafx.scene.image.Image
 import javafx.scene.input.MouseEvent
 
-class SpawnItemComponent(private val waveIndex: Int, private var invaderSpawnArgs: InvaderSpawnArgs) : Component() {
+class SpawnItemComponent(private val waveIndex: Int, private var invaderSpawnArgs: InvaderSpawnArgs, private val invaderData: InvaderData) : Component(), HasInfo {
 
   private var isDragging = false
 
@@ -46,4 +51,22 @@ class SpawnItemComponent(private val waveIndex: Int, private var invaderSpawnArg
     entity.viewComponent.removeEventHandler(MouseEvent.MOUSE_PRESSED, onPress)
     entity.viewComponent.removeEventHandler(MouseEvent.MOUSE_RELEASED, onRelease)
   }
+
+  //region -- Has Info --
+
+  override fun getTitle(): String = "${invaderSpawnArgs.args.type.title} - Lvl ${invaderSpawnArgs.args.level}"
+
+  override fun getInformation(): StringBinding {
+    val infoText = "Path ID: \t${invaderSpawnArgs.args.pathId}\n" +
+        "Spawn Time: \t${"%.0f".format(invaderSpawnArgs.time)}s"
+    return Bindings.createStringBinding({ infoText }, null)
+  }
+
+  override fun getTexture(): Image = invaderData.texture.getRepresentative()
+
+  override fun activate() = Unit
+
+  override fun deactivate() = Unit
+
+  //endregion
 }
