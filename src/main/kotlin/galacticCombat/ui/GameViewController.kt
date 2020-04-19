@@ -7,12 +7,14 @@ import galacticCombat.configs.IntGameVar
 import galacticCombat.configs.LevelController
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.ui.elements.SpawnSlider
+import javafx.beans.property.SimpleListProperty
 import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.TextArea
 import javafx.scene.image.ImageView
+import javafx.scene.layout.HBox
 
 class GameViewController : UIController {
 
@@ -30,6 +32,7 @@ class GameViewController : UIController {
   @FXML lateinit var infoPanelTitle: Label
   @FXML lateinit var infoPanelText: TextArea
   @FXML lateinit var infoPanelImage: ImageView
+  @FXML lateinit var infoPanelBottomBar: HBox
 
   // Spawn Slider
   @FXML lateinit var spawnSlider: SpawnSlider
@@ -52,6 +55,7 @@ class GameViewController : UIController {
     infoPanelText.textProperty().bind(provider.textProperty)
     infoPanelTitle.textProperty().bind(provider.titleProperty)
     infoPanelImage.imageProperty().bind(provider.imageProperty)
+    SimpleListProperty(infoPanelBottomBar.children).bind(provider.bottomChildrenProperty)
   }
 
   private fun bindTimerButton() {

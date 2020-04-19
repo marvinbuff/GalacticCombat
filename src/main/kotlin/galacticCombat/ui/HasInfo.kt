@@ -10,7 +10,7 @@ interface HasInfo {
 
   fun getTexture(): Image
 
-  fun activate()
+  fun activate(panel: InfoPanel)
 
-  fun deactivate()
+  fun deactivate(panel: InfoPanel)
 }

@@ -48,28 +48,35 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Label fx:id="goldLabel" prefWidth="70.0" styleClass="label_green"/>
-                        <Label fx:id="healthLabel" prefWidth="70.0" styleClass="label_green" GridPane.columnIndex="1"/>
-                        <Label fx:id="experienceLabel" prefWidth="70.0" styleClass="label_green" GridPane.rowIndex="1"/>
-                        <Label fx:id="scoreLabel" prefWidth="70.0" styleClass="label_green" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Label fx:id="goldLabel" prefHeight="27.0" prefWidth="80.0" styleClass="label_green"/>
+                        <Label fx:id="healthLabel" prefWidth="80.0" styleClass="label_green" GridPane.columnIndex="1"/>
+                        <Label fx:id="experienceLabel" prefWidth="80.0" styleClass="label_green" GridPane.rowIndex="1"/>
+                        <Label fx:id="scoreLabel" prefWidth="80.0" styleClass="label_green" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                     </children>
                 </GridPane>
-                <GridPane prefHeight="122.0" prefWidth="159.0" styleClass="label_green">
+                <GridPane prefHeight="146.0" prefWidth="161.0" styleClass="label_green">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.57141876220703" minWidth="10.0" prefWidth="94.14283970424108"/>
-                        <ColumnConstraints/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.57141876220703" minWidth="10.0" prefWidth="114.42865099225725"/>
+                        <ColumnConstraints maxWidth="46.28568703787667" minWidth="29.71426827566964" prefWidth="43.99992043631417"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="51.714303152901785" minHeight="10.0" prefHeight="19.714311872209823" vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="95.57140432085309" minHeight="10.0" prefHeight="67.9999564034598" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="51.714303152901785" minHeight="10.0" prefHeight="24.428587913513184" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="95.57140432085309" minHeight="10.0" prefHeight="80.85710797991072" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="95.57140432085309" minHeight="10.0" prefHeight="32.857177734375014" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <VBox.margin>
-                        <Insets bottom="9.0" left="9.0" right="9.0" top="8.0"/>
+                        <Insets bottom="7.0" left="4.0" right="4.0" top="7.0"/>
                     </VBox.margin>
                     <children>
-                        <Label fx:id="infoPanelTitle" prefHeight="17.0" prefWidth="101.0"/>
-                        <ImageView fx:id="infoPanelImage" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1"/>
-                        <TextArea fx:id="infoPanelText" editable="false" prefHeight="200.0" prefWidth="53.0" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="1"/>
+                        <Label fx:id="infoPanelTitle" prefHeight="17.0" prefWidth="157.0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"/>
+                        <ImageView fx:id="infoPanelImage" fitHeight="26.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                                   GridPane.rowIndex="1" GridPane.valignment="CENTER"/>
+                        <TextArea fx:id="infoPanelText" editable="false" prefHeight="37.0" prefWidth="159.0" wrapText="true" GridPane.rowIndex="1">
+                            <GridPane.margin>
+                                <Insets/>
+                            </GridPane.margin>
+                        </TextArea>
+                        <HBox fx:id="infoPanelBottomBar" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2"/>
                     </children>
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="36.0" prefWidth="177.0">
@@ -95,7 +102,7 @@
         </HBox>
     </top>
     <center>
-        <VBox prefWidth="530.0" mouseTransparent="true" BorderPane.alignment="CENTER">
+        <VBox mouseTransparent="true" prefWidth="530.0" BorderPane.alignment="CENTER">
             <children>
                 <AnchorPane VBox.vgrow="ALWAYS">
                     <styleClass>

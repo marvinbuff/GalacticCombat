@@ -10,6 +10,7 @@ import galacticCombat.moddable.towerConfig.BulletData
 import galacticCombat.moddable.towerConfig.BulletEffect
 import galacticCombat.moddable.towerConfig.BulletEffectType
 import galacticCombat.ui.HasInfo
+import galacticCombat.ui.InfoPanel
 import galacticCombat.utils.fire
 import galacticCombat.utils.toPoint
 import javafx.beans.binding.StringBinding
@@ -65,9 +66,9 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
 
   override fun getTexture(): Image = data.texture.getRepresentative()
 
-  override fun activate() = Unit
+  override fun activate(panel: InfoPanel) = Unit
 
-  override fun deactivate() = Unit
+  override fun deactivate(panel: InfoPanel) = Unit
 
   //endregion
   //region -- Public Members --

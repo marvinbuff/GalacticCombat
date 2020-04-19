@@ -17,6 +17,7 @@ import galacticCombat.moddable.towerConfig.BulletData
 import galacticCombat.moddable.towerConfig.TowerData
 import galacticCombat.moddable.towerConfig.UpgradeLevel
 import galacticCombat.ui.HasInfo
+import galacticCombat.ui.InfoPanel
 import galacticCombat.utils.toPoint
 import javafx.beans.binding.Bindings
 import javafx.beans.binding.StringBinding
@@ -83,9 +84,9 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
 
   override fun getTexture(): Image = towerData.textureByLevel.getValue(level).loadImage()
 
-  override fun activate() = entity.addComponent(RangeIndicatorComponent(bullet.range, center))
+  override fun activate(panel: InfoPanel) = entity.addComponent(RangeIndicatorComponent(bullet.range, center))
 
-  override fun deactivate() {
+  override fun deactivate(panel: InfoPanel) {
     entity.removeComponent(RangeIndicatorComponent::class.java)
   }
 

@@ -6,6 +6,7 @@ import galacticCombat.configs.LevelDataVar
 import galacticCombat.entities.invader.InvaderData
 import galacticCombat.level.json.InvaderSpawnArgs
 import galacticCombat.ui.HasInfo
+import galacticCombat.ui.InfoPanel
 import galacticCombat.ui.SpawnSliderController.Companion.SLIDER_WIDTH
 import galacticCombat.ui.SpawnSliderController.Companion.SLIDER_X
 import galacticCombat.ui.SpawnSliderController.Companion.getTimeFromSliderX
@@ -64,9 +65,9 @@ class SpawnItemComponent(private val waveIndex: Int, private var invaderSpawnArg
 
   override fun getTexture(): Image = invaderData.texture.getRepresentative()
 
-  override fun activate() = Unit
+  override fun activate(panel: InfoPanel) = Unit
 
-  override fun deactivate() = Unit
+  override fun deactivate(panel: InfoPanel) = Unit
 
   //endregion
 }
