@@ -8,6 +8,7 @@ import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.entity.component.Required
 import galacticCombat.configs.InfoPanelVar
+import galacticCombat.configs.LevelGameVars
 import galacticCombat.configs.loadImage
 import galacticCombat.entities.BULLET_SPAWN_ID
 import galacticCombat.entities.EntityType
@@ -22,6 +23,7 @@ import galacticCombat.utils.toPoint
 import javafx.beans.binding.Bindings
 import javafx.beans.binding.StringBinding
 import javafx.geometry.Point2D
+import javafx.scene.control.Button
 import javafx.scene.image.Image
 import javafx.scene.transform.Rotate
 
@@ -52,6 +54,9 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
   fun upgrade() {
     //todo implement specialization logic
     check(level.ordinal != 4) { "Cannot upgrade tower higher then level 5: $level!" }
+    val exp = LevelGameVars.EXPERIENCE.get()
+    if (exp < 100) return
+    else LevelGameVars.EXPERIENCE.set(exp - 100)
     level = level.next()
     updateView()
   }
@@ -84,10 +89,23 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
 
   override fun getTexture(): Image = towerData.textureByLevel.getValue(level).loadImage()
 
-  override fun activate(panel: InfoPanel) = entity.addComponent(RangeIndicatorComponent(bullet.range, center))
+  override fun activate(panel: InfoPanel) {
+    entity.addComponent(RangeIndicatorComponent(bullet.range, center))
+    if (level.hasNext()) {
+
+      val btn = Button("Upgrade")
+      btn.setOnAction {
+        upgrade()
+      }
+      btn.styleClass += "button_green"
+
+      panel.bottomChildrenProperty.add(btn)
+    }
+  }
 
   override fun deactivate(panel: InfoPanel) {
     entity.removeComponent(RangeIndicatorComponent::class.java)
+    panel.bottomChildrenProperty.clear()
   }
 
   //endregion

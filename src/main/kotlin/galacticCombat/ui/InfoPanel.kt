@@ -13,7 +13,7 @@ class InfoPanel {
   val titleProperty: StringProperty = SimpleStringProperty("")
   val textProperty: StringProperty = SimpleStringProperty("")
   val imageProperty: ObjectProperty<Image> = SimpleObjectProperty()
-  val bottomChildrenProperty: SimpleListProperty<Node> = SimpleListProperty()
+  lateinit var bottomChildrenProperty: SimpleListProperty<Node>
 
   fun set(source: HasInfo) {
     reset()

@@ -55,7 +55,7 @@ class GameViewController : UIController {
     infoPanelText.textProperty().bind(provider.textProperty)
     infoPanelTitle.textProperty().bind(provider.titleProperty)
     infoPanelImage.imageProperty().bind(provider.imageProperty)
-    SimpleListProperty(infoPanelBottomBar.children).bind(provider.bottomChildrenProperty)
+    provider.bottomChildrenProperty = SimpleListProperty(infoPanelBottomBar.children)
   }
 
   private fun bindTimerButton() {

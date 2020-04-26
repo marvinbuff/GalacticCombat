@@ -35,7 +35,6 @@ object LevelController : GameVar<LevelControllerComponent> {
  * All [GameVarsInt] will be initialized before loading the level.
  */
 enum class GameVarsInt(val initial: Int) : IntGameVar {
-  ENEMIES_TO_SPAWN(2),
   ALIVE_INVADERS(0),
   SCORE(0),
   WAVE_INDEX(0)
