@@ -11,7 +11,7 @@ class GameEvent(eventType: EventType<GameEvent>) : Event(eventType) {
   }
 }
 
-class WaveEvent(eventType: EventType<WaveEvent>, val waveIndex: Int) : Event(eventType) {
+class WaveEvent(eventType: EventType<WaveEvent>, val waveIndex: Int, val timeRemaining: Int = 0) : Event(eventType) {
 
   companion object {
     val WAVE_STARTED: EventType<WaveEvent> = EventType(ANY, "WaveStarted")

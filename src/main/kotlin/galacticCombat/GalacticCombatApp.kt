@@ -44,6 +44,7 @@ import galacticCombat.entities.tower.TowerComponent
 import galacticCombat.entities.tower.TowerFactory
 import galacticCombat.events.GameEvent
 import galacticCombat.events.InvaderEvents
+import galacticCombat.events.WaveEvent
 import galacticCombat.handlers.gameLost
 import galacticCombat.handlers.gameWon
 import galacticCombat.level.GalacticCombatLevelLoader
@@ -96,6 +97,13 @@ class GalacticCombatApp : GameApplication() {
     val trickle = Runnable {
       LevelGameVars.GOLD.increment(levelData.settings.trickleGold)
       GameVarsInt.SCORE.increment(levelData.settings.trickleScore)
+    }
+
+    onEvent(WaveEvent.WAVE_STARTED) { event: WaveEvent ->
+      val diff = event.timeRemaining
+      require(diff >= 0) { "Time difference cannot be negative but is $diff!" }
+      LevelGameVars.GOLD.increment(levelData.settings.trickleGold * diff)
+      GameVarsInt.SCORE.increment(levelData.settings.trickleScore * diff)
     }
 
     getGameTimer().runAtInterval(trickle, Duration.seconds(AppConfig.TRICKLE_RATE))

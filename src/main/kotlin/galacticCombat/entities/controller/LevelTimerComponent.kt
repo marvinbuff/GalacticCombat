@@ -59,8 +59,8 @@ class LevelTimerComponent(private val levelData: LevelData) : Component() {
  * Holds the state in which the [LevelControllerComponent] is.
  */
 private data class LevelState(
-    private val data: LevelData,
-    var isWaveThrough: Boolean = false
+  private val data: LevelData,
+  var isWaveThrough: Boolean = false
 ) {
   // State Variable
   private var time = SimpleDoubleProperty(0.0)
@@ -92,7 +92,8 @@ private data class LevelState(
     isWaveThrough = false
     time.value = 0.0
     GameVarsInt.WAVE_INDEX.increment()
-    WaveEvent(WaveEvent.WAVE_STARTED, currentWaveIndex.get()).fire()
+    val diff = (data.settings.timePerWave - getTime()).toInt()
+    WaveEvent(WaveEvent.WAVE_STARTED, currentWaveIndex.get(), diff).fire()
   }
 
   fun getInvader(): InvaderSpawnArgs? = data.waves[currentWaveIndex.value].getOrNull(currentInvaderIndex)
