@@ -4,6 +4,8 @@ import com.almasb.fxgl.dsl.getAssetLoader
 import galacticCombat.entities.controller.LevelControllerComponent
 import galacticCombat.level.json.LevelData
 import galacticCombat.moddable.towerConfig.TowerConfiguration
+import galacticCombat.services.Files
+import galacticCombat.services.getFileService
 import galacticCombat.ui.InfoPanel
 import galacticCombat.utils.parseJson
 
@@ -11,8 +13,9 @@ object TowerConfigVar : GameVar<TowerConfiguration> {
   override val id = "Tower Config Variable"
 
   fun initialize() {
-    val towerConfigsText = getAssetLoader().getStream("/assets/config/towerConfiguration.json").bufferedReader().readText()
-    val towerConfigs: TowerConfiguration = parseJson<TowerConfiguration>(towerConfigsText)
+    val towerConfigsText = getAssetLoader().getStream(Files.TOWER_CONFIG_FILE.path).bufferedReader().readText()
+    val moddedtowerConfigsText = getFileService().getLocalFileContent(Files.LOCAL_TOWER_CONFIG_FILE.path)
+    val towerConfigs: TowerConfiguration = parseJson(moddedtowerConfigsText ?: towerConfigsText)
     set(towerConfigs)
   }
 }

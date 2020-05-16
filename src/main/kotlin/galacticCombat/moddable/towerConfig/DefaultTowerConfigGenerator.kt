@@ -2,10 +2,6 @@ package galacticCombat.moddable.towerConfig
 
 import galacticCombat.utils.printJson
 
-// todo use populated data in tower creation. remove old classes. Clean-up
-
-private val levels = UpgradeLevel.values()
-
 fun main() {
   val towers = listOf(
 //    "Bomb Thrower" to createCannonTower(),
@@ -19,6 +15,8 @@ fun main() {
   val config = TowerConfiguration(towers)
   printJson(config)
 }
+
+private val levels = UpgradeLevel.values()
 
 private fun createCannonTower(): TowerData {
   val bullets = listOf(
