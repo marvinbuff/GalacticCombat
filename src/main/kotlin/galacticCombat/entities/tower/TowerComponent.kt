@@ -34,6 +34,7 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
   private val bullet: BulletData
     get() = towerData.bulletByLevel.getValue(level)
   var level: UpgradeLevel = UpgradeLevel.First
+  private val btn by lazy(LazyThreadSafetyMode.NONE) { initializeUpgradeButton() }
 
   override fun onUpdate(tpf: Double) {
     val closestInvader = getGameWorld()
@@ -51,12 +52,17 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
     }
   }
 
+  override fun onRemoved() {
+    super.onRemoved()
+    btn.disableProperty().unbind()
+  }
+
   fun upgrade() {
     //todo implement specialization logic
-    check(level.ordinal != 4) { "Cannot upgrade tower higher then level 5: $level!" }
+    check(level.hasNext()) { "Cannot upgrade tower higher then level 5: $level!" }
     val exp = LevelGameVars.EXPERIENCE.get()
-    if (exp < 100) return
-    else LevelGameVars.EXPERIENCE.set(exp - 100)
+    if (exp < EXPERIENCE_COST) return
+    else LevelGameVars.EXPERIENCE.set(exp - EXPERIENCE_COST)
     level = level.next()
     updateView()
   }
@@ -89,16 +95,19 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
 
   override fun getTexture(): Image = towerData.textureByLevel.getValue(level).loadImage()
 
+  private fun initializeUpgradeButton(): Button {
+    val btn = Button("Upgrade")
+    btn.setOnAction {
+      upgrade()
+    }
+    btn.styleClass += "button_green"
+    return btn
+  }
+
   override fun activate(panel: InfoPanel) {
     entity.addComponent(RangeIndicatorComponent(bullet.range, center))
     if (level.hasNext()) {
-
-      val btn = Button("Upgrade")
-      btn.setOnAction {
-        upgrade()
-      }
-      btn.styleClass += "button_green"
-
+      btn.disableProperty().bind(LevelGameVars.EXPERIENCE.property().lessThan(EXPERIENCE_COST))
       panel.bottomChildrenProperty.add(btn)
     }
   }
@@ -106,11 +115,13 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
   override fun deactivate(panel: InfoPanel) {
     entity.removeComponent(RangeIndicatorComponent::class.java)
     panel.bottomChildrenProperty.clear()
+    btn.disableProperty().unbind()
   }
 
   //endregion
 
   companion object {
     val center: Point2D = (38 / 2.0).toPoint()
+    const val EXPERIENCE_COST = 100
   }
 }

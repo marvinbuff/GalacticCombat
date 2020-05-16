@@ -52,12 +52,12 @@ data class BulletEffect(
   var duration: Double
 )
 
-enum class UpgradeLevel(val level: Int) {
-  First(1),
-  Second(2),
-  Third(3),
-  Fourth(4),
-  Fifth(5);
+enum class UpgradeLevel {
+  First,
+  Second,
+  Third,
+  Fourth,
+  Fifth;
 
   fun hasNext() = this.ordinal + 1 < values().size
   fun next() = values()[this.ordinal + 1]
