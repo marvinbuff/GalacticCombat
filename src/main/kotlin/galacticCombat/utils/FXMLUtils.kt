@@ -2,7 +2,7 @@ package galacticCombat.utils
 
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.entity.GameWorld
-import com.almasb.sslogger.Logger
+import com.almasb.fxgl.logging.Logger
 import javafx.event.Event
 
 private val logger = Logger.get("Global Utils")

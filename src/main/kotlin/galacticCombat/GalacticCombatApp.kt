@@ -19,8 +19,8 @@ import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.InputModifier
 import com.almasb.fxgl.input.UserAction
+import com.almasb.fxgl.logging.Logger
 import com.almasb.fxgl.physics.CollisionHandler
-import com.almasb.sslogger.Logger
 import galacticCombat.configs.AppConfig
 import galacticCombat.configs.AssetConfig
 import galacticCombat.configs.GameConfig
@@ -73,7 +73,7 @@ class GalacticCombatApp : GameApplication() {
     settings.title = AppConfig.TITLE
     settings.version = AppConfig.VERSION
     settings.appIcon = AssetConfig.getUI("logo.png")
-    settings.isMenuEnabled = false
+    settings.isMainMenuEnabled = false
     settings.isIntroEnabled = false
     settings.applicationMode = AppConfig.MODE
   }

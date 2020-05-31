@@ -22,6 +22,6 @@ fun gameLost() {
 fun gameEnd() {
   //todo add stats to profile
   //todo this does not compile anymore: getGameWorld().clear()
-  if (getSettings().isMenuEnabled) getGameController().gotoMainMenu()
+  if (getSettings().isMainMenuEnabled) getGameController().gotoMainMenu()
   else exitProcess(0)
 }
