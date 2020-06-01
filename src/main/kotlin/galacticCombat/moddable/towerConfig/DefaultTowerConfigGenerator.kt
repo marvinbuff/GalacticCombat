@@ -21,7 +21,7 @@ private val levels = UpgradeLevel.values()
 private fun createCannonTower(): TowerData {
   val bullets = listOf(
     // damage = 12.0 + (level - 1) * 3
-    BulletData(12.0, 2.0),
+    BulletData(12.0, 2.0, targetingMode = TargetingMode(TargetingEntity.INVADER, TargetingStrategy.FOREMOST, true, 100)),
     BulletData(15.0, 2.0),
     BulletData(18.0, 2.0),
     BulletData(18.0, 4.0, range = 110.0),
@@ -62,27 +62,33 @@ private fun createRayBlaster(): TowerData {
 }
 
 private fun createSporeLauncher(): TowerData {
+  val targetingMode = TargetingMode(TargetingEntity.INVADER, TargetingStrategy.UNTAINTED, true, -1)
   val bullets = listOf(
     // effect.amount = 2.5 + (level - 1) * 1.0
     BulletData(
       6.0, 1.0,
-      effect = BulletEffect(BulletEffectType.POISON, 2.5, 6.0)
+      effect = BulletEffect(BulletEffectType.POISON, 2.5, 6.0),
+      targetingMode = targetingMode
     ),
     BulletData(
       6.0, 1.0,
-      effect = BulletEffect(BulletEffectType.POISON, 3.5, 6.0)
+      effect = BulletEffect(BulletEffectType.POISON, 3.5, 6.0),
+      targetingMode = targetingMode
     ),
     BulletData(
       6.0, 1.0,
-      effect = BulletEffect(BulletEffectType.POISON, 4.5, 6.0)
+      effect = BulletEffect(BulletEffectType.POISON, 4.5, 6.0),
+      targetingMode = targetingMode
     ),
     BulletData(
       6.0, 1.0,
-      effect = BulletEffect(BulletEffectType.POISON, 5.5, 6.0)
+      effect = BulletEffect(BulletEffectType.POISON, 5.5, 6.0),
+      targetingMode = targetingMode
     ),
     BulletData(
       6.0, 1.0,
-      effect = BulletEffect(BulletEffectType.POISON, 6.5, 6.0)
+      effect = BulletEffect(BulletEffectType.POISON, 6.5, 6.0),
+      targetingMode = targetingMode
     )
   )
   val bulletsByLevel = levels.zip(bullets).toMap()
@@ -98,29 +104,15 @@ private fun createSporeLauncher(): TowerData {
 }
 
 private fun createCryonicEmitter(): TowerData {
-  val bullets = listOf(
-    // effect.amount = 0.7 - (level - 1) * 0.05
+  val createBaseBullet = { level: Int ->
     BulletData(
       6.0, 0.0,
-      effect = BulletEffect(BulletEffectType.SLOW, 0.7, 4.0)
-    ),
-    BulletData(
-      6.0, 0.0,
-      effect = BulletEffect(BulletEffectType.SLOW, 0.65, 4.0)
-    ),
-    BulletData(
-      6.0, 0.0,
-      effect = BulletEffect(BulletEffectType.SLOW, 0.6, 4.0)
-    ),
-    BulletData(
-      6.0, 1.0,
-      effect = BulletEffect(BulletEffectType.SLOW, 0.55, 4.0)
-    ),
-    BulletData(
-      6.0, 1.0,
-      effect = BulletEffect(BulletEffectType.SLOW, 0.5, 4.0)
+      effect = BulletEffect(BulletEffectType.SLOW, 0.7 - (level - 1) * 0.5, 4.0),
+      targetingMode = TargetingMode(TargetingEntity.INVADER, TargetingStrategy.UNTAINTED, true, -1)
     )
-  )
+  }
+
+  val bullets = (1..5).map(createBaseBullet)
   val bulletsByLevel = levels.zip(bullets).toMap()
   val textures = listOf(
     "towers/cryonic_emitter_1.gif",

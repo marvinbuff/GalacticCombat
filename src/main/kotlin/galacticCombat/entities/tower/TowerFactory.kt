@@ -45,6 +45,7 @@ class TowerFactory : EntityFactory {
       .with(projectile)
       .with(towerComponent)
       .with(infoHandler)
+      .with(HittableTowerComponent())
       .build()
   }
 

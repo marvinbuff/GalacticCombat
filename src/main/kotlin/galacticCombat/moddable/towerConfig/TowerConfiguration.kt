@@ -31,6 +31,7 @@ data class BulletData(
   val attackDelay: Double = 1.0,
   val range: Double = 100.0,
   val bulletSpeed: Double = 300.0,
+  val targetingMode: TargetingMode = TargetingMode(TargetingEntity.INVADER, TargetingStrategy.FOREMOST, true),
   val effect: BulletEffect = BulletEffect(BulletEffectType.NONE, 0.0, 0.0),
   val texture: String = AssetConfig.get("beeper.png")
 ) {
@@ -52,6 +53,28 @@ data class BulletEffect(
   var duration: Double
 )
 
+/**
+ * The [TargetingMode] defines what entities are affected from the associated [BulletData].
+ * @property targetingEntity Whether towers or invaders are targeted.
+ * @property targetingStrategy Which targets are to be prioritized.
+ * @property tracking Whether the bullet follows the target.
+ * @property areaOfEffect The impact radius. -1 denotes the single-target mode, where only the target is being hit.
+ */
+@Serializable
+data class TargetingMode(
+  val targetingEntity: TargetingEntity,
+  val targetingStrategy: TargetingStrategy,
+  val tracking: Boolean,
+  val areaOfEffect: Int = -1
+) {
+  init {
+    check(tracking || areaOfEffect != -1) { "Tracking must be activated for single-target targeting mode." }
+    if (targetingEntity != targetingStrategy.validTarget) invalidConfiguration()
+  }
+
+  fun invalidConfiguration(): Nothing = error("TargetingStrategy $targetingStrategy is not applicable for target $targetingEntity.")
+}
+
 enum class UpgradeLevel {
   First,
   Second,
@@ -68,4 +91,21 @@ enum class BulletEffectType {
   POISON,
   SLOW,
   CHAIN
+}
+
+enum class TargetingEntity {
+  INVADER,
+  TOWER;
+}
+
+enum class TargetingStrategy(val validTarget: TargetingEntity = TargetingEntity.INVADER) {
+  // TargetingEntity.Invader
+  FOREMOST,
+  UNTAINTED,
+  HIGHEST_HEALTH,
+
+  // TargetingEntity.Tower
+  CLOSEST(TargetingEntity.TOWER)
+  ;
+
 }

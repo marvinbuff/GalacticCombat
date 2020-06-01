@@ -2,9 +2,9 @@ package galacticCombat.entities.invader
 
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.getGameTimer
-import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.entity.component.Required
 import galacticCombat.configs.GameVarsInt
+import galacticCombat.entities.generic.HittableComponent
 import galacticCombat.events.InvaderEvents
 import galacticCombat.moddable.towerConfig.BulletData
 import galacticCombat.moddable.towerConfig.BulletEffect
@@ -20,7 +20,7 @@ import javafx.scene.image.Image
 import kotlin.math.max
 
 @Required(ProjectileComponent::class)
-class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
+class InvaderComponent(val data: InvaderData) : HittableComponent(), HasInfo {
   private lateinit var projectile: ProjectileComponent
   private lateinit var nextWayPoint: Point2D
   private lateinit var lastWayPoint: Point2D
@@ -76,7 +76,7 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
   /**
    *  A bullet hitting an invader registers here to apply its damage and effect.
    */
-  fun hitWithBullet(bullet: BulletData) {
+  override fun hitWithBullet(bullet: BulletData) {
     val effectiveArmour = max((data.armour - bullet.penetration), 0.0)
     val effectiveDmg = max((bullet.damage - effectiveArmour), 0.0)
     if (effectiveDmg == 0.0) return // Effects are not applied if no damage is done
@@ -89,6 +89,18 @@ class InvaderComponent(val data: InvaderData) : Component(), HasInfo {
       BulletEffectType.CHAIN  -> TODO()
       BulletEffectType.NONE   -> { /* do nothing */
       }
+    }
+  }
+
+  /**
+   * Informs whether the given [type] of effect is already applied.
+   */
+  fun isSufferingEffect(type: BulletEffectType): Boolean {
+    return when (type) {
+      BulletEffectType.POISON -> poisonEffects.isNotEmpty()
+      BulletEffectType.SLOW   -> slowEffects.isNotEmpty()
+      BulletEffectType.CHAIN  -> false
+      BulletEffectType.NONE   -> false
     }
   }
 

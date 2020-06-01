@@ -3,18 +3,23 @@ package galacticCombat.entities.tower
 import com.almasb.fxgl.dsl.FXGL
 import com.almasb.fxgl.dsl.components.ProjectileComponent
 import com.almasb.fxgl.dsl.getGameWorld
-import com.almasb.fxgl.entity.Entity
-import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.entity.component.Required
 import galacticCombat.configs.InfoPanelVar
 import galacticCombat.configs.LevelGameVars
 import galacticCombat.configs.loadImage
-import galacticCombat.entities.BULLET_SPAWN_ID
 import galacticCombat.entities.EntityType
+import galacticCombat.entities.bullet.BulletFactory
+import galacticCombat.entities.generic.HittableComponent
 import galacticCombat.entities.generic.RangeIndicatorComponent
 import galacticCombat.entities.invader.InvaderComponent
 import galacticCombat.moddable.towerConfig.BulletData
+import galacticCombat.moddable.towerConfig.TargetingEntity.INVADER
+import galacticCombat.moddable.towerConfig.TargetingEntity.TOWER
+import galacticCombat.moddable.towerConfig.TargetingStrategy.CLOSEST
+import galacticCombat.moddable.towerConfig.TargetingStrategy.FOREMOST
+import galacticCombat.moddable.towerConfig.TargetingStrategy.HIGHEST_HEALTH
+import galacticCombat.moddable.towerConfig.TargetingStrategy.UNTAINTED
 import galacticCombat.moddable.towerConfig.TowerData
 import galacticCombat.moddable.towerConfig.UpgradeLevel
 import galacticCombat.ui.HasInfo
@@ -31,20 +36,18 @@ import javafx.scene.transform.Rotate
 class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
   private lateinit var projectile: ProjectileComponent
   private var reloadingTime: Double = 0.0
-  private val bullet: BulletData
+  val bullet: BulletData
     get() = towerData.bulletByLevel.getValue(level)
   var level: UpgradeLevel = UpgradeLevel.First
   private val btn by lazy(LazyThreadSafetyMode.NONE) { initializeUpgradeButton() }
 
   override fun onUpdate(tpf: Double) {
-    val closestInvader = getGameWorld()
-      .getEntitiesByType(EntityType.INVADER)
-      .filter { other -> entity.anchoredPosition.distance(other.anchoredPosition) < bullet.range }
-      .maxBy { it.getComponent(InvaderComponent::class.java).getProgress() }
-    closestInvader?.let {
-      projectile.direction = Rotate.rotate(-45.0, 0.0, 0.0).transform(it.anchoredPosition.subtract(entity.anchoredPosition))
+    val target = getTarget()
+
+    target?.let {
+      projectile.direction = Rotate.rotate(-45.0, 0.0, 0.0).transform(it.entity.anchoredPosition.subtract(entity.anchoredPosition))
       if (reloadingTime <= 0.0) {
-        shoot(closestInvader)
+        shoot(target)
         reloadingTime = bullet.attackDelay
       } else {
         reloadingTime -= tpf
@@ -73,12 +76,46 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
     InfoPanelVar.get().update(this)
   }
 
-  private fun shoot(target: Entity) {
-    getGameWorld().spawn(
-      BULLET_SPAWN_ID,
-      SpawnData(entity.anchoredPosition)
-        .put("target", target).put(BulletData.id, bullet)
-    )
+  private fun getTarget(): HittableComponent? {
+    return when (bullet.targetingMode.targetingEntity) {
+      INVADER -> getInvaderTarget()
+      TOWER   -> getTowerTarget()
+    }
+  }
+
+  private fun getInvaderTarget(): HittableComponent? {
+    val possibleTargets = getGameWorld()
+      .getEntitiesByType(EntityType.INVADER)
+      .filter { other -> entity.anchoredPosition.distance(other.anchoredPosition) < bullet.range }
+      .map { it.getComponent(InvaderComponent::class.java) }
+      .sortedByDescending { it.getProgress() }
+
+    val fallbackTarget = possibleTargets.firstOrNull()
+
+    val chosenTarget = when (bullet.targetingMode.targetingStrategy) {
+      FOREMOST       -> fallbackTarget
+      UNTAINTED      -> possibleTargets.firstOrNull { !it.isSufferingEffect(bullet.effect.type) } //todo this might not always try to apply the strongest effect
+      HIGHEST_HEALTH -> possibleTargets.minBy { it.health.get() }
+      else           -> bullet.targetingMode.invalidConfiguration()
+    }
+
+    return chosenTarget ?: fallbackTarget
+  }
+
+  private fun getTowerTarget(): HittableComponent? {
+    val possibleTargets = getGameWorld()
+      .getEntitiesByComponent(HittableTowerComponent::class.java)
+      .filter { other -> entity.anchoredPosition.distance(other.anchoredPosition) < bullet.range }
+      .map { it.getComponent(HittableTowerComponent::class.java) }
+
+    return when (bullet.targetingMode.targetingStrategy) {
+      CLOSEST -> possibleTargets.minBy { it.entity.distance(this.entity) }
+      else    -> bullet.targetingMode.invalidConfiguration()
+    }
+  }
+
+  private fun shoot(target: HittableComponent) {
+    BulletFactory.spawnBullet(entity.anchoredPosition, bullet, target)
   }
 
   //region -------------------- HasInfo ------------------------
