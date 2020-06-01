@@ -13,7 +13,7 @@
             "targetingEntity": "INVADER",
             "targetingStrategy": "FOREMOST",
             "tracking": true,
-            "areaOfEffect": 100
+            "areaOfEffect": -1
           },
           "effect": {
             "type": "NONE",
@@ -119,7 +119,7 @@
           "bulletSpeed": 300.0,
           "targetingMode": {
             "targetingEntity": "INVADER",
-            "targetingStrategy": "FOREMOST",
+            "targetingStrategy": "UNTAINTED",
             "tracking": true,
             "areaOfEffect": -1
           },
@@ -138,7 +138,7 @@
           "bulletSpeed": 300.0,
           "targetingMode": {
             "targetingEntity": "INVADER",
-            "targetingStrategy": "FOREMOST",
+            "targetingStrategy": "UNTAINTED",
             "tracking": true,
             "areaOfEffect": -1
           },
@@ -157,7 +157,7 @@
           "bulletSpeed": 300.0,
           "targetingMode": {
             "targetingEntity": "INVADER",
-            "targetingStrategy": "FOREMOST",
+            "targetingStrategy": "UNTAINTED",
             "tracking": true,
             "areaOfEffect": -1
           },
@@ -176,7 +176,7 @@
           "bulletSpeed": 300.0,
           "targetingMode": {
             "targetingEntity": "INVADER",
-            "targetingStrategy": "FOREMOST",
+            "targetingStrategy": "UNTAINTED",
             "tracking": true,
             "areaOfEffect": -1
           },
@@ -195,7 +195,7 @@
           "bulletSpeed": 300.0,
           "targetingMode": {
             "targetingEntity": "INVADER",
-            "targetingStrategy": "FOREMOST",
+            "targetingStrategy": "UNTAINTED",
             "tracking": true,
             "areaOfEffect": -1
           },
@@ -321,6 +321,114 @@
         "Third": "towers/spore_launcher_3.gif",
         "Fourth": "towers/spore_launcher_cross_4.gif",
         "Fifth": "towers/spore_launcher_cross_5.gif"
+      },
+      "price": 100
+    },
+    "Bomb Thrower": {
+      "name": "Bomb Thrower",
+      "bulletByLevel": {
+        "First": {
+          "damage": 6.0,
+          "penetration": 2.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "targetingMode": {
+            "targetingEntity": "INVADER",
+            "targetingStrategy": "FOREMOST",
+            "tracking": false,
+            "areaOfEffect": 100
+          },
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Second": {
+          "damage": 7.5,
+          "penetration": 2.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "targetingMode": {
+            "targetingEntity": "INVADER",
+            "targetingStrategy": "FOREMOST",
+            "tracking": false,
+            "areaOfEffect": 100
+          },
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Third": {
+          "damage": 9.0,
+          "penetration": 2.0,
+          "attackDelay": 1.0,
+          "range": 100.0,
+          "bulletSpeed": 300.0,
+          "targetingMode": {
+            "targetingEntity": "INVADER",
+            "targetingStrategy": "FOREMOST",
+            "tracking": false,
+            "areaOfEffect": 100
+          },
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Fourth": {
+          "damage": 10.5,
+          "penetration": 4.0,
+          "attackDelay": 1.0,
+          "range": 110.0,
+          "bulletSpeed": 300.0,
+          "targetingMode": {
+            "targetingEntity": "INVADER",
+            "targetingStrategy": "FOREMOST",
+            "tracking": false,
+            "areaOfEffect": 100
+          },
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        },
+        "Fifth": {
+          "damage": 12.0,
+          "penetration": 4.0,
+          "attackDelay": 1.0,
+          "range": 120.0,
+          "bulletSpeed": 300.0,
+          "targetingMode": {
+            "targetingEntity": "INVADER",
+            "targetingStrategy": "FOREMOST",
+            "tracking": false,
+            "areaOfEffect": 100
+          },
+          "effect": {
+            "type": "NONE",
+            "amount": 0.0,
+            "duration": 0.0
+          },
+          "texture": "beeper.png"
+        }
+      },
+      "textureByLevel": {
+        "First": "towers/bomb_thrower_1.gif",
+        "Second": "towers/bomb_thrower_2.gif",
+        "Third": "towers/bomb_thrower_3.gif",
+        "Fourth": "towers/bomb_thrower_cross_4.gif",
+        "Fifth": "towers/bomb_thrower_cross_5.gif"
       },
       "price": 100
     },

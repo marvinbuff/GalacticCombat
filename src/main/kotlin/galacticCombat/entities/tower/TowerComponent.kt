@@ -24,6 +24,7 @@ import galacticCombat.moddable.towerConfig.TowerData
 import galacticCombat.moddable.towerConfig.UpgradeLevel
 import galacticCombat.ui.HasInfo
 import galacticCombat.ui.InfoPanel
+import galacticCombat.utils.getEntitiesInRange
 import galacticCombat.utils.toPoint
 import javafx.beans.binding.Bindings
 import javafx.beans.binding.StringBinding
@@ -36,7 +37,7 @@ import javafx.scene.transform.Rotate
 class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
   private lateinit var projectile: ProjectileComponent
   private var reloadingTime: Double = 0.0
-  val bullet: BulletData
+  private val bullet: BulletData
     get() = towerData.bulletByLevel.getValue(level)
   var level: UpgradeLevel = UpgradeLevel.First
   private val btn by lazy(LazyThreadSafetyMode.NONE) { initializeUpgradeButton() }
@@ -96,7 +97,7 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
       FOREMOST       -> fallbackTarget
       UNTAINTED      -> possibleTargets.firstOrNull { !it.isSufferingEffect(bullet.effect.type) } //todo this might not always try to apply the strongest effect
       HIGHEST_HEALTH -> possibleTargets.minBy { it.health.get() }
-      else           -> bullet.targetingMode.invalidConfiguration()
+      CLOSEST        -> bullet.targetingMode.invalidConfiguration()
     }
 
     return chosenTarget ?: fallbackTarget
@@ -104,13 +105,12 @@ class TowerComponent(private val towerData: TowerData) : Component(), HasInfo {
 
   private fun getTowerTarget(): HittableComponent? {
     val possibleTargets = getGameWorld()
-      .getEntitiesByComponent(HittableTowerComponent::class.java)
-      .filter { other -> entity.anchoredPosition.distance(other.anchoredPosition) < bullet.range }
+      .getEntitiesInRange(this.entity, HittableTowerComponent::class.java, bullet.range)
       .map { it.getComponent(HittableTowerComponent::class.java) }
 
     return when (bullet.targetingMode.targetingStrategy) {
-      CLOSEST -> possibleTargets.minBy { it.entity.distance(this.entity) }
-      else    -> bullet.targetingMode.invalidConfiguration()
+      CLOSEST                             -> possibleTargets.minBy { it.entity.distance(this.entity) }
+      FOREMOST, UNTAINTED, HIGHEST_HEALTH -> bullet.targetingMode.invalidConfiguration()
     }
   }
 

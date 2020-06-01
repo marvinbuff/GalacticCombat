@@ -1,15 +1,16 @@
 package galacticCombat.moddable.towerConfig
 
+import galacticCombat.entities.tower.TowerType
 import galacticCombat.utils.printJson
 
 fun main() {
   val towers = listOf(
-//    "Bomb Thrower" to createCannonTower(),
-    "Cannon Tower" to createCannonTower(),
-    "Cryonic Emitter" to createCryonicEmitter(),
-    "Spore Launcher" to createSporeLauncher(),
+    TowerType.CANNON.title to createCannonTower(),
+    TowerType.CRYONIC.title to createCryonicEmitter(),
+    TowerType.SPORE.title to createSporeLauncher(),
+    TowerType.BOMBER.title to createBomberThrower(),
 //    "Storm Conjurer" to createSporeLauncher(),
-    "Ray Blaster" to createRayBlaster()
+    TowerType.RAY.title to createRayBlaster()
   ).toMap()
 
   val config = TowerConfiguration(towers)
@@ -21,7 +22,7 @@ private val levels = UpgradeLevel.values()
 private fun createCannonTower(): TowerData {
   val bullets = listOf(
     // damage = 12.0 + (level - 1) * 3
-    BulletData(12.0, 2.0, targetingMode = TargetingMode(TargetingEntity.INVADER, TargetingStrategy.FOREMOST, true, 100)),
+    BulletData(12.0, 2.0),
     BulletData(15.0, 2.0),
     BulletData(18.0, 2.0),
     BulletData(18.0, 4.0, range = 110.0),
@@ -36,7 +37,7 @@ private fun createCannonTower(): TowerData {
     "towers/cannon_tower_cross_5.gif"
   )
   val textureByLevel = levels.zip(textures).toMap()
-  return TowerData("Cannon Tower", bulletsByLevel, textureByLevel)
+  return TowerData(TowerType.CANNON.title, bulletsByLevel, textureByLevel)
 }
 
 private fun createRayBlaster(): TowerData {
@@ -58,7 +59,7 @@ private fun createRayBlaster(): TowerData {
     "towers/ray_blaster_cross_5.gif"
   )
   val textureByLevel = levels.zip(textures).toMap()
-  return TowerData("Ray Blaster", bulletsByLevel, textureByLevel)
+  return TowerData(TowerType.RAY.title, bulletsByLevel, textureByLevel)
 }
 
 private fun createSporeLauncher(): TowerData {
@@ -100,14 +101,14 @@ private fun createSporeLauncher(): TowerData {
     "towers/spore_launcher_cross_5.gif"
   )
   val textureByLevel = levels.zip(textures).toMap()
-  return TowerData("Spore Launcher", bulletsByLevel, textureByLevel)
+  return TowerData(TowerType.SPORE.title, bulletsByLevel, textureByLevel)
 }
 
 private fun createCryonicEmitter(): TowerData {
   val createBaseBullet = { level: Int ->
     BulletData(
       6.0, 0.0,
-      effect = BulletEffect(BulletEffectType.SLOW, 0.7 - (level - 1) * 0.5, 4.0),
+      effect = BulletEffect(BulletEffectType.SLOW, 0.7 - (level - 1) * 0.05, 4.0),
       targetingMode = TargetingMode(TargetingEntity.INVADER, TargetingStrategy.UNTAINTED, true, -1)
     )
   }
@@ -122,5 +123,27 @@ private fun createCryonicEmitter(): TowerData {
     "towers/cryonic_emitter_cone_5.gif"
   )
   val textureByLevel = levels.zip(textures).toMap()
-  return TowerData("Cryonic Emitter", bulletsByLevel, textureByLevel)
+  return TowerData(TowerType.CRYONIC.title, bulletsByLevel, textureByLevel)
+}
+
+private fun createBomberThrower(): TowerData {
+  val targetingMode = TargetingMode(TargetingEntity.INVADER, TargetingStrategy.FOREMOST, false, 100)
+  val bullets = listOf(
+    // damage = 6.0 + (level - 1) * 1.5
+    BulletData(6.0, 2.0, targetingMode = targetingMode),
+    BulletData(7.5, 2.0, targetingMode = targetingMode),
+    BulletData(9.0, 2.0, targetingMode = targetingMode),
+    BulletData(10.5, 4.0, range = 110.0, targetingMode = targetingMode),
+    BulletData(12.0, 4.0, range = 120.0, targetingMode = targetingMode)
+  )
+  val bulletsByLevel = levels.zip(bullets).toMap()
+  val textures = listOf(
+    "towers/bomb_thrower_1.gif",
+    "towers/bomb_thrower_2.gif",
+    "towers/bomb_thrower_3.gif",
+    "towers/bomb_thrower_cross_4.gif",
+    "towers/bomb_thrower_cross_5.gif"
+  )
+  val textureByLevel = levels.zip(textures).toMap()
+  return TowerData(TowerType.BOMBER.title, bulletsByLevel, textureByLevel)
 }

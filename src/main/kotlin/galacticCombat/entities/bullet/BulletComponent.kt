@@ -1,11 +1,13 @@
 package galacticCombat.entities.bullet
 
 import com.almasb.fxgl.dsl.components.ProjectileComponent
+import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.entity.component.Required
 import galacticCombat.entities.generic.HittableComponent
 import galacticCombat.moddable.towerConfig.BulletData
+import galacticCombat.utils.getEntitiesInRange
 import galacticCombat.utils.toPoint
 import javafx.geometry.Point2D
 
@@ -23,9 +25,8 @@ class BulletComponent(
     projectile.direction = vectorToTarget
 
     if (vectorToTarget.magnitude() < projectile.speed * tpf) {
-      //todo implement explosion here: check radius of targeting mode
-      if (targetEntity.isActive) {
-        target.hitWithBullet(data)
+      getHitTargets().forEach {
+        it.hitWithBullet(data)
       }
       entity.removeFromWorld()
     }
@@ -37,6 +38,15 @@ class BulletComponent(
     } else {
       initialTargetPosition
     }
+  }
+
+  private fun getHitTargets(): List<HittableComponent> {
+    val clazz = data.targetingMode.targetingEntity.clazz
+
+    return if (data.targetingMode.isSingleTargetMode()) return listOf(target)
+    else getGameWorld()
+      .getEntitiesInRange(entity, clazz, data.targetingMode.areaOfEffect.toDouble())
+      .map { it.getComponent(clazz) }
   }
 
   companion object {

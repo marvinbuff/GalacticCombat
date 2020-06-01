@@ -77,6 +77,7 @@ class InvaderComponent(val data: InvaderData) : HittableComponent(), HasInfo {
    *  A bullet hitting an invader registers here to apply its damage and effect.
    */
   override fun hitWithBullet(bullet: BulletData) {
+    if (!entity.isActive) return
     val effectiveArmour = max((data.armour - bullet.penetration), 0.0)
     val effectiveDmg = max((bullet.damage - effectiveArmour), 0.0)
     if (effectiveDmg == 0.0) return // Effects are not applied if no damage is done

@@ -1,6 +1,9 @@
 package galacticCombat.moddable.towerConfig
 
 import galacticCombat.configs.AssetConfig
+import galacticCombat.entities.generic.HittableComponent
+import galacticCombat.entities.invader.InvaderComponent
+import galacticCombat.entities.tower.HittableTowerComponent
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -72,6 +75,8 @@ data class TargetingMode(
     if (targetingEntity != targetingStrategy.validTarget) invalidConfiguration()
   }
 
+  fun isSingleTargetMode() = areaOfEffect == -1
+
   fun invalidConfiguration(): Nothing = error("TargetingStrategy $targetingStrategy is not applicable for target $targetingEntity.")
 }
 
@@ -93,9 +98,9 @@ enum class BulletEffectType {
   CHAIN
 }
 
-enum class TargetingEntity {
-  INVADER,
-  TOWER;
+enum class TargetingEntity(val clazz: Class<out HittableComponent>) {
+  INVADER(InvaderComponent::class.java),
+  TOWER(HittableTowerComponent::class.java);
 }
 
 enum class TargetingStrategy(val validTarget: TargetingEntity = TargetingEntity.INVADER) {
