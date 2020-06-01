@@ -20,6 +20,7 @@ private class LevelCreator {
   private val data = LevelData(
     "Experiment Level",
     settings = createSettings(),
+    isEditable = false,
     waves = mutableListOf(createWave(10), createWave(4)),
     paths = mutableListOf(createPath("default"))
   )

@@ -140,7 +140,7 @@ class GalacticCombatApp : GameApplication() {
     }
 
     input.addKeyAction(KeyCode.E, "Activate Editor Mode") {
-      LevelController.get().timerComponent.togglePause()
+      LevelController.get().timerComponent.togglePause() //todo fix pause functionality (override pause on draggable components)
       //todo open editor menu
     }
 

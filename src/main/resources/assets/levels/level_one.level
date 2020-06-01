@@ -2,17 +2,18 @@
   "title": "Level One",
   "settings": {
     "initialGold": 200,
-    "trickleGold": 10,
+    "trickleGold": 2,
     "trickleScore": 10,
     "initialHealth": 5,
-    "initialExperience": 200,
+    "initialExperience": 100,
     "timePerWave": 60.0
   },
+  "isEditable": false,
   "waves": [
     {
       "invaders": [
         {
-          "time": 0.0,
+          "time": 5.0,
           "args": {
             "type": "COMMON",
             "level": 1,
@@ -20,23 +21,7 @@
           }
         },
         {
-          "time": 1.826190848373165,
-          "args": {
-            "type": "REINFORCED",
-            "level": 2,
-            "pathId": "default"
-          }
-        },
-        {
-          "time": 2.6877088394785424,
-          "args": {
-            "type": "ACCELERATED",
-            "level": 2,
-            "pathId": "default"
-          }
-        },
-        {
-          "time": 4.1880255997982605,
+          "time": 8.5451684569411235,
           "args": {
             "type": "COMMON",
             "level": 1,
@@ -44,15 +29,15 @@
           }
         },
         {
-          "time": 4.376337790910855,
+          "time": 12.053671937075531,
           "args": {
             "type": "REINFORCED",
-            "level": 3,
+            "level": 1,
             "pathId": "default"
           }
         },
         {
-          "time": 5.126532116183878,
+          "time": 17.971428571428582,
           "args": {
             "type": "ACCELERATED",
             "level": 1,
@@ -60,42 +45,10 @@
           }
         },
         {
-          "time": 6.923100235734903,
-          "args": {
-            "type": "COMMON",
-            "level": 2,
-            "pathId": "default"
-          }
-        },
-        {
-          "time": 8.810285388903344,
-          "args": {
-            "type": "REINFORCED",
-            "level": 2,
-            "pathId": "default"
-          }
-        },
-        {
-          "time": 10.182190164380248,
+          "time": 19.483674973326739,
           "args": {
             "type": "ACCELERATED",
-            "level": 2,
-            "pathId": "default"
-          }
-        },
-        {
-          "time": 11.493608591089863,
-          "args": {
-            "type": "COMMON",
-            "level": 2,
-            "pathId": "default"
-          }
-        },
-        {
-          "time": 59.9,
-          "args": {
-            "type": "COMMON",
-            "level": 2,
+            "level": 1,
             "pathId": "default"
           }
         }
@@ -105,39 +58,31 @@
     {
       "invaders": [
         {
-          "time": 0.0,
+          "time": 5.0,
           "args": {
             "type": "COMMON",
-            "level": 3,
-            "pathId": "default"
-          }
-        },
-        {
-          "time": 0.98224336564696,
-          "args": {
-            "type": "REINFORCED",
-            "level": 3,
-            "pathId": "default"
-          }
-        },
-        {
-          "time": 1.130998411039466,
-          "args": {
-            "type": "ACCELERATED",
             "level": 1,
             "pathId": "default"
           }
         },
         {
-          "time": 2.332751412859725,
+          "time": 5.98224336564696,
           "args": {
             "type": "COMMON",
-            "level": 2,
+            "level": 1,
+            "pathId": "default"
+          }
+        },
+        {
+          "time": 7.332751412859725,
+          "args": {
+            "type": "BASTION",
+            "level": 1,
             "pathId": "default"
           }
         }
       ],
-      "isBoss": false
+      "isBoss": true
     }
   ],
   "paths": [
@@ -145,20 +90,68 @@
       "id": "default",
       "wayPoints": [
         {
-          "first": 50,
+          "first": 6,
           "second": 50
         },
         {
-          "first": 480,
+          "first": 386,
           "second": 50
         },
         {
-          "first": 50,
-          "second": 320
+          "first": 424,
+          "second": 49
         },
         {
-          "first": 480,
-          "second": 320
+          "first": 464,
+          "second": 62
+        },
+        {
+          "first": 488,
+          "second": 88
+        },
+        {
+          "first": 489,
+          "second": 127
+        },
+        {
+          "first": 473,
+          "second": 166
+        },
+        {
+          "first": 436,
+          "second": 179
+        },
+        {
+          "first": 396,
+          "second": 181
+        },
+        {
+          "first": 105,
+          "second": 182
+        },
+        {
+          "first": 72,
+          "second": 193
+        },
+        {
+          "first": 46,
+          "second": 223
+        },
+        {
+          "first": 47,
+          "second": 267
+        },
+        {
+          "first": 71,
+          "second": 300
+        },
+        {
+          "first": 115,
+          "second": 304
+        },
+        {
+          "first": 526,
+          "second": 302
         }
       ]
     }
