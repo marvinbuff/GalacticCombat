@@ -18,11 +18,11 @@ fun GameWorld.removeEntitiesByType(vararg types: Enum<*>) {
   removeEntities(getEntitiesByType(*types))
 }
 
-private fun EntityBuilder.conditionalWith(vararg comps: Component?) = this.also {
+fun EntityBuilder.conditionalWith(vararg comps: Component?) = this.also {
   this.with(*comps.filterNotNull().toTypedArray())
 }
 
-private fun EntityBuilder.conditionalWith(comps: Component, condition: Boolean) = this.also {
+fun EntityBuilder.conditionalWith(comps: Component, condition: Boolean) = this.also {
   if (condition) {
     this.with(comps)
   }

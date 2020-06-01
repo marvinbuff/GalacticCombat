@@ -16,6 +16,7 @@ import galacticCombat.entities.PATH_VERTEX_SPAWN_ID
 import galacticCombat.entities.path.PathEdgeArgs.Companion.ID_PATH_EDGE_ARGS
 import galacticCombat.entities.path.PathVertexArgs.Companion.ID_PATH_VERTEX_ARGS
 import galacticCombat.entities.setTypeAdvanced
+import galacticCombat.utils.conditionalWith
 import galacticCombat.utils.toPoint
 import javafx.geometry.Point2D
 import javafx.scene.shape.Circle
@@ -29,10 +30,9 @@ class PathFactory : EntityFactory {
 
     val pathVertexArgs = data.get<PathVertexArgs>(ID_PATH_VERTEX_ARGS)
 
-    return entityBuilder().setTypeAdvanced(EntityType.PATH)
-      .from(data)
-      .with(DraggableComponent())
-      .with(PathVertexComponent(pathVertexArgs)) //todo check if we should not just pass the args object
+    return entityBuilder(data).setTypeAdvanced(EntityType.PATH)
+      .conditionalWith(DraggableComponent(), LevelDataVar.get().isEditable)
+      .conditionalWith(PathVertexComponent(pathVertexArgs), LevelDataVar.get().isEditable) //todo check if we should not just pass the args object
       .viewWithBBox(Circle(halfPathWidth, UIConfig.PATH_COLOR))
 //      .with(CollidableComponent(true)) //fixme view and bbox seem not to be in sync
       .build()
